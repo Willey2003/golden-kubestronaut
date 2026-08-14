@@ -1,0 +1,36 @@
+kind: knowledge
+domain: metrics
+level: deep
+title: Metric temporality
+prompt: |
+  A Prometheus backend expects cumulative counters, while a push backend wants
+  deltas. How does OpenTelemetry handle this?
+options:
+  A: "The SDK and Collector export metrics with configurable temporality, cumulative or delta, matched to the backend."
+  B: "All backends require the same format, so one temporality is used everywhere."
+  C: "Only delta temporality is supported by OpenTelemetry."
+  D: "Temporality is decided by the application code at random."
+answer: A
+explanation: |
+  OpenTelemetry supports both cumulative and delta temporality. A cumulative
+  counter reports the value since process start, Prometheus style, while a
+  delta reports the change since the last report, ideal for push backends. The
+  SDK or Collector is configured to emit the temporality the backend expects.
+  OpenTelemetry is not limited to one temporality, and it is a configuration
+  concern, not a random application choice.
+solution: |
+  Metrics in OpenTelemetry support two temporalities. Cumulative temporality
+  reports the total since the start of the process, which Prometheus-style pull
+  backends expect. Delta temporality reports the change since the previous
+  export, which many push-based systems prefer. The SDK reader and Collector
+  exporters are configured with the temporality each backend requires, so the
+  same instrumentation can feed both kinds of systems.
+checks:
+  - desc: Mentions cumulative temporality
+    contains: "cumulative"
+  - desc: Mentions delta temporality
+    contains: "delta"
+  - desc: References Prometheus
+    contains: "Prometheus"
+  - desc: Uses the term temporality
+    contains: "temporality"

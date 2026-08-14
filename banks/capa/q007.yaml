@@ -1,0 +1,36 @@
+kind: knowledge
+domain: argo-cd
+level: core
+title: Automated sync with prune and selfHeal
+prompt: |
+  A team wants their cluster to always match git, including deleting resources
+  removed from the repo and reverting manual changes. Which Argo CD sync options
+  deliver this?
+options:
+  A: "Automated sync with prune and selfHeal enabled."
+  B: "Manual sync with no options."
+  C: "Disabling the application controller."
+  D: "Storing manifests in multiple branches."
+answer: A
+explanation: |
+  Automated sync applies changes on commit; prune deletes resources that
+  vanished from git; selfHeal reverts live changes back to git state. Without
+  them, Argo CD only applies what is in git at sync time.
+solution: |
+  Argo CD syncs by applying the manifests in git to the cluster. Setting the
+  sync policy to automated makes Argo CD sync whenever the repository changes.
+  The prune option deletes resources that exist in the cluster but no longer
+  exist in git, so removals propagate. The selfHeal option reverts any manual
+  modification back to the git state, closing drift continuously. Manual sync
+  without options requires an operator to trigger each sync and ignores
+  removals and drift. Disabling the controller stops all reconciliation, and
+  branches alone do not change the sync behavior.
+checks:
+  - desc: Names automated sync
+    contains: "automated"
+  - desc: Names prune
+    contains: "prune"
+  - desc: Names selfHeal
+    contains: "selfHeal"
+  - desc: Notes reverting drift
+    contains: "drift"

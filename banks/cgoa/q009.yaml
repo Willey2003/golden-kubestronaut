@@ -1,0 +1,37 @@
+kind: knowledge
+domain: gitops-tooling
+level: quick
+title: Argo CD Application fundamentals
+prompt: |
+  In Argo CD, an Application resource ties a Git repository path to a
+  destination cluster and namespace. Which statement about Argo CD is correct?
+options:
+  A: "Argo CD continuously reconciles the target cluster to the state described in the configured repository path."
+  B: "Argo CD stores the desired state inside the cluster database."
+  C: "Argo CD requires a separate operator per namespace to sync workloads."
+  D: "Argo CD can only deploy Helm charts, not plain YAML manifests."
+answer: A
+explanation: |
+  An Argo CD Application points at a source, such as a Git repository,
+  revision, and path or a Helm registry, and a destination cluster and
+  namespace. Argo CD pulls that desired state and continuously reconciles the
+  destination, surfacing sync and health status in its UI and CLI. The desired
+  state lives in Git, not in a cluster database, a single Argo CD installation
+  handles many Applications, and Argo CD natively supports plain YAML,
+  Kustomize, and Helm.
+solution: |
+  Argo CD is a declarative GitOps tool for Kubernetes. An Application defines a
+  source, such as a Git repository, revision, and path, and a destination
+  cluster and namespace. Argo CD pulls the manifests from the source and
+  continuously reconciles the destination to that desired state, reporting sync
+  status, health, and diff history in its UI and CLI. Because the source of
+  truth is Git, every deployment is reproducible and auditable.
+checks:
+  - desc: Names the Application resource
+    contains: "Application"
+  - desc: Agent reconciles the destination
+    contains: "reconciles"
+  - desc: Source of truth is Git
+    contains: "Git"
+  - desc: Mentions the destination cluster
+    contains: "destination"

@@ -1,0 +1,37 @@
+kind: knowledge
+domain: security-istio
+level: core
+title: Access control with AuthorizationPolicy
+prompt: |
+  A team wants to allow only the billing service to call a payment service,
+  using a deny-by-default policy. Which resource expresses this decision?
+options:
+  A: "An AuthorizationPolicy with an allow action matched on source principals."
+  B: "A Gateway with TLS termination."
+  C: "A ServiceEntry for the payment host."
+  D: "A DestinationRule with a timeout."
+answer: A
+explanation: |
+  AuthorizationPolicy uses actions allow, deny, and audit, and rules matching
+  sources (principals), operations (methods and paths), and conditions. An
+  allow rule naming the billing principal plus the default deny behavior
+  implements least privilege.
+solution: |
+  AuthorizationPolicy is the Istio resource for access control at the mesh
+  layer. It supports actions such as allow, deny, and audit, and rules that
+  match on sources (request principals), operations (HTTP methods and paths),
+  and arbitrary request conditions. To implement least privilege, a policy can
+  allow only the billing service principal to call the payment service, and
+  because authorization in Istio defaults to denying unmatched requests, all
+  other callers are rejected. PeerAuthentication covers mTLS between workloads,
+  Gateways manage ingress listeners, and DestinationRule timeouts affect
+  reliability rather than authorization.
+checks:
+  - desc: Names AuthorizationPolicy
+    contains: "AuthorizationPolicy"
+  - desc: Mentions allow/deny actions
+    contains: "allow, deny"
+  - desc: Mentions source principals
+    contains: "principals"
+  - desc: Notes default deny behavior
+    contains: "denying unmatched requests"

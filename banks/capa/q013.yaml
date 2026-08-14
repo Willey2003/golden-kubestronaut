@@ -1,0 +1,36 @@
+kind: knowledge
+domain: argo-events-rollouts
+level: core
+title: Event-driven pipelines with Argo Events
+prompt: |
+  A team wants a pipeline to trigger automatically whenever a webhook is
+  received from their CI system and then launch an Argo Workflow. Which Argo
+  project and resources implement this?
+options:
+  A: "Argo Events, with an EventSource for the webhook, a Sensor that maps it to a trigger, and a trigger that launches the workflow."
+  B: "Argo CD, with an ApplicationSet."
+  C: "Argo Rollouts, with a canary strategy."
+  D: "CronJob, scheduled hourly."
+answer: A
+explanation: |
+  Argo Events is event-driven: EventSources (webhook, cron, S3, and more)
+  produce events; Sensors listen, filter, and trigger actions such as launching
+  Workflows or syncing Applications.
+solution: |
+  Argo Events makes workflows event-driven. An EventSource is the producer
+  side, watching a source such as an HTTP webhook, a cron schedule, a message
+  queue, or an object storage bucket, and translating activity into events. A
+  Sensor is the consumer side: it subscribes to events from one or more
+  EventSources, applies filters and dependencies, and fires triggers, which can
+  launch an Argo Workflow, sync an Argo CD application, or send a message. This
+  decouples the trigger from the pipeline. Argo CD, Rollouts, and CronJobs do
+  not provide a general-purpose webhook-to-workflow event model.
+checks:
+  - desc: Names Argo Events
+    contains: "Argo Events"
+  - desc: Names the EventSource
+    contains: "EventSource"
+  - desc: Names the Sensor
+    contains: "Sensor"
+  - desc: Names the trigger
+    contains: "trigger"

@@ -1,0 +1,21 @@
+kind: knowledge
+domain: advanced-cilium
+level: core
+title: Transparent L3 encryption options
+prompt: |
+  Pod-to-pod traffic inside the cluster must be encrypted at the network
+  layer without modifying applications. Which mechanisms can Cilium use
+  for transparent encryption?
+options:
+  A: "IPsec or WireGuard"
+  B: "TLS terminated in a sidecar proxy"
+  C: "SSH tunnels between nodes"
+  D: "SSL termination at the ingress controller"
+answer: A
+explanation: |
+  Cilium provides transparent L3 encryption using either IPsec (ESP with
+  kernel offload) or WireGuard (a kernel-level secure tunnel), selected in
+  the agent's configuration. Both operate below the socket layer, so
+  applications need no changes. Sidecar TLS, SSH tunnels, and ingress SSL
+  termination protect only specific paths or protocols, not all pod-to-pod
+  traffic at L3.

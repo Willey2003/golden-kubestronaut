@@ -1,0 +1,23 @@
+kind: hands-on
+domain: storage
+level: core
+title: Create a filesystem image and mount it
+prompt: |
+  Create a 64 MiB disk image at `/var/tmp/lfcs-q17.img`, format it with
+  the ext4 filesystem, create the mount point `/mnt/lfcs-q17`, and mount
+  the image there. The filesystem must remain mounted.
+solution: |
+  dd if=/dev/zero of=/var/tmp/lfcs-q17.img bs=1M count=64
+  mkfs.ext4 -F /var/tmp/lfcs-q17.img
+  mkdir -p /mnt/lfcs-q17
+  mount -o loop /var/tmp/lfcs-q17.img /mnt/lfcs-q17
+checks:
+  - desc: The mount point is mounted
+    run: mountpoint /mnt/lfcs-q17
+    exit-success: true
+  - desc: The mounted filesystem type is ext4
+    run: findmnt -n -o FSTYPE /mnt/lfcs-q17
+    equals: ext4
+  - desc: The image is formatted with ext4
+    run: blkid -s TYPE -o value /var/tmp/lfcs-q17.img
+    equals: ext4

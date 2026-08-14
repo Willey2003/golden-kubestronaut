@@ -1,0 +1,37 @@
+kind: knowledge
+domain: argo-cd
+level: core
+title: Scoping with AppProjects
+prompt: |
+  A security team must restrict which git repositories a set of developers can
+  deploy, and to which clusters and namespaces. Which Argo CD resource enforces
+  these boundaries?
+options:
+  A: "An AppProject, which scopes applications to allowed source repos, destinations, and namespaces."
+  B: "A ConfigMap that stores application names."
+  C: "A Deployment replicas setting."
+  D: "A Kubernetes Secret for repository passwords."
+answer: A
+explanation: |
+  AppProjects group Applications and constrain them: sourceRepos allow which
+  repos, destinations define where apps can deploy, and cluster resource
+  whitelists limit what is allowed. RBAC binds users to project roles.
+solution: |
+  AppProjects are Argo CD's mechanism for multi-tenancy. Each project restricts
+  its applications to an allow-list of source repositories and an allow-list of
+  destination clusters and namespaces, and can whitelist which cluster-scoped
+  resources may be used. Applications must reference a project, and by default
+  they belong to the default project, which is permissive. RBAC then binds
+  users or groups to project roles so teams can only operate within their
+  allowed scope. Storing application names in a ConfigMap, adjusting replica
+  counts, or hiding passwords in a Secret does not enforce these deployment
+  boundaries.
+checks:
+  - desc: Names AppProject
+    contains: "AppProject"
+  - desc: Mentions source repo restrictions
+    contains: "allow-list of source repositories"
+  - desc: Mentions destination restrictions
+    contains: "destination clusters and namespaces"
+  - desc: Notes RBAC roles
+    contains: "RBAC"

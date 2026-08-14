@@ -1,0 +1,37 @@
+kind: knowledge
+domain: argo-events-rollouts
+level: deep
+title: Analysis during a rollout
+prompt: |
+  During a canary rollout, the team wants the rollout to pause automatically if
+  the new version's error rate exceeds a threshold. Which Argo Rollouts objects
+  encode this gate?
+options:
+  A: "An AnalysisTemplate describing the metric and success condition, which the Rollout references so an AnalysisRun is created during the rollout."
+  B: "A Kubernetes Secret with thresholds."
+  C: "A ConfigMap holding the metric name."
+  D: "A Prometheus recording rule only."
+answer: A
+explanation: |
+  AnalysisTemplate defines the metric (for example a Prometheus query), success
+  condition, interval, and count. The Rollout references it in its strategy; an
+  AnalysisRun is created during the rollout, and failure pauses or aborts it.
+solution: |
+  Argo Rollouts gates a rollout with automated analysis. An AnalysisTemplate
+  declares how to measure success: which metric to query, such as a Prometheus
+  query for the error rate, the success condition like result < 0.01, and the
+  interval and number of measurements. The Rollout's canary or blue-green
+  strategy references the template, and when the rollout starts, Argo Rollouts
+  creates an AnalysisRun that polls the metric; if the success condition fails,
+  the rollout pauses or aborts according to the strategy. The live evaluation
+  happens in the AnalysisRun, not in a Secret, ConfigMap, or a standalone
+  recording rule.
+checks:
+  - desc: Names AnalysisTemplate
+    contains: "AnalysisTemplate"
+  - desc: Names the success condition
+    contains: "success condition"
+  - desc: Names the AnalysisRun
+    contains: "AnalysisRun"
+  - desc: Notes abort behavior
+    contains: "aborts"

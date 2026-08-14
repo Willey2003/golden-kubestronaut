@@ -1,0 +1,35 @@
+kind: knowledge
+domain: logs
+level: deep
+title: Collecting existing application logs
+prompt: |
+  Applications write plain JSON lines to stdout that OpenTelemetry should
+  ingest. Which Collector component fits?
+options:
+  A: "The filelog receiver, which tails files and parses each line into structured log records."
+  B: "The OTLP receiver, which reads plain text lines from a socket."
+  C: "The Jaeger receiver, which parses JSON logs."
+  D: "The Prometheus exporter, which ingests logs from files."
+answer: A
+explanation: |
+  The filelog receiver reads and tails files, including container stdout and
+  stderr files, parsing each line into a log record and letting operators add
+  attributes. The OTLP receiver only accepts OTLP-protocol data, the Jaeger
+  receiver is for Jaeger spans, and the Prometheus exporter sends metrics; none
+  parse plain log lines.
+solution: |
+  The filelog receiver tails log files, including the stdout and stderr files
+  written by containers, and parses each line into a structured log record.
+  Operators can add attributes such as the container and namespace from the
+  file's context and send the records into a pipeline for further processing.
+  For applications that already emit structured JSON, the receiver can parse
+  the JSON into attributes, keeping the structure intact.
+checks:
+  - desc: Names the filelog receiver
+    contains: "filelog"
+  - desc: It is a receiver
+    contains: "receiver"
+  - desc: Tails log files
+    contains: "tails"
+  - desc: Parses JSON lines
+    contains: "JSON"

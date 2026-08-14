@@ -1,0 +1,35 @@
+kind: knowledge
+domain: ebpf-basics
+level: core
+title: eBPF maps
+prompt: |
+  eBPF programs often need to share data with userspace and across programs.
+  Which mechanism provides that state?
+options:
+  A: "eBPF maps, which are key/value stores in kernel memory usable by both kernel programs and userspace."
+  B: "Writing state to the container filesystem on each event."
+  C: "Sending every event as a network packet to a logging daemon."
+  D: "A shared /proc file that programs read each time."
+answer: A
+explanation: |
+  eBPF maps are generic key/value data structures stored in kernel memory.
+  Multiple eBPF programs can share a map, and userspace can read and write the
+  same map through the BPF syscall interface. This is how Cilium stores
+  identities, policy state, and connection metadata. Filesystem writes, event
+  packets, and /proc polling are far too slow and are not how eBPF shares state.
+solution: |
+  eBPF maps are in-kernel key/value data structures that serve as the
+  state-sharing mechanism for eBPF. Programs attached to different hooks can
+  access the same map, and userspace components read and write the maps through
+  the BPF system calls to exchange data such as connection tables, policy
+  state, and security identities. Because the data stays in kernel memory,
+  updates are fast and consistent with the fast data path.
+checks:
+  - desc: Names eBPF maps
+    contains: "eBPF maps"
+  - desc: Maps are key/value stores
+    contains: "key/value"
+  - desc: Data lives in kernel memory
+    contains: "kernel"
+  - desc: Userspace shares the data
+    contains: "userspace"

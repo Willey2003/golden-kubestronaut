@@ -1,0 +1,37 @@
+kind: knowledge
+domain: cloud-security
+level: core
+title: The shared responsibility model
+prompt: |
+  In a public cloud, who is responsible for patching the guest operating system
+  of a customer's virtual machine?
+options:
+  A: "The customer, because the provider secures the underlying cloud while the customer secures what it controls inside the cloud."
+  B: "The provider, who patches all customer VMs automatically."
+  C: "Nobody, patches are unnecessary in the cloud."
+  D: "The internet service provider."
+answer: A
+explanation: |
+  Under the shared responsibility model the provider protects the physical and
+  virtualization layer; the customer manages guest OS, applications, and data.
+  How much is shared depends on the service model.
+solution: |
+  The shared responsibility model divides security duties between the provider
+  and the customer. The provider secures the physical data centers, networking,
+  and virtualization layer, while the customer is responsible for what it
+  controls inside the cloud: the guest operating system of its VMs,
+  applications, data, and access configuration. Therefore patching a customer
+  VM's guest OS is the customer's job. The balance shifts with the service
+  model, for example a managed database service shifts more patching to the
+  provider, but for raw VMs the guest remains the customer's responsibility. No
+  cloud removes the need for patches, and the ISP is not involved in VM
+  patching.
+checks:
+  - desc: Names the shared responsibility model
+    contains: "shared responsibility model"
+  - desc: Notes the provider's layer
+    contains: "virtualization layer"
+  - desc: Notes the customer's layer
+    contains: "guest operating system"
+  - desc: Gives the service-model nuance
+    contains: "The balance shifts"

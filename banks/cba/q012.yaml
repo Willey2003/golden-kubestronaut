@@ -1,0 +1,36 @@
+kind: knowledge
+domain: observability-cilium
+level: core
+title: Hubble observability
+prompt: |
+  A team wants to observe pod-to-pod traffic flows and build a service
+  dependency map. Which Cilium component provides this?
+options:
+  A: "Hubble, Cilium's observability layer that records flows and provides a service map."
+  B: "The metrics-server, which tracks all network flows."
+  C: "kubectl top pods, which shows per-pod network traffic."
+  D: "The kube-apiserver audit log."
+answer: A
+explanation: |
+  Hubble is Cilium's observability platform. It taps the eBPF data path to
+  record flows between workloads, correlates them with Kubernetes metadata such
+  as labels, namespaces, and identities, and exposes a service map, the hubble
+  CLI, and metrics. metrics-server only reports CPU and memory, kubectl top
+  shows resource usage, and the API audit log records API calls, not network
+  flows.
+solution: |
+  Hubble is the observability layer for Cilium, built on eBPF to capture flows
+  between workloads at line rate. It enriches flows with Kubernetes context
+  such as labels, namespaces, and security identities, and surfaces them through
+  the hubble CLI, a web UI with a service dependency map, and Prometheus
+  metrics. Hubble gives operators visibility into what is talking to what and
+  why, including policy verdicts.
+checks:
+  - desc: Names Hubble
+    contains: "Hubble"
+  - desc: Records flows
+    contains: "flows"
+  - desc: Provides a service map
+    contains: "service map"
+  - desc: Built on eBPF
+    contains: "eBPF"

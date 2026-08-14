@@ -1,0 +1,13 @@
+id: cca
+title: CCA Cloud Certified Associate Mock
+engine: knowledge
+duration_minutes: 90
+pass_threshold: 0.7
+draw_size: 18
+seed: null
+domains:
+  cloud-computing-concepts: 0.20
+  cloud-native-architecture: 0.25
+  containers-k8s-cloud: 0.25
+  infrastructure-automation: 0.15
+  cloud-security: 0.15

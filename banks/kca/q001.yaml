@@ -1,0 +1,35 @@
+kind: knowledge
+domain: kubernetes-cost-concepts
+level: core
+title: Attributing cluster costs to workloads
+prompt: |
+  A team shares one production cluster among four products. How should the
+  monthly cloud bill be attributed to each product?
+options:
+  A: "Allocate node costs to workloads based on the resources they request or use, using namespaces or labels as the allocation boundary."
+  B: "Split the bill evenly among the four products every month."
+  C: "Charge everything to the shared services bucket."
+  D: "Attribute cost only to the largest deployment."
+answer: A
+explanation: |
+  Kubernetes cost management attributes node and cluster costs to the workloads
+  that run on them, using the resources each workload requests or consumes,
+  grouped by namespace or label as the allocation unit. Splitting evenly ignores
+  real usage, an all-shared bucket hides cost, and charging only the largest
+  deployment ignores the rest.
+solution: |
+  Kubernetes cost allocation assigns shared cluster costs to individual
+  workloads. Node prices from the cloud bill are distributed to the pods that
+  run on them in proportion to the resources each pod requests or actually
+  uses, and namespaces or labels define the grouping boundary. This yields a
+  per-product, per-namespace cost view that sums back to the real cloud bill,
+  making the shared cluster's spend attributable and auditable.
+checks:
+  - desc: Uses allocation
+    contains: "allocation"
+  - desc: Grouped by namespace
+    contains: "namespace"
+  - desc: Distributed by requests
+    contains: "requests"
+  - desc: Starts from node prices
+    contains: "node"

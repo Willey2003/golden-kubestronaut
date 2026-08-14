@@ -1,0 +1,36 @@
+kind: knowledge
+domain: cloud-computing-concepts
+level: core
+title: NIST essential characteristics
+prompt: |
+  Which list matches the NIST essential characteristics of cloud computing?
+options:
+  A: "On-demand self-service, broad network access, resource pooling, rapid elasticity, and measured service."
+  B: "High availability, load balancing, backups, and monitoring."
+  C: "Virtualization, containers, orchestration, and automation."
+  D: "Cost, speed, reliability, and security."
+answer: A
+explanation: |
+  NIST defines five essential characteristics: on-demand self-service, broad
+  network access, resource pooling, rapid elasticity, and measured service. The
+  other options are operational features or benefits, not the NIST list.
+solution: |
+  NIST lists five essential characteristics of cloud computing: on-demand
+  self-service, where users provision resources without human interaction;
+  broad network access, where services are available over the network through
+  standard mechanisms; resource pooling, where provider resources serve many
+  customers; rapid elasticity, where capacity scales quickly in both
+  directions; and measured service, where usage is metered and reported. These
+  characteristics distinguish cloud computing from traditional hosting. Items
+  like load balancing, monitoring, and containers are techniques or features
+  that may appear in cloud systems but are not part of the NIST definition
+  itself.
+checks:
+  - desc: Names on-demand self-service
+    contains: "on-demand"
+  - desc: Names resource pooling
+    contains: "resource pooling"
+  - desc: Names rapid elasticity
+    contains: "rapid elasticity"
+  - desc: Names measured service
+    contains: "measured service"

@@ -1,0 +1,25 @@
+kind: hands-on
+domain: multinetworking
+level: core
+title: Define a LoadBalancer IP pool
+prompt: |
+  Cilium will manage LoadBalancer service addresses in this cluster. Create
+  a CiliumLoadBalancerIPPool named `edge-pool` that allocates addresses
+  from the block `10.200.0.0/24`.
+solution: |
+  cat <<'EOF' | kubectl apply -f -
+  apiVersion: cilium.io/v2alpha1
+  kind: CiliumLoadBalancerIPPool
+  metadata:
+    name: edge-pool
+  spec:
+    blocks:
+    - cidr: 10.200.0.0/24
+  EOF
+checks:
+  - desc: CiliumLoadBalancerIPPool edge-pool exists
+    run: kubectl get lbippool edge-pool -o name
+    equals: ciliumloadbalancerippool.cilium.io/edge-pool
+  - desc: Pool allocates from block 10.200.0.0/24
+    run: "kubectl get lbippool edge-pool -o jsonpath='{.spec.blocks[0].cidr}'"
+    equals: 10.200.0.0/24

@@ -1,0 +1,35 @@
+kind: knowledge
+domain: resource-allocation
+level: deep
+title: Cost impact of overprovisioning
+prompt: |
+  A deployment requests 8 CPU and 16 GiB per replica but rarely exceeds 1 CPU
+  and 2 GiB. What is the cost impact?
+options:
+  A: "It reserves far more capacity than it uses, inflating allocated cost and wasting cluster capacity."
+  B: "It is cost-free because limits are not set."
+  C: "It only affects latency, never cost."
+  D: "The scheduler ignores requests when nodes are large."
+answer: A
+explanation: |
+  Requested capacity is reserved and billed in request-based allocation, so
+  overstating requests inflates the workload's allocated cost and blocks other
+  workloads from using the capacity. Overprovisioning is one of the largest
+  Kubernetes waste sources. Options B, C, and D misunderstand how requests
+  reserve billable capacity.
+solution: |
+  Overprovisioning happens when requests far exceed typical usage. Because
+  requests reserve capacity and cost models allocate node cost by requests,
+  overstating them makes the workload appear expensive and starves other pods
+  of schedulable capacity. The efficient pattern is to rightsize requests to
+  realistic usage while keeping limits as a safety cap, so capacity and cost
+  reflect actual demand.
+checks:
+  - desc: Names overprovisioning
+    contains: "Overprovisioning"
+  - desc: Requests exceed usage
+    contains: "requests"
+  - desc: Reserves billable capacity
+    contains: "reserve"
+  - desc: Fix is rightsizing
+    contains: "rightsize"

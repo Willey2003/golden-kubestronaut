@@ -1,0 +1,36 @@
+kind: knowledge
+domain: cloud-computing-concepts
+level: core
+title: IaaS, PaaS, and SaaS
+prompt: |
+  A startup wants to run their application without managing servers or
+  operating systems, deploying only code into a managed runtime. Which cloud
+  service model matches this?
+options:
+  A: "Platform as a Service (PaaS), which provides a managed runtime for applications."
+  B: "Infrastructure as a Service (IaaS), which provides raw VMs."
+  C: "Software as a Service (SaaS), which provides finished applications to end users."
+  D: "Desktop as a Service (DaaS), which provides virtual desktops."
+answer: A
+explanation: |
+  IaaS provides raw compute, storage, and network; PaaS provides a managed
+  runtime where developers push code and the platform runs and scales it; SaaS
+  delivers finished software. The scenario describes PaaS.
+solution: |
+  The scenario describes Platform as a Service (PaaS): the provider delivers a
+  managed application runtime including the underlying operating system,
+  middleware, and scaling, so developers push code and the platform runs it.
+  IaaS provides raw infrastructure such as virtual machines and storage that
+  the customer still configures and patches. SaaS delivers finished
+  applications consumed over the internet, and the customer manages nothing but
+  settings and data. Choosing PaaS trades flexibility for operational
+  convenience, which suits teams that want to focus on code.
+checks:
+  - desc: Names PaaS
+    contains: "Platform as a Service"
+  - desc: Contrasts IaaS
+    contains: "IaaS"
+  - desc: Contrasts SaaS
+    contains: "SaaS"
+  - desc: Notes the managed runtime
+    contains: "managed application runtime"

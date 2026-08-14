@@ -1,0 +1,35 @@
+kind: knowledge
+domain: finops-practices
+level: deep
+title: Sustaining cost predictability
+prompt: |
+  A FinOps program must keep costs predictable over time. Which practice set
+  best sustains this?
+options:
+  A: "Continuous monitoring with budgets and alerts, plus regular review of waste and rate optimization."
+  B: "A one-time cleanup executed last year."
+  C: "Removing dashboards so nobody sees costs."
+  D: "Freezing all deployments until year-end."
+answer: A
+explanation: |
+  Cost discipline is continuous: budgets and anomaly alerts surface surprises
+  early, periodic reviews find waste and rightsizing opportunities, and rate
+  and commitment management keeps pricing optimal. One-off cleanups, hiding
+  data, or freezing deployments do not produce sustained, predictable cost
+  behavior.
+solution: |
+  Sustained cost control relies on continuous practices: budgets and anomaly
+  detection alert the team when spend deviates from plan; regular waste reviews
+  find idle resources, overprovisioned workloads, and unattached storage; and
+  rate optimization, such as commitments, spot usage, and rightsizing, keeps
+  unit costs down. A FinOps program that reviews cost behavior on a cadence and
+  treats spend like any production metric stays predictable instead of drifting.
+checks:
+  - desc: Uses budgets
+    contains: "budgets"
+  - desc: Detects anomalies
+    contains: "anomaly"
+  - desc: Reviews waste
+    contains: "waste"
+  - desc: Includes rightsizing
+    contains: "rightsizing"

@@ -1,0 +1,13 @@
+id: cnpe
+title: CNPE Networking Engineer Mock
+engine: mixed
+duration_minutes: 120
+pass_threshold: 0.7
+draw_size: 16
+seed: null
+domains:
+  advanced-cilium: 0.25
+  cluster-mesh: 0.20
+  security-advanced: 0.20
+  observability-advanced: 0.15
+  performance-tuning: 0.20

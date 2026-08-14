@@ -1,0 +1,39 @@
+kind: knowledge
+domain: gitops-core-concepts
+level: quick
+title: Declarative desired state stored in Git
+prompt: |
+  A platform engineer wants to manage an application's deployment with GitOps.
+  The engineer describes the desired state in YAML manifests and stores them in
+  a Git repository. Which statement best describes this core GitOps idea?
+options:
+  A: "The desired state is declared in configuration stored in Git, and automated processes reconcile live systems to it."
+  B: "The desired state is derived imperatively by running kubectl apply commands against the cluster."
+  C: "The desired state only exists in the operator's memory and is applied manually each time."
+  D: "The desired state is generated dynamically by the application at runtime and never stored."
+answer: A
+explanation: |
+  GitOps treats the Git repository as the single source of truth for the
+  desired state. Configuration is declarative, describing what the system
+  should look like rather than the imperative steps to get there, and an
+  operator or agent continuously reconciles the live cluster toward that
+  declared state. B describes imperative management, C has no single source of
+  truth, and D inverts the model because the desired state is committed to Git,
+  not produced at runtime.
+solution: |
+  GitOps manages infrastructure and applications with declarative configuration
+  stored in a Git repository as the single source of truth. The repository
+  declares the desired state of the system, and an automated reconciliation
+  loop continuously compares the live environment with that desired state,
+  applying any changes required to converge. Because everything is defined in
+  version-controlled manifests, changes are auditable, reviewable, and
+  repeatable.
+checks:
+  - desc: Cites the single source of truth
+    contains: "single source of truth"
+  - desc: Names declarative configuration
+    contains: "declarative configuration"
+  - desc: Mentions the reconciliation loop
+    contains: "reconciliation loop"
+  - desc: Points at the Git repository
+    contains: "Git repository"

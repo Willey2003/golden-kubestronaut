@@ -1,0 +1,36 @@
+kind: knowledge
+domain: observability-tracing
+level: core
+title: Istio metrics and Prometheus
+prompt: |
+  An operator configures Prometheus to scrape Istio's data plane. Which
+  statement about the resulting metrics is correct?
+options:
+  A: "Envoy proxies emit a large set of standard traffic metrics (requests, duration, size, errors) that can be graphed and alerted on."
+  B: "Prometheus must parse Envoy access logs to get metrics."
+  C: "Istio metrics are only available as command-line counters."
+  D: "Metrics are stored inside each application database."
+answer: A
+explanation: |
+  Envoy generates standard metrics per protocol (HTTP, gRPC, TCP) that Istio
+  labels with service, destination, response code, and more. Prometheus scrapes
+  them from the proxies and gateways.
+solution: |
+  The Envoy data plane emits a standard set of traffic metrics for the
+  protocols it handles, such as HTTP requests total, request duration, request
+  size, response size, and error counts. Istio labels these metrics with useful
+  context including source and destination workload, service, response code,
+  and protocol, so operators can graph request rates, error rates, and latency
+  per service. Prometheus scrapes the metrics from the sidecar proxies and
+  gateways through the telemetry configuration. The metrics are network-level
+  observations produced by the proxy, not parsed from logs and not stored in
+  application databases.
+checks:
+  - desc: Names the Envoy data plane
+    contains: "Envoy data plane"
+  - desc: Mentions request counts and latency
+    contains: "request duration"
+  - desc: Notes labeling context
+    contains: "labels"
+  - desc: Mentions Prometheus scraping
+    contains: "Prometheus scrapes"

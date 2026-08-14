@@ -1,0 +1,19 @@
+kind: knowledge
+domain: users-groups
+level: core
+title: Create a user with a home directory and login shell
+prompt: |
+  You must create the user `alice` with a home directory and `/bin/bash`
+  as her login shell. Which command does this?
+options:
+  A: "useradd -m -s /bin/bash alice"
+  B: "useradd -s alice /bin/bash -m"
+  C: "useradd -d alice -m"
+  D: "useradd -u alice -b /bin/bash"
+answer: A
+explanation: |
+  `useradd -m` creates the home directory (`/home/alice`) and `-s
+  /bin/bash` sets the login shell; the username is the final argument.
+  Option B misorders the arguments (`-s` takes the shell path, not the
+  username), `-d` only overrides the home directory path, and `-u`
+  overrides the numeric UID, not the shell.

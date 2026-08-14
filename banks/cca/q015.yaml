@@ -1,0 +1,36 @@
+kind: knowledge
+domain: infrastructure-automation
+level: core
+title: The GitOps model
+prompt: |
+  An operator explains that their deployment process watches a git repository
+  and automatically applies any change committed there. Which term describes
+  this model?
+options:
+  A: "GitOps, where git is the single source of truth and a controller reconciles the cluster to it."
+  B: "Snapshot backup."
+  C: "Log shipping."
+  D: "Continuous monitoring."
+answer: A
+explanation: |
+  GitOps makes git the source of truth for desired state; a reconciler such as
+  Argo CD or Flux pulls changes and applies them, reverting drift. Everything
+  is reviewable and reversible through pull requests.
+solution: |
+  GitOps is an operating model in which the desired state of the system lives
+  in git and the actual state is continuously reconciled to it. A controller in
+  the environment watches the repository, applies committed changes, and
+  corrects any drift back to what is declared, usually with a pull-based
+  mechanism. Because git holds the history, every change is reviewable through
+  pull requests, auditable, and reversible by reverting commits. The model is
+  about declarative infrastructure and application delivery, not backups, logs,
+  or mere monitoring, though those may coexist in the same system.
+checks:
+  - desc: Names GitOps
+    contains: "GitOps"
+  - desc: Names git as the source of truth
+    contains: "state of the system"
+  - desc: Mentions reconciliation
+    contains: "reconciled"
+  - desc: Notes the pull-based mechanism
+    contains: "pull-based"

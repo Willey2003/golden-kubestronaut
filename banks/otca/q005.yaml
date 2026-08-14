@@ -1,0 +1,35 @@
+kind: knowledge
+domain: traces
+level: core
+title: W3C Trace Context propagation
+prompt: |
+  How do spans in different services become part of the same trace?
+options:
+  A: "Trace context propagates with the request, carried in headers such as traceparent per the W3C Trace Context standard."
+  B: "The tracing backend merges spans that happen to arrive at the same time."
+  C: "Each service guesses the trace ID from the destination IP."
+  D: "Span IDs are matched by process name in the backend."
+answer: A
+explanation: |
+  The SDKs inject trace context, including the trace ID, parent span ID, and
+  flags, into outgoing request headers, and downstream services extract it. The
+  W3C Trace Context standard defines the traceparent header, keeping context
+  consistent across languages and vendors. Timestamp-based merging, IP
+  guessing, and process-name matching cannot reliably assemble a distributed
+  trace.
+solution: |
+  Distributed tracing works because trace context is propagated with each
+  request. The OTel SDK injects the current trace ID, span ID, and trace flags
+  into outgoing headers, and for HTTP this is the W3C Trace Context traceparent
+  header. The receiving service's SDK extracts that context and creates child
+  spans under it, so the backend can reassemble every span for the request into
+  one trace regardless of how many services the request crossed.
+checks:
+  - desc: Names the traceparent header
+    contains: "traceparent"
+  - desc: Cites W3C Trace Context
+    contains: "W3C Trace Context"
+  - desc: Context is propagated with requests
+    contains: "propagated"
+  - desc: Context travels in headers
+    contains: "header"

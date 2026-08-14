@@ -1,0 +1,12 @@
+id: cgoa
+title: CGOA Certified GitOps Associate Mock
+engine: knowledge
+duration_minutes: 90
+pass_threshold: 0.7
+draw_size: 16
+seed: null
+domains:
+  gitops-core-concepts: 0.25
+  gitops-practices: 0.25
+  gitops-tooling: 0.25
+  gitops-security: 0.25

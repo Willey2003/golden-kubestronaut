@@ -1,0 +1,36 @@
+kind: knowledge
+domain: finops-practices
+level: core
+title: The FinOps lifecycle
+prompt: |
+  A company has just finished building cost dashboards and tagging. Which phase
+  of the FinOps lifecycle is this, and what comes next?
+options:
+  A: "Inform, which builds visibility; next is Optimize, then Operate."
+  B: "Optimize; next is Inform."
+  C: "Operate; next is Inform."
+  D: "Inform; the lifecycle ends once dashboards exist."
+answer: A
+explanation: |
+  The FinOps lifecycle is Inform, Optimize, Operate. Inform builds visibility
+  through dashboards, tagging, and allocation; Optimize drives efficiency with
+  rightsizing, discounts, and waste removal; and Operate continuously tunes
+  against goals and metrics. Building dashboards is the Inform phase, not the
+  end of the journey.
+solution: |
+  The FinOps lifecycle has three phases. Inform establishes visibility, such as
+  tagging, allocation, and dashboards that show who spends what. Optimize then
+  acts on that visibility through rightsizing, autoscaling, discount
+  purchasing, and waste elimination. Operate keeps the system tuned and
+  accountable: metrics, budgets, and continuous review keep cost behavior
+  aligned with business goals over time. Organizations move through the phases
+  iteratively, not once.
+checks:
+  - desc: Names the Inform phase
+    contains: "Inform"
+  - desc: Names the Optimize phase
+    contains: "Optimize"
+  - desc: Names the Operate phase
+    contains: "Operate"
+  - desc: Inform builds visibility
+    contains: "visibility"

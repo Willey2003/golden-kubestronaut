@@ -1,0 +1,36 @@
+kind: knowledge
+domain: argo-cd
+level: core
+title: What Argo CD is
+prompt: |
+  A team wants a tool that continuously deploys Kubernetes workloads from git
+  and shows whether the cluster matches the repository. Which tool fits?
+options:
+  A: "Argo CD, a declarative GitOps tool for Kubernetes that syncs applications from git and visualizes health."
+  B: "A shell script that copies manifests to a shared drive."
+  C: "A container registry."
+  D: "A network load balancer."
+answer: A
+explanation: |
+  Argo CD is a declarative GitOps delivery tool: it registers repositories and
+  clusters, manages Applications, syncs to git, and reports sync and health
+  status with rollback.
+solution: |
+  Argo CD is a declarative GitOps continuous delivery tool built for
+  Kubernetes. It watches git repositories that contain the manifests for
+  applications, compares the desired state with the live state in the target
+  cluster, and syncs the cluster to match, optionally automatically. Its UI and
+  CLI show the sync and health status of every application and allow rollback
+  to previous deployed revisions. Git serves as the system of record, and
+  cluster-side agents perform the reconciliation. Scripts, registries, and load
+  balancers provide none of the desired-state management and status
+  visualization Argo CD offers.
+checks:
+  - desc: Names Argo CD
+    contains: "Argo CD"
+  - desc: Notes git as the record
+    contains: "watches git repositories"
+  - desc: Notes sync/health status
+    contains: "health"
+  - desc: Notes rollback
+    contains: "rollback"

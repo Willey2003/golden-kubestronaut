@@ -1,0 +1,38 @@
+kind: knowledge
+domain: gitops-practices
+level: deep
+title: Progressive delivery in a GitOps workflow
+prompt: |
+  A team wants to release new versions to a small subset of users, observe
+  metrics, and then roll out fully. Which GitOps-aligned approach fits best?
+options:
+  A: "Use progressive delivery tools such as Argo Rollouts or Flagger together with the GitOps sync process."
+  B: "Manually replace all pods at once during a maintenance window."
+  C: "Deploy the new version to a separate, permanently running cluster."
+  D: "Gradually raise and lower replicas by hand with kubectl scale over several days."
+answer: A
+explanation: |
+  Progressive delivery, using canaries or blue-green strategies, controls how a
+  release is rolled out based on analysis of live traffic and metrics. Tools
+  like Argo Rollouts and Flagger integrate with GitOps operators so the desired
+  state stays in Git while the rollout is automated. Replacing everything at
+  once is a standard rollout, not progressive, a separate cluster is a different
+  environment, and manually scaling by hand is imperative, error-prone, and not
+  driven by automated analysis.
+solution: |
+  Progressive delivery rolls out a new version gradually, to a canary subset or
+  a blue-green stack, and only advances or rolls back based on automated
+  analysis of metrics, logs, and traffic. Tools such as Argo Rollouts and
+  Flagger integrate with the GitOps agent: the desired state remains declarative
+  in Git while the tool automates the staged rollout and its promotion
+  decisions. This keeps changes auditable in Git while adding
+  measurement-driven control over how quickly a release reaches all users.
+checks:
+  - desc: Names the canary strategy
+    contains: "canary"
+  - desc: Cites Argo Rollouts
+    contains: "Argo Rollouts"
+  - desc: Decisions driven by metrics
+    contains: "metrics"
+  - desc: Desired state stays in Git
+    contains: "Git"

@@ -1,0 +1,36 @@
+kind: knowledge
+domain: security-istio
+level: core
+title: PeerAuthentication mTLS modes
+prompt: |
+  An operator wants all traffic inside the mesh to be encrypted with mTLS and
+  rejects connections from services that do not present a certificate. Which
+  PeerAuthentication mode enforces this?
+options:
+  A: "STRICT, which requires mutual TLS for all matching traffic."
+  B: "PERMISSIVE, which accepts both plaintext and mTLS."
+  C: "DISABLE, which turns mTLS off."
+  D: "UNAUTHENTICATED, which skips authorization."
+answer: A
+explanation: |
+  PeerAuthentication modes are STRICT (mTLS required), PERMISSIVE (accept
+  both, for gradual rollout), and DISABLE (no mTLS). STRICT rejects plaintext
+  connections.
+solution: |
+  PeerAuthentication controls whether requests between workloads use mutual
+  TLS. STRICT mode requires every matched connection to present a valid client
+  certificate, so plaintext calls are rejected; this fully enforces mTLS
+  between the workloads it covers. PERMISSIVE accepts both plaintext and mTLS
+  traffic and is the default, useful while rolling out mTLS incrementally, and
+  DISABLE turns off mTLS for the selected workloads. PeerAuthentication applies
+  at the workload level, whereas RequestAuthentication and AuthorizationPolicy
+  govern who can call whom based on identity.
+checks:
+  - desc: Names STRICT mode
+    contains: "STRICT"
+  - desc: Names PERMISSIVE mode
+    contains: "PERMISSIVE"
+  - desc: Names DISABLE mode
+    contains: "DISABLE"
+  - desc: Notes plaintext rejection
+    contains: "plaintext calls are rejected"

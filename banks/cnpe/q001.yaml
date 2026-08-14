@@ -1,0 +1,21 @@
+kind: knowledge
+domain: advanced-cilium
+level: deep
+title: Enforcing network policy on host endpoints
+prompt: |
+  A security team must restrict which ports are reachable on the worker
+  nodes themselves, in addition to pod traffic. Which Cilium feature
+  enforces policy on host endpoints?
+options:
+  A: "CiliumHostFirewall"
+  B: "CiliumLoadBalancerIPPool"
+  C: "CiliumIdentity"
+  D: "CiliumNodeConfig"
+answer: A
+explanation: |
+  CiliumHostFirewall allows policy enforcement on host endpoints by
+  writing a CiliumClusterwideNetworkPolicy that uses a `nodeSelector`
+  instead of an `endpointSelector`. It covers services on the host
+  (such as SSH) before traffic reaches a pod. CiliumLoadBalancerIPPool
+  handles Service IP allocation, CiliumIdentity is the identity resource,
+  and CiliumNodeConfig carries per-node agent overrides.

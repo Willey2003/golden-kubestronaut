@@ -1,0 +1,14 @@
+id: lfcs
+title: LFCS System Administrator Mock
+engine: mixed
+duration_minutes: 120
+pass_threshold: 0.7
+draw_size: 18
+seed: null
+domains:
+  essential-commands: 0.20
+  operations-deployment: 0.15
+  users-groups: 0.15
+  networking: 0.20
+  storage: 0.15
+  system-services: 0.15

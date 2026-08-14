@@ -1,0 +1,20 @@
+kind: knowledge
+domain: operations-deployment
+level: core
+title: Reload systemd after editing a unit file
+prompt: |
+  You edited `/etc/systemd/system/myapp.service`. Which command makes
+  systemd re-read the changed unit definition?
+options:
+  A: "systemctl daemon-reload"
+  B: "systemctl reload myapp"
+  C: "systemctl restart systemd"
+  D: "systemctl reset myapp"
+answer: A
+explanation: |
+  `systemctl daemon-reload` tells systemd to rescan the unit files on
+  disk, picking up edits to definitions, then you can use
+  `systemctl restart myapp` to apply them to a running instance. `reload`
+  asks the service itself to reload configuration (many daemons support
+  it, but it does not reread the unit file), and there is no
+  `systemctl reset` for this purpose.

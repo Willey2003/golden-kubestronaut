@@ -1,0 +1,37 @@
+kind: knowledge
+domain: cloud-native-architecture
+level: core
+title: Declarative desired state
+prompt: |
+  A team stores the complete desired state of their infrastructure in version
+  control and a controller continuously makes the live system match it. Which
+  term best describes this pattern?
+options:
+  A: "Declarative infrastructure management with continuous reconciliation."
+  B: "Imperative scripting of every change."
+  C: "Manual console administration."
+  D: "Autoscaling based on CPU usage."
+answer: A
+explanation: |
+  Declarative systems describe desired state; controllers reconcile actual
+  state toward it. GitOps builds on this pattern. Imperative commands describe
+  how, not what; autoscaling adjusts capacity, not configuration.
+solution: |
+  Declarative infrastructure management expresses the desired state of the
+  system in version-controlled artifacts, and a controller continuously
+  reconciles the live state toward that desired state, applying diffs and
+  reverting drift. Because the desired state is the source of truth, changes
+  are reviewable, repeatable, and recoverable. Imperative scripting states
+  step-by-step how to change things and tends to drift from what actually
+  exists. Manual console administration does not scale and is hard to audit,
+  and autoscaling adjusts capacity to demand rather than describing system
+  configuration.
+checks:
+  - desc: Names declarative management
+    contains: "Declarative"
+  - desc: Names reconciliation
+    contains: "reconciles"
+  - desc: Notes version control
+    contains: "version-controlled"
+  - desc: Mentions drift
+    contains: "drift"

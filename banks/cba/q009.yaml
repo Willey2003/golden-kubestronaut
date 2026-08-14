@@ -1,0 +1,37 @@
+kind: knowledge
+domain: connectivity-security
+level: core
+title: Cilium default-allow and default-deny
+prompt: |
+  After installing Cilium in a namespace with no CiliumNetworkPolicies,
+  traffic is allowed between all pods. What is Cilium's default behavior, and
+  how does a policy change it?
+options:
+  A: "Default is allow; adding a policy that selects an endpoint switches that endpoint to default-deny for connections not allowed by any policy."
+  B: "Default is deny; policies only add logging."
+  C: "Default is allow and policies cannot restrict traffic."
+  D: "Default is deny for all traffic until a NetworkPolicy is created."
+answer: A
+explanation: |
+  Cilium defaults to allow-all traffic, like Kubernetes itself. The moment any
+  CiliumNetworkPolicy or CiliumClusterwideNetworkPolicy selects an endpoint,
+  that endpoint becomes default-deny: all connections are blocked unless
+  permitted by at least one policy rule. Kubernetes NetworkPolicy has the same
+  effect. Policies are enforcement, not just logging, and default-deny applies
+  only once an endpoint is selected by a policy.
+solution: |
+  Cilium's default policy mode is allow-all: with no policies, all traffic
+  between endpoints is permitted. Once a CiliumNetworkPolicy or
+  CiliumClusterwideNetworkPolicy selects an endpoint, that endpoint enters
+  default-deny mode and only connections explicitly allowed by a policy rule are
+  forwarded. This explicit switch to default-deny on first policy selection is
+  how operators build a zero-trust posture one endpoint at a time.
+checks:
+  - desc: Default is allow-all
+    contains: "allow-all"
+  - desc: Policy selection triggers default-deny
+    contains: "default-deny"
+  - desc: References CiliumNetworkPolicy
+    contains: "CiliumNetworkPolicy"
+  - desc: Policy selects an endpoint
+    contains: "selects"

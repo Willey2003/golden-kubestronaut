@@ -1,0 +1,13 @@
+id: ica
+title: ICA Istio Certified Associate Mock
+engine: knowledge
+duration_minutes: 90
+pass_threshold: 0.7
+draw_size: 18
+seed: null
+domains:
+  service-mesh-concepts: 0.20
+  istio-architecture: 0.25
+  traffic-management: 0.25
+  security-istio: 0.15
+  observability-tracing: 0.15

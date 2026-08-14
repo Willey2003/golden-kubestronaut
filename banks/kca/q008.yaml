@@ -1,0 +1,35 @@
+kind: knowledge
+domain: resource-allocation
+level: deep
+title: Enforcing budgets with ResourceQuota
+prompt: |
+  A namespace keeps consuming more than its share of cluster memory. Which
+  resource prevents a team from exceeding an agreed budget?
+options:
+  A: "A ResourceQuota, which caps the total requests and limits a namespace may claim."
+  B: "A ConfigMap with the word limit in it."
+  C: "An Ingress rule that blocks large payloads."
+  D: "A NetworkPolicy that denies requests to memory."
+answer: A
+explanation: |
+  ResourceQuota limits the aggregate resources a namespace may request or
+  consume, including total CPU and memory requests, limits, and object counts.
+  Pods that would exceed the quota are rejected by the API server, enforcing the
+  team's budget. ConfigMaps, Ingress, and NetworkPolicy do not govern resource
+  claims.
+solution: |
+  ResourceQuota enforces an upper bound on the resources a namespace can claim,
+  such as the total CPU and memory requests and limits across all its objects.
+  Any pod or object that would push the namespace past its quota is rejected by
+  the API server. Combined with LimitRange, which sets default and per-pod
+  request and limit bounds, quotas give platform teams a hard control for
+  keeping every team inside its allocated budget.
+checks:
+  - desc: Names ResourceQuota
+    contains: "ResourceQuota"
+  - desc: Applies to a namespace
+    contains: "namespace"
+  - desc: Caps limits
+    contains: "limits"
+  - desc: Exceeding requests are rejected
+    contains: "rejected"

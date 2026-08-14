@@ -1,0 +1,19 @@
+kind: knowledge
+domain: operations-deployment
+level: deep
+title: How often a */15 cron schedule runs
+prompt: |
+  A crontab entry reads `*/15 * * * * /opt/check.sh`. How often does the
+  job run?
+options:
+  A: "Every 15 minutes"
+  B: "Once per hour, at minute 15"
+  C: "Every 15 seconds"
+  D: "Once per day at 15:00"
+answer: A
+explanation: |
+  In cron's five-field syntax the minute field `*/15` means "every 15th
+  minute", so the job runs at 0, 15, 30, and 45 minutes past every hour.
+  "Once per hour at minute 15" would be `15 * * * *`, cron's minimum
+  granularity is one minute (not seconds), and "daily at 15:00" would be
+  `0 15 * * *`.

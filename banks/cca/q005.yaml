@@ -1,0 +1,37 @@
+kind: knowledge
+domain: cloud-native-architecture
+level: core
+title: Microservices vs monolith
+prompt: |
+  A large legacy application is deployed as a single deployable unit, and every
+  change requires rebuilding and redeploying everything. The team wants each
+  team to own and release its part independently. Which architectural approach
+  aligns with this goal?
+options:
+  A: "Microservices, where the application is split into independently deployable services that communicate over well-defined APIs."
+  B: "A modular monolith deployed as one artifact."
+  C: "Larger virtual machines with more memory."
+  D: "Copying the monolith into multiple regions."
+answer: A
+explanation: |
+  Microservices decompose the application into small, independently deployable
+  services with their own lifecycles and bounded contexts. This decouples
+  release cadence per team but requires handling distributed-system trade-offs.
+solution: |
+  Microservices architecture splits an application into small, focused services
+  that are developed, deployed, and scaled independently and communicate
+  through well-defined interfaces, typically HTTP or message queues. This lets
+  each team own a service and release it on its own cadence, which directly
+  supports the stated goal. It introduces distributed systems complexity:
+  network failures, latency, data consistency, and observability must be
+  handled explicitly. A modular monolith keeps one deployment unit, larger VMs
+  only add capacity, and replicating regions does not change the architecture.
+checks:
+  - desc: Names microservices
+    contains: "Microservices"
+  - desc: Notes independent deployment
+    contains: "independently"
+  - desc: Mentions well-defined interfaces
+    contains: "well-defined interfaces"
+  - desc: Notes distributed trade-offs
+    contains: "distributed systems complexity"

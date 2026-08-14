@@ -1,0 +1,20 @@
+kind: knowledge
+domain: security-policies
+level: quick
+title: Scope of CiliumNetworkPolicy vs CiliumClusterwideNetworkPolicy
+prompt: |
+  A policy must apply to pods in every namespace in the cluster. Which
+  statement about Cilium policy resources is correct?
+options:
+  A: "CiliumNetworkPolicy is namespaced; CiliumClusterwideNetworkPolicy is cluster-scoped."
+  B: "Both resources are cluster-scoped."
+  C: "CiliumNetworkPolicy is cluster-scoped; CiliumClusterwideNetworkPolicy is namespaced."
+  D: "Both resources are namespaced."
+answer: A
+explanation: |
+  `CiliumNetworkPolicy` (CNP) lives in a namespace and selects endpoints
+  within that namespace (unless it uses cluster-wide selectors such as
+  `fromEntities`). `CiliumClusterwideNetworkPolicy` (CCNP) is a
+  cluster-scoped resource that can select endpoints in any namespace and
+  also supports host-endpoint selectors. A CCNP is the right choice when a
+  rule must apply cluster-wide.

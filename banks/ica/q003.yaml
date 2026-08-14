@@ -1,0 +1,33 @@
+kind: knowledge
+domain: service-mesh-concepts
+level: core
+title: How sidecar injection works
+prompt: |
+  In Istio, how does a workload end up with an Envoy sidecar proxy in its pod?
+options:
+  A: "A mutating admission webhook injects the sidecar container when the pod is created, based on namespace labels or pod annotations."
+  B: "The application calls an API to attach the proxy at runtime."
+  C: "Operators edit every container image to embed Envoy."
+  D: "The Kubernetes scheduler chooses Envoy as the default runtime."
+answer: A
+explanation: |
+  Istio uses a mutating admission webhook. If the namespace is labeled for
+  injection (`istio-injection: enabled`) or the pod requests it, the webhook
+  rewrites the pod spec to add the init and sidecar containers.
+solution: |
+  Istio performs automatic sidecar injection through a mutating admission
+  webhook that runs when a pod is created. When the namespace carries the label
+  istio-injection: enabled, or the pod has an injection annotation, the webhook
+  modifies the pod spec to add an init container for iptables setup and the
+  Envoy sidecar container. Manual injection with istioctl can also generate an
+  explicit proxy. The application code is unaware of the proxy because traffic
+  is transparently redirected through it.
+checks:
+  - desc: Names the admission webhook
+    contains: "mutating admission"
+  - desc: Mentions the namespace label
+    contains: "istio-injection"
+  - desc: Mentions the sidecar container
+    contains: "Envoy sidecar container"
+  - desc: Notes transparent redirection
+    contains: "transparently redirected"

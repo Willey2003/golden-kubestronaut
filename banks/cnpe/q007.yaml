@@ -1,0 +1,21 @@
+kind: knowledge
+domain: security-advanced
+level: core
+title: Grouping external CIDRs for reuse across policies
+prompt: |
+  Several Cilium policies must allow egress to the same set of external
+  networks. The operator wants to define that set once and reference it
+  from multiple policies. Which Cilium resource does this?
+options:
+  A: "CiliumCIDRGroup"
+  B: "CiliumIdentity"
+  C: "CiliumEndpoint"
+  D: "CiliumEnvoyConfig"
+answer: A
+explanation: |
+  `CiliumCIDRGroup` is a cluster-scoped list of external CIDRs (for
+  example `spec.externalCIDRs`). Once created it can be referenced by
+  multiple CiliumNetworkPolicies through the `fromCIDRGroup`/`toCIDRGroup`
+  rule, so adding a network to the group updates every policy that uses
+  it. CiliumIdentity is per-endpoint, CiliumEndpoint reflects a pod's
+  identity on a node, and CiliumEnvoyConfig holds Envoy configuration.

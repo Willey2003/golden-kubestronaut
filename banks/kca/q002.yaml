@@ -1,0 +1,34 @@
+kind: knowledge
+domain: kubernetes-cost-concepts
+level: core
+title: Why per-pod cost must be derived
+prompt: |
+  Why is it hard to answer "how much does this pod cost" directly from a cloud
+  bill?
+options:
+  A: "Cloud bills price nodes or instances, not pods, so pod cost must be derived by allocating node cost to the pods sharing it."
+  B: "Cloud bills price each pod individually already."
+  C: "Pods are free; only storage is billed."
+  D: "Billing is per container by default in every provider."
+answer: A
+explanation: |
+  Cloud providers bill at the instance, node, or managed-service level, not per
+  pod. Many pods share a node, so the node's cost is apportioned to those pods
+  via resource requests and usage. That derived cost is what tools compute. The
+  other options assume per-pod billing that does not exist.
+solution: |
+  Cloud providers invoice per node instance, not per pod, so there is no direct
+  pod price on the bill. Because many pods share nodes, an organization must
+  derive pod cost by allocating the node's price across its pods, typically
+  weighted by resource requests and actual usage, then grouping by namespace or
+  label. This allocation is what makes Kubernetes spend meaningful to product
+  teams.
+checks:
+  - desc: Billing is per node
+    contains: "node"
+  - desc: Cost is allocated across pods
+    contains: "allocate"
+  - desc: Weighted by requests
+    contains: "requests"
+  - desc: Grouped per namespace
+    contains: "pods"

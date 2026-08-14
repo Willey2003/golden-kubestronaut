@@ -1,0 +1,19 @@
+kind: knowledge
+domain: networking
+level: quick
+title: DNS resolution of a hostname
+prompt: |
+  You need to confirm which IP addresses a hostname resolves to via DNS.
+  Which command performs the DNS lookup and displays the answer records?
+options:
+  A: "dig example.com"
+  B: "ping example.com"
+  C: "traceroute example.com"
+  D: "ifconfig example.com"
+answer: A
+explanation: |
+  `dig` is a dedicated DNS lookup tool that queries the configured
+  resolver and prints the answer (A/AAAA) records, along with query time
+  and authoritative servers. `ping` sends ICMP probes and does not report
+  DNS answers, `traceroute` traces the network path, and `ifconfig`
+  configures interfaces and takes no hostname argument.

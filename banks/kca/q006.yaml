@@ -1,0 +1,35 @@
+kind: knowledge
+domain: resource-allocation
+level: core
+title: How requests drive scheduling
+prompt: |
+  A node has 8 CPU allocatable. Two pods each request 5 CPU. What happens when
+  the second pod is created?
+options:
+  A: "The second pod stays Pending because the node's remaining requests cannot satisfy it."
+  B: "Both pods run and share the 8 CPU."
+  C: "The second pod evicts the first pod."
+  D: "The node automatically overcommits and both run."
+answer: A
+explanation: |
+  The scheduler places pods based on the sum of requests compared with
+  allocatable capacity. After the first pod reserves 5 CPU, only 3 remains, so a
+  second 5-CPU-request pod cannot be scheduled on that node and stays Pending.
+  Overcommit happens only when limits exceed requests, and the scheduler never
+  evicts existing pods to make room.
+solution: |
+  Scheduling is request-driven: the kube-scheduler only places a pod on a node
+  whose remaining allocatable capacity can satisfy the pod's requests. In this
+  example the first pod reserves 5 CPU, leaving 3, so the second pod requesting
+  5 CPU remains Pending until capacity frees up. Overcommit, where usage can
+  exceed requests up to limits, is separate and does not change the scheduler's
+  reservation math.
+checks:
+  - desc: Second pod stays Pending
+    contains: "Pending"
+  - desc: Scheduling is request-driven
+    contains: "requests"
+  - desc: Mentions the scheduler
+    contains: "scheduler"
+  - desc: First pod reserves capacity
+    contains: "reserves"

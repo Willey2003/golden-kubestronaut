@@ -1,0 +1,18 @@
+kind: hands-on
+domain: networking
+level: core
+title: Resolve an internal hostname via /etc/hosts
+prompt: |
+  The name `db1.internal` must resolve to the IP address `10.0.0.5` on
+  this host, without relying on DNS. Add the appropriate entry to
+  `/etc/hosts` and make sure `db1.internal` resolves to `10.0.0.5`.
+solution: |
+  echo "10.0.0.5 db1.internal" >> /etc/hosts
+  getent hosts db1.internal
+checks:
+  - desc: The hosts file maps db1.internal to 10.0.0.5
+    run: grep db1.internal /etc/hosts
+    contains: 10.0.0.5
+  - desc: The hostname resolves to 10.0.0.5
+    run: getent hosts db1.internal
+    contains: 10.0.0.5

@@ -1,0 +1,35 @@
+kind: knowledge
+domain: istio-architecture
+level: core
+title: Data plane vs control plane
+prompt: |
+  Which statement correctly separates the Istio data plane and control plane?
+options:
+  A: "The data plane is the set of Envoy proxies that handle traffic; the control plane, istiod, configures and manages them."
+  B: "The control plane is composed of Envoy proxies and the data plane is istiod."
+  C: "Both planes run exclusively as Deployments in the istio-system namespace."
+  D: "Istio has no data plane; traffic flows through the kernel."
+answer: A
+explanation: |
+  Envoy sidecars and gateways form the data plane; istiod is the control plane
+  that serves configuration and certificates. The data plane implements what
+  the control plane declares.
+solution: |
+  Istio's architecture is divided into a data plane and a control plane. The
+  data plane is made of Envoy proxies, both sidecars attached to workloads and
+  standalone gateways, which actually process and forward traffic. The control
+  plane is istiod, which discovers services, validates and distributes
+  configuration to the proxies, and provides certificate management for mTLS.
+  The proxies implement the policy they receive from the control plane; if
+  istiod is down, the existing proxy configuration keeps traffic flowing.
+  Gateway proxies in the mesh act as ingress and egress traffic entry and exit
+  points.
+checks:
+  - desc: Defines the data plane
+    contains: "data plane"
+  - desc: Defines the control plane
+    contains: "control plane"
+  - desc: Names istiod
+    contains: "istiod"
+  - desc: Notes traffic flows without istiod
+    contains: "istiod is down"

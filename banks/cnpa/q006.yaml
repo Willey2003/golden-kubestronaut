@@ -1,0 +1,21 @@
+kind: knowledge
+domain: security-policies
+level: core
+title: Default-deny behavior of a CiliumNetworkPolicy
+prompt: |
+  A pod is selected by a CiliumNetworkPolicy that only permits inbound SSH
+  from a single source. What happens to all other traffic destined to that
+  pod?
+options:
+  A: "It is denied because selecting an endpoint in a Cilium policy implies default-deny."
+  B: "It keeps flowing as before; the policy only adds new allowances."
+  C: "It is redirected to the Envoy proxy for inspection."
+  D: "It is rate-limited instead of dropped."
+answer: A
+explanation: |
+  When an endpoint is selected by at least one Cilium policy (CiliumNetworkPolicy
+  or CiliumClusterwideNetworkPolicy), Cilium switches it to default-deny for the
+  policy direction being enforced: traffic not explicitly allowed is dropped.
+  Endpoints that are selected by no policy remain fully allowed. This is the
+  same mental model as Kubernetes NetworkPolicy and it is why a policy is
+  typically written as "allow X" rather than "deny Y".

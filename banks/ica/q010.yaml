@@ -1,0 +1,37 @@
+kind: knowledge
+domain: traffic-management
+level: core
+title: Timeouts, retries, and circuit breaking
+prompt: |
+  An application suffers from slow downstream responses and cascading
+  failures. An operator wants the mesh to bound how long calls wait and to stop
+  sending traffic to unhealthy instances. Which resources and policies do this?
+options:
+  A: "Timeouts and retries in a VirtualService plus connection pool and outlier detection policies in a DestinationRule."
+  B: "A PeerAuthentication policy with STRICT mode."
+  C: "An AuthorizationPolicy that denies slow routes."
+  D: "A Gateway with more replicas."
+answer: A
+explanation: |
+  A VirtualService can set per-route timeouts and retries; a DestinationRule
+  trafficPolicy sets connectionPool limits and outlierDetection to eject
+  unhealthy endpoints.
+solution: |
+  The VirtualService can define a timeout for a route so calls that exceed the
+  limit fail fast, and retry policies that retry failed or timed-out requests a
+  bounded number of times. The DestinationRule's traffic policy controls
+  resilience at the endpoint level: connectionPool settings bound concurrent
+  connections and pending requests, and outlierDetection ejects instances that
+  repeatedly fail health checks, so traffic stops going to unhealthy pods.
+  Together these prevent a slow dependency from consuming all resources and
+  stop cascading failures. PeerAuthentication and AuthorizationPolicy address
+  security, not load shedding.
+checks:
+  - desc: Names timeouts
+    contains: "timeout"
+  - desc: Names retries
+    contains: "retry"
+  - desc: Names connection pool settings
+    contains: "connectionPool"
+  - desc: Names outlier detection
+    contains: "outlierDetection"

@@ -1,0 +1,39 @@
+kind: knowledge
+domain: gitops-core-concepts
+level: quick
+title: Reconciliation restores deleted workloads
+prompt: |
+  During a GitOps demo, someone manually runs kubectl delete to remove a
+  Deployment. Minutes later the Deployment is back. Which GitOps concept
+  explains this behaviour?
+options:
+  A: "Reconciliation, where the agent restores the live state to match the desired state in Git."
+  B: "Autoscaling, where the HorizontalPodAutoscaler created a replacement."
+  C: "Caching, where the API server restored the Deployment from a stale snapshot."
+  D: "Eventual consistency of the underlying container runtime."
+answer: A
+explanation: |
+  GitOps agents continuously reconcile the live environment against the
+  desired state held in Git. Any manual change that diverges from the declared
+  configuration, including deleting a resource, is drift, and the agent
+  reapplies the desired state until they converge. An HPA scales replicas of an
+  existing workload but does not recreate a deleted Deployment, the API server
+  keeps no snapshots that restore resources, and the container runtime does not
+  reschedule deleted objects.
+solution: |
+  The reconciliation loop is the core engine of GitOps: the in-cluster agent
+  repeatedly compares the live environment with the desired state declared in
+  Git and applies corrective changes whenever they differ. Deleting a
+  Deployment by hand creates drift because the live state no longer matches the
+  repository, so the agent immediately recreates the resource to converge back
+  to the declared state. This guarantees the cluster converges to the
+  version-controlled configuration even after manual interference.
+checks:
+  - desc: Names the reconciliation loop
+    contains: "reconciliation loop"
+  - desc: Mentions drift
+    contains: "drift"
+  - desc: References desired state
+    contains: "desired state"
+  - desc: Points at the Git repository
+    contains: "Git"

@@ -1,0 +1,36 @@
+kind: knowledge
+domain: cilium-fundamentals
+level: deep
+title: CiliumEndpoint and identity records
+prompt: |
+  Cilium exposes per-pod status. Which resource records a pod's security
+  identity and policy state?
+options:
+  A: "The CiliumEndpoint, tied to each pod, recording its identity and applied policy state."
+  B: "The Kubernetes EndpointSlice, which stores policy decisions."
+  C: "A ServiceAccount annotation."
+  D: "The Node object, which lists all identities in the cluster."
+answer: A
+explanation: |
+  Every Cilium-managed pod has a CiliumEndpoint resource that stores its
+  networking state, its assigned security identity, and the policies that apply
+  to it. Inspecting a CEP shows which policy rules allow or deny traffic for
+  that pod. EndpointSlice describes service endpoints, not policy, ServiceAccount
+  annotations carry RBAC metadata, and Node objects do not store per-pod
+  identities.
+solution: |
+  Cilium creates a CiliumEndpoint for each managed pod, describing the pod's
+  networking status: its IP addresses, its security identity, and the policy
+  state enforced on it. Operators can inspect a CiliumEndpoint to see why
+  traffic is allowed or denied for a specific workload. The CiliumEndpoint is
+  the per-endpoint view of Cilium's identity and policy model, complementing
+  the cluster-wide view in CiliumIdentity resources.
+checks:
+  - desc: Names the CiliumEndpoint
+    contains: "CiliumEndpoint"
+  - desc: Records the security identity
+    contains: "identity"
+  - desc: Shows applied policy state
+    contains: "policy"
+  - desc: One record per pod
+    contains: "pod"

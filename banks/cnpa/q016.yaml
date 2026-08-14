@@ -1,0 +1,50 @@
+kind: hands-on
+domain: service-mesh-cilium
+level: core
+title: Enforce an L7 HTTP rule on the API service
+prompt: |
+  Create the namespace `cnpa-q16`. Then create a CiliumNetworkPolicy named
+  `api-l7` in that namespace that allows pods labeled `app=web` to reach
+  pods labeled `app=api` on TCP port 8080, restricted to HTTP method `GET`
+  on path `/v1`.
+solution: |
+  kubectl create ns cnpa-q16
+  cat <<'EOF' | kubectl apply -f -
+  apiVersion: cilium.io/v2
+  kind: CiliumNetworkPolicy
+  metadata:
+    name: api-l7
+    namespace: cnpa-q16
+  spec:
+    endpointSelector:
+      matchLabels:
+        app: api
+    ingress:
+    - fromEndpoints:
+      - matchLabels:
+          app: web
+      toPorts:
+      - ports:
+        - port: "8080"
+          protocol: TCP
+        rules:
+          http:
+          - method: GET
+            path: /v1
+  EOF
+checks:
+  - desc: Namespace cnpa-q16 exists
+    run: kubectl get ns cnpa-q16 -o name
+    equals: namespace/cnpa-q16
+  - desc: CiliumNetworkPolicy api-l7 exists
+    run: kubectl -n cnpa-q16 get cnp api-l7 -o name
+    equals: ciliumnetworkpolicy.cilium.io/api-l7
+  - desc: Allowed port is TCP 8080
+    run: "kubectl -n cnpa-q16 get cnp api-l7 -o jsonpath='{.spec.ingress[0].toPorts[0].ports[0].port}'"
+    equals: 8080
+  - desc: HTTP method is restricted to GET
+    run: "kubectl -n cnpa-q16 get cnp api-l7 -o jsonpath='{.spec.ingress[0].toPorts[0].rules.http[0].method}'"
+    equals: GET
+  - desc: HTTP path is restricted to /v1
+    run: "kubectl -n cnpa-q16 get cnp api-l7 -o jsonpath='{.spec.ingress[0].toPorts[0].rules.http[0].path}'"
+    equals: /v1

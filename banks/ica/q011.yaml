@@ -1,0 +1,36 @@
+kind: knowledge
+domain: traffic-management
+level: core
+title: Header-based routing
+prompt: |
+  A tester wants requests carrying the header `x-canary: true` to reach the
+  canary subset while all other requests go to stable. Which resource matches
+  on that header?
+options:
+  A: "A VirtualService with a match on the header and a route to the canary subset."
+  B: "A DestinationRule with TLS settings."
+  C: "An Ingress that filters by IP address."
+  D: "A ConfigMap that rewrites HTTP methods."
+answer: A
+explanation: |
+  A VirtualService supports matching on headers, uri, method, and more.
+  Header-based routing enables internal testing and dark launches before broad
+  rollouts. A DestinationRule does not route on request attributes.
+solution: |
+  A VirtualService can match on request attributes including HTTP headers. A
+  rule that matches the header x-canary with value true routes those requests
+  to the canary subset, while a catch-all rule sends the remaining traffic to
+  the stable subset. This header-based routing supports internal testing, dark
+  launches, and progressive rollouts without changing the client code.
+  DestinationRule defines endpoint subsets and their policies but does not
+  inspect request headers to choose a route, and an Ingress gateway alone does
+  not provide this layer of matching.
+checks:
+  - desc: Names header matching
+    contains: "header"
+  - desc: Gives a concrete header
+    contains: "x-canary"
+  - desc: Mentions the subset routing
+    contains: "canary subset"
+  - desc: Contrasts with DestinationRule
+    contains: "DestinationRule"

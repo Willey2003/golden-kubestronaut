@@ -1,0 +1,37 @@
+kind: knowledge
+domain: containers-k8s-cloud
+level: core
+title: Managed Kubernetes on cloud
+prompt: |
+  On AWS, Azure, and Google Cloud, teams often use EKS, AKS, and GKE instead of
+  running Kubernetes themselves. What is the primary difference from a
+  self-managed cluster?
+options:
+  A: "The cloud provider operates the control plane and upgrades it, while the customer manages worker nodes and workloads."
+  B: "The provider runs the customer's application code."
+  C: "Managed clusters cannot run Pods."
+  D: "The customer is locked out of all Kubernetes APIs."
+answer: A
+explanation: |
+  Managed Kubernetes services operate and upgrade the control plane for the
+  customer; customers manage node pools and applications. The Kubernetes API
+  remains fully accessible.
+solution: |
+  Managed Kubernetes offerings such as EKS, AKS, and GKE run the cluster
+  control plane for the customer: the API server, scheduler, and controllers
+  are operated, patched, and upgraded by the provider, and their availability
+  is part of the service. The customer remains responsible for worker nodes,
+  node pools, and everything that runs inside the cluster, and still interacts
+  with the cluster through the standard Kubernetes API. Running the control
+  plane is removed from the customer's to-do list, which reduces operational
+  burden compared with self-managing the full stack. The provider does not run
+  the customer's application code, and the API is fully open to the customer.
+checks:
+  - desc: Names EKS, AKS, GKE
+    contains: "EKS"
+  - desc: Notes the provider-operated control plane
+    contains: "control plane"
+  - desc: Notes customer worker nodes
+    contains: "worker nodes"
+  - desc: Notes full API access
+    contains: "Kubernetes API"

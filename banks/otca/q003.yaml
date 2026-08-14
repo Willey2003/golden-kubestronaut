@@ -1,0 +1,36 @@
+kind: knowledge
+domain: telemetry-concepts
+level: deep
+title: OpenTelemetry architecture
+prompt: |
+  Which statement correctly describes how telemetry flows in an OpenTelemetry
+  deployment?
+options:
+  A: "Instrumented applications emit signals via the SDK; the Collector receives, processes, and exports them to configured backends using OTLP."
+  B: "Backends push telemetry down into applications through the SDK."
+  C: "The Collector instruments application code automatically without an SDK."
+  D: "Applications must send telemetry directly to a database, never through a Collector."
+answer: A
+explanation: |
+  The OpenTelemetry architecture is: applications instrumented with OTel SDKs
+  emit spans, metrics, and logs; these are exported, usually over OTLP, to one
+  or more Collector instances; and the Collector runs pipelines that receive,
+  process, and export the data to backends. Backends do not push into
+  applications, the Collector does not instrument code, and while applications
+  may send directly to a backend, the Collector is the recommended flexible hop.
+solution: |
+  In OpenTelemetry, application code is instrumented using the OTel APIs and
+  SDKs, which emit spans, metrics, and log records. The SDK exports these
+  signals over OTLP to an OpenTelemetry Collector, which runs pipelines of
+  receivers, processors, and exporters to normalize, filter, batch, and route
+  the data to any configured backend. This decouples application instrumentation
+  from the destination, making telemetry portable across vendors.
+checks:
+  - desc: Instrumentation happens via SDKs
+    contains: "SDKs"
+  - desc: Signals move over OTLP
+    contains: "OTLP"
+  - desc: The Collector processes data
+    contains: "Collector"
+  - desc: Processing runs in pipelines
+    contains: "pipelines"

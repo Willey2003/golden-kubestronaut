@@ -1,0 +1,37 @@
+kind: knowledge
+domain: opentelemetry-collector
+level: deep
+title: Batch and memory_limiter processors
+prompt: |
+  Which set of Collector processors addresses high throughput and bursty
+  traffic on a resource-constrained node?
+options:
+  A: "batch, which groups spans, metrics, and logs before export, plus memory_limiter, which soft-fails when memory limits are hit."
+  B: "The filter processor only, which removes all data."
+  C: "The resourcedetection processor, which sends data faster."
+  D: "The kubeletstats receiver, which limits memory."
+answer: A
+explanation: |
+  The batch processor buffers and merges telemetry, greatly reducing the number
+  of export calls and improving throughput. The memory_limiter processor
+  monitors Collector memory and soft-fails so the Collector does not crash on
+  bursts. The filter processor drops matching data rather than helping
+  throughput, resourcedetection adds metadata, and kubeletstats is a metrics
+  receiver, not a memory limiter.
+solution: |
+  The batch processor is the default tool for high-throughput Collectors: it
+  accumulates spans, metrics, and logs and exports them in larger groups,
+  slashing overhead and stabilizing backend load. The memory_limiter processor
+  watches the Collector's memory footprint and, when a configured limit is
+  reached, begins soft-failing data so the Collector does not crash under
+  bursts. These two processors are the standard starting point for production
+  pipelines.
+checks:
+  - desc: Names the batch processor
+    contains: "batch"
+  - desc: Names memory_limiter
+    contains: "memory_limiter"
+  - desc: Groups data before export
+    contains: "export"
+  - desc: Protects memory
+    contains: "memory"

@@ -1,0 +1,36 @@
+kind: knowledge
+domain: traffic-management
+level: core
+title: Weighted canary traffic shifting
+prompt: |
+  A team deploys a canary version and gradually moves traffic from the stable
+  version to it over several hours. Which Istio routing feature directly
+  supports percentage-based traffic shifting between two subsets?
+options:
+  A: "Setting weight on two route destinations in a VirtualService."
+  B: "Rebooting the gateways every hour."
+  C: "Changing the number of replicas in the Deployment."
+  D: "Adding more labels to the pod."
+answer: A
+explanation: |
+  VirtualService route entries accept a weight per destination, for example
+  weight 90 to subset v1 and weight 10 to subset v2. Scaling replicas does not
+  shift mesh traffic weights.
+solution: |
+  In a VirtualService, each route destination can carry a weight. Assigning
+  weight 90 to the stable subset and weight 10 to the canary subset sends 90%
+  of the matching traffic to stable and 10% to canary; operators adjust the
+  weights over time to complete the rollout. The weights apply at the mesh
+  routing layer, so the shift happens without changing Deployment replicas or
+  rebuilding the workload. Weighted routing is evaluated per destination, and
+  the weights across destinations in a route normally sum to 100. This is the
+  foundation of progressive delivery in Istio.
+checks:
+  - desc: Names weights in routes
+    contains: "weight"
+  - desc: Gives a percentage example
+    contains: "90"
+  - desc: Notes no replica change needed
+    contains: "without changing Deployment replicas"
+  - desc: Mentions subsets
+    contains: "subset"

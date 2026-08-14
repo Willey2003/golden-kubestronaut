@@ -1,0 +1,35 @@
+kind: knowledge
+domain: cloud-security
+level: core
+title: Least privilege and IAM
+prompt: |
+  A developer needs read-only access to one cloud project. Which access-control
+  approach follows least privilege?
+options:
+  A: "Grant a role with read-only permissions scoped to just that project."
+  B: "Grant full administrator access to everything."
+  C: "Share the root account password with the team."
+  D: "Grant read and write access to all projects."
+answer: A
+explanation: |
+  Least privilege grants only the permissions needed, scoped to the specific
+  resource. Role-based access control and per-project scoping prevent a broad
+  blast radius and reduce misuse.
+solution: |
+  Least privilege means granting only the permissions required for a role,
+  scoped as narrowly as possible. For a developer who only needs to read one
+  project, the right approach is a read-only role bound to that specific
+  project, not broader access. Cloud platforms implement this with role-based
+  access control and resource-scoped bindings. Granting administrator access,
+  sharing root credentials, or allowing read/write on all projects expands the
+  blast radius enormously and makes misuse and compromise far more damaging.
+  IAM policies should always be reviewed against the actual job needs.
+checks:
+  - desc: Names least privilege
+    contains: "Least privilege"
+  - desc: Mentions role-based access control
+    contains: "role-based"
+  - desc: Notes scoping
+    contains: "scoped"
+  - desc: Rejects broad admin access
+    contains: "administrator access"

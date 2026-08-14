@@ -1,0 +1,36 @@
+kind: knowledge
+domain: telemetry-concepts
+level: quick
+title: The three telemetry pillars
+prompt: |
+  An SRE wants to understand why API latency increased. Which set of signals
+  best supports this investigation?
+options:
+  A: "Traces to follow a request end-to-end, metrics for aggregate latency and error rates, and logs for detailed context."
+  B: "Only a count of running pods."
+  C: "Only the cloud provider invoice."
+  D: "Only infrastructure CPU usage graphs."
+answer: A
+explanation: |
+  The three pillars, traces, metrics, and logs, answer different questions.
+  Traces follow individual requests through services, metrics give aggregate
+  time series such as latency percentiles and error rates, and logs provide
+  detailed event context. Together they let the SRE see the symptom, find the
+  affected request, and inspect the cause. The other options each cover only a
+  fraction of the picture.
+solution: |
+  Traces, metrics, and logs are the three telemetry pillars, each answering a
+  different question. Metrics summarize aggregates, such as request rates,
+  error rates, and latency percentiles, for dashboards and alerting. Traces
+  follow a single request across services and spans to pinpoint where time or
+  failures occur. Logs record discrete events with detail and context.
+  Combining them lets an SRE move from symptom to cause efficiently.
+checks:
+  - desc: Names traces
+    contains: "traces"
+  - desc: Names metrics
+    contains: "metrics"
+  - desc: Names logs
+    contains: "logs"
+  - desc: Uses the term pillars
+    contains: "pillars"

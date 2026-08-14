@@ -1,0 +1,35 @@
+kind: knowledge
+domain: metrics
+level: core
+title: Choosing a metric instrument
+prompt: |
+  A team needs to record the current number of in-flight requests. Which
+  OpenTelemetry instrument is the right choice?
+options:
+  A: "An Asynchronous Gauge, which reports the current value read on demand."
+  B: "A Counter, which only ever increases."
+  C: "A Histogram, which records a distribution."
+  D: "An UpDownCounter that monotonically increases."
+answer: A
+explanation: |
+  A gauge reports a value that can go up or down and is sampled at points in
+  time, exactly what the current number of in-flight requests needs. Counters
+  are monotonic accumulators for events such as total requests, an
+  UpDownCounter can go both ways but is intended for additive quantities, and
+  histograms capture distributions of values, not a current reading.
+solution: |
+  Instrument types in OpenTelemetry map to how data changes over time. A gauge
+  reports a current value that may go up or down, and the number of in-flight
+  requests read on demand is a canonical gauge. Counters are monotonic totals
+  for events, UpDownCounters are non-monotonic additive quantities, and
+  histograms record distributions of measurements such as durations. Choosing
+  the instrument that matches the semantics keeps the metric meaningful.
+checks:
+  - desc: Selects a Gauge
+    contains: "Gauge"
+  - desc: Tracks in-flight requests
+    contains: "in-flight"
+  - desc: Contrasts with Counter
+    contains: "Counter"
+  - desc: Notes monotonic semantics
+    contains: "monotonic"

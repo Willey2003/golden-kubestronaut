@@ -1,0 +1,35 @@
+kind: knowledge
+domain: deployment-cilium
+level: deep
+title: Upgrading Cilium safely
+prompt: |
+  What is the correct, safe approach to upgrade a Cilium installation?
+options:
+  A: "Upgrade via the official Helm chart or cilium CLI using the documented steps, letting the DaemonSet roll agents node-by-node."
+  B: "Delete all Cilium DaemonSets and reinstall the new version at once."
+  C: "Upgrade the kernel on every node first and restart Cilium manually."
+  D: "Upgrade Cilium by replacing the agent image in place without any rollout."
+answer: A
+explanation: |
+  Cilium upgrades are performed through the release channels, the Helm chart or
+  the cilium CLI, following the documented upgrade path, including any required
+  CRD updates and Helm values migrations. The agent DaemonSet rolls across nodes
+  so the cluster keeps functioning during the upgrade. Deleting the DaemonSet
+  wholesale, manually touching nodes, or editing images in place are unsupported
+  and risky.
+solution: |
+  Upgrading Cilium is done with the official Helm chart or the cilium CLI
+  following the version upgrade notes. The chart updates CRDs and agent
+  settings, and the DaemonSet rolls the cilium-agent pods node-by-node so
+  connectivity is preserved throughout. Operators validate the new version with
+  cilium status and the cluster check after the rollout, and consult the upgrade
+  guide for version-specific migration steps.
+checks:
+  - desc: Upgrade goes through the Helm chart
+    contains: "Helm"
+  - desc: Agents roll via the DaemonSet
+    contains: "DaemonSet"
+  - desc: Rollout happens node-by-node
+    contains: "rolls"
+  - desc: Follows the upgrade path
+    contains: "upgrade"

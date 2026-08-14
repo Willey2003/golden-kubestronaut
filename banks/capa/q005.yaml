@@ -1,0 +1,35 @@
+kind: knowledge
+domain: argo-cd
+level: core
+title: Fields of an Application
+prompt: |
+  In Argo CD, an Application resource declares which three essential things
+  about a deployment?
+options:
+  A: "The source repo and path, the destination cluster and namespace, and the sync policy."
+  B: "The DNS names and SSL certificates."
+  C: "The container image digest and registry credentials."
+  D: "The cloud provider and region only."
+answer: A
+explanation: |
+  An Argo CD Application defines spec.source (repoURL, path, targetRevision),
+  spec.destination (cluster and namespace), and spec.syncPolicy (automated vs
+  manual, prune, selfHeal). Image digests are referenced inside manifests.
+solution: |
+  An Argo CD Application ties the desired state to a location. Its spec.source
+  points at the git repository, the path inside it, and the target revision.
+  Its spec.destination identifies the destination cluster and namespace where
+  the manifests will be applied. Its spec.syncPolicy controls whether syncing
+  is automated or manual, and options like pruning removed resources and
+  self-healing against drift. The image digest is resolved from the manifests
+  themselves, not from the Application, and DNS or cloud metadata are separate
+  concerns.
+checks:
+  - desc: Names the source field
+    contains: "spec.source"
+  - desc: Names the destination field
+    contains: "spec.destination"
+  - desc: Names the sync policy
+    contains: "spec.syncPolicy"
+  - desc: Notes prune and self-heal
+    contains: "self-healing"

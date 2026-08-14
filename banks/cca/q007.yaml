@@ -1,0 +1,37 @@
+kind: knowledge
+domain: cloud-native-architecture
+level: core
+title: Stateless vs stateful services
+prompt: |
+  A service keeps its session data in local memory, so restarting any instance
+  drops user sessions and scaling out does not help. Which change makes the
+  service horizontally scalable?
+options:
+  A: "Externalize state to a shared store (database or cache) so instances remain stateless."
+  B: "Add more memory to each instance."
+  C: "Disable health checks."
+  D: "Run only one instance."
+answer: A
+explanation: |
+  Stateless processes persist no local state, so any instance can serve any
+  request and instances can be added or removed freely. State lives in external
+  stores. This is the twelve-factor process principle.
+solution: |
+  A horizontally scalable service treats its instances as disposable: any
+  instance can handle any request because the state lives outside the process,
+  in a shared database, cache, or object store. Session data and durable state
+  must be externalized so that restarting or adding instances never loses data
+  and load can be spread across many replicas. Keeping session data in local
+  memory breaks this because requests must stick to a specific instance and
+  failures lose data. Bigger machines only delay the limit, disabling health
+  checks hides failures, and a single instance is the opposite of horizontal
+  scaling.
+checks:
+  - desc: Names stateless processes
+    contains: "disposable"
+  - desc: Mentions externalized state
+    contains: "externalized"
+  - desc: Notes horizontal scaling
+    contains: "horizontally scalable"
+  - desc: Rejects local session memory
+    contains: "Keeping session data"

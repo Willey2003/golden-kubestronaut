@@ -1,0 +1,37 @@
+kind: knowledge
+domain: gitops-practices
+level: core
+title: Drift detection and reconciliation
+prompt: |
+  An operator discovers that pods were manually evicted and a Service was
+  edited by a colleague outside of Git. In a GitOps setup, which statement
+  about drift is correct?
+options:
+  A: "The agent detects the mismatch and reconciles the cluster back to the state declared in Git."
+  B: "Drift is allowed to persist until the next release train."
+  C: "Drift is resolved by restarting all nodes."
+  D: "Drift only matters for secrets, never for workloads."
+answer: A
+explanation: |
+  Drift is any difference between the live state and the desired state in Git.
+  The reconciliation loop continuously detects drift, including manual
+  evictions, edited Services, and deleted resources, and reapplies the declared
+  configuration to converge. Letting drift persist breaks the guarantee that
+  Git is the source of truth, node restarts do not reconcile object state, and
+  drift applies to every resource kind, not just secrets.
+solution: |
+  Drift is the gap between what the cluster actually runs and the desired state
+  stored in Git. The GitOps reconciliation loop continuously watches both, and
+  whenever they diverge, because of a manual edit, an eviction, or a
+  misconfigured controller, it reapplies the declared manifests to bring the
+  cluster back in line. Continuous drift detection is what keeps the live
+  environment trustworthy and reproducible, so unwanted drift does not survive.
+checks:
+  - desc: Explains drift
+    contains: "Drift"
+  - desc: Names the reconciliation loop
+    contains: "reconciliation loop"
+  - desc: References desired state
+    contains: "desired state"
+  - desc: Mentions reapplying manifests
+    contains: "manifests"

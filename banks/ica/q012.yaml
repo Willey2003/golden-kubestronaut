@@ -1,0 +1,35 @@
+kind: knowledge
+domain: traffic-management
+level: core
+title: How subsets are defined
+prompt: |
+  Before a VirtualService can route to subset v2, what must exist so that
+  endpoints can actually be grouped?
+options:
+  A: "A DestinationRule declaring subset v2 with a label selector that matches v2 pods."
+  B: "A Gateway listener on port 80."
+  C: "A ServiceEntry for the pod IPs."
+  D: "An EnvoyFilter for the subset."
+answer: A
+explanation: |
+  Subsets are declared in a DestinationRule using labels such as `version: v2`
+  that select pods. Routing to a subset without a matching DestinationRule does
+  nothing useful.
+solution: |
+  Subsets are declared in a DestinationRule. Each subset is defined by a name
+  and a label selector that picks the pods belonging to that subset, for
+  example version: v2. The VirtualService references the subset name in its
+  route destinations, and the mesh resolves it to the matching endpoints. If no
+  DestinationRule defines the subset, or the labels do not match any pods,
+  traffic cannot be routed to that subset. ServiceEntry, Gateways, and
+  EnvoyFilters do not group workload endpoints for routing in the way the
+  subset mechanism does.
+checks:
+  - desc: Names the DestinationRule
+    contains: "DestinationRule"
+  - desc: Mentions the label selector
+    contains: "label selector"
+  - desc: Gives a label example
+    contains: "version: v2"
+  - desc: Notes the VirtualService reference
+    contains: "VirtualService references"

@@ -1,0 +1,35 @@
+kind: knowledge
+domain: gitops-concepts
+level: core
+title: The GitOps principles
+prompt: |
+  Which set of principles is commonly associated with GitOps?
+options:
+  A: "Declarative, versioned and immutable, pulled automatically, and continuously reconciled."
+  B: "Imperative, manual, and based on chat approval."
+  C: "Compiled, compressed, and cached."
+  D: "Centralized, batched, and scheduled nightly."
+answer: A
+explanation: |
+  The CNCF GitOps working group defines four principles: declarative desired
+  state, stored in a versioned and immutable form, pulled automatically by
+  agents, and continuously reconciled with feedback.
+solution: |
+  The core GitOps principles are four. First, the desired state is declarative:
+  it describes the whole system. Second, it is versioned and immutable: stored
+  in git so every version is retained and changes are made by new versions,
+  never edits. Third, the state is pulled automatically by software agents,
+  such as Argo CD or Flux, rather than pushed. Fourth, the software
+  continuously reconciles the actual state to the desired state and reports
+  deviations. These principles together make the system reproducible and
+  auditable. Imperative, chat-driven, or nightly-batch processes do not satisfy
+  them.
+checks:
+  - desc: Names the declarative principle
+    contains: "declarative"
+  - desc: Names the immutable principle
+    contains: "immutable"
+  - desc: Names the pull principle
+    contains: "pulled automatically"
+  - desc: Names continuous reconciliation
+    contains: "continuously reconciles"

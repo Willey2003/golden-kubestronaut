@@ -1,0 +1,35 @@
+kind: knowledge
+domain: metrics
+level: deep
+title: Histograms and percentiles
+prompt: |
+  A team wants latency percentiles such as p50 and p99 for an API. Which
+  OpenTelemetry instrument and aggregation supports this?
+options:
+  A: "A Histogram, which buckets measurements and is aggregated into percentiles."
+  B: "A Counter incremented once per request."
+  C: "A Gauge showing the latest latency."
+  D: "An UpDownCounter tracking the slowest call."
+answer: A
+explanation: |
+  A Histogram records a distribution of measurements into buckets, and the SDK
+  computes count, sum, and bucket counts, from which backends derive
+  percentiles. A Counter only totals events, a gauge gives the last sample, and
+  an UpDownCounter is for additive quantities; none can produce a latency
+  distribution.
+solution: |
+  A Histogram is the instrument for measurements whose distribution matters,
+  such as request latency. Each measurement increments a bucket, and the
+  aggregation exports count, sum, and bucket counts, allowing backends to
+  compute quantiles like p50 and p99. Histograms also aggregate across
+  instances, so an operator sees the latency distribution for the whole service
+  rather than per-instance samples.
+checks:
+  - desc: Uses a Histogram
+    contains: "Histogram"
+  - desc: Measurements go into buckets
+    contains: "bucket"
+  - desc: Backends derive percentiles
+    contains: "percentiles"
+  - desc: Computes p99
+    contains: "p99"

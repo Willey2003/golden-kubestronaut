@@ -1,0 +1,34 @@
+kind: knowledge
+domain: istio-architecture
+level: core
+title: Role of the Envoy proxy
+prompt: |
+  What role does the Envoy proxy play in an Istio mesh?
+options:
+  A: "It handles all inbound and outbound traffic for its workload, applying routing, retries, security, and telemetry policies."
+  B: "It stores configuration in a database."
+  C: "It replaces the application's business logic."
+  D: "It provides the Kubernetes API server."
+answer: A
+explanation: |
+  Envoy is a high-performance L7/L4 proxy. As a sidecar it terminates and
+  initiates connections, applies policies, and generates telemetry; as a
+  gateway it handles edge traffic.
+solution: |
+  The Envoy proxy is the data plane worker of the mesh. As a sidecar, it
+  intercepts all inbound and outbound traffic for its workload, so routing
+  rules, retries, timeouts, circuit breaking, mutual TLS, and telemetry
+  generation are applied at the proxy without application changes. Envoy is a
+  high-performance L7 proxy with a rich filter model, and its dynamic
+  configuration is received from istiod over xDS. Standalone Envoy instances
+  run as ingress and egress gateways at the mesh boundary. Envoy does not
+  execute application logic or act as a control plane itself.
+checks:
+  - desc: Names the sidecar role
+    contains: "sidecar"
+  - desc: Mentions the L7 proxy
+    contains: "high-performance L7 proxy"
+  - desc: Mentions xDS configuration
+    contains: "xDS"
+  - desc: Names gateways
+    contains: "ingress and egress gateways"

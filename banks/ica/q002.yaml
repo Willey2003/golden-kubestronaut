@@ -1,0 +1,34 @@
+kind: knowledge
+domain: service-mesh-concepts
+level: core
+title: Capabilities gained from a mesh
+prompt: |
+  Which capability is typically obtained by adopting a service mesh, without
+  rewriting application code?
+options:
+  A: "mTLS between services, fine-grained traffic control, and consistent telemetry."
+  B: "Automatic database schema migrations."
+  C: "Replacement of the container runtime."
+  D: "Compilation of the application into native binaries."
+answer: A
+explanation: |
+  Meshes deliver security (mTLS), traffic management (routing, retries), and
+  observability (metrics, logs, traces) at the network layer, so applications
+  need no changes.
+solution: |
+  A service mesh provides three categories of value without application
+  changes: security through automatic mutual TLS (mTLS) between services,
+  traffic management through routing, retries, timeouts, and fault injection,
+  and observability through consistent metrics, logs, and distributed traces.
+  These features are implemented by the sidecar proxies on the network path,
+  not in the application code. Database migrations, container runtimes, and
+  binary compilation are outside the scope of a service mesh.
+checks:
+  - desc: Names mTLS
+    contains: "mTLS"
+  - desc: Names traffic management
+    contains: "traffic management"
+  - desc: Names observability
+    contains: "observability"
+  - desc: Notes no application changes
+    contains: "without application"

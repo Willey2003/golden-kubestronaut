@@ -1,0 +1,37 @@
+kind: knowledge
+domain: opentelemetry-collector
+level: core
+title: Collector pipelines
+prompt: |
+  The Collector must receive OTLP data, batch it, and export it to a backend.
+  Which YAML section wires these components together?
+options:
+  A: "The service.pipelines configuration, which names receivers, processors, and exporters per pipeline."
+  B: "The exporters section alone, which defines everything."
+  C: "The extensions section, which runs the pipelines."
+  D: "A separate plugin file loaded by the agent."
+answer: A
+explanation: |
+  In the Collector's configuration, receivers, processors, and exporters are
+  declared as components, and the service.pipelines block connects them into
+  named pipelines, for example a traces pipeline listing an OTLP receiver, a
+  batch processor, and an OTLP exporter. The pipeline is what actually moves
+  data. Exporters define endpoints but not pipelines, extensions add auxiliary
+  features, and there is no plugin-file mechanism here.
+solution: |
+  The OpenTelemetry Collector processes telemetry through pipelines. Each
+  pipeline is declared in the service.pipelines section and wires together a
+  receiver, any number of processors, and an exporter, for example an OTLP
+  receiver, a batch processor, and an OTLP exporter. Components are declared
+  once in their own sections, then referenced by name in the pipeline. Data
+  flows through the pipeline in order, so operators control exactly how each
+  signal is handled.
+checks:
+  - desc: Wired in service.pipelines
+    contains: "service.pipelines"
+  - desc: Includes a receiver
+    contains: "receiver"
+  - desc: Includes a processor
+    contains: "processor"
+  - desc: Includes an exporter
+    contains: "exporter"

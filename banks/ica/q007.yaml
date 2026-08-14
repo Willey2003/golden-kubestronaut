@@ -1,0 +1,37 @@
+kind: knowledge
+domain: istio-architecture
+level: core
+title: Purpose of the Gateway resource
+prompt: |
+  An operator wants to expose a service to traffic from outside the cluster
+  over HTTP, keeping mTLS and routing policies intact. Which resource is the
+  primary place to configure this exposure in Istio?
+options:
+  A: "A Gateway resource that configures edge proxy listeners for the host and port."
+  B: "A DestinationRule with a circuit breaker."
+  C: "A PeerAuthentication policy."
+  D: "A ServiceEntry for external hosts."
+answer: A
+explanation: |
+  A Gateway defines listeners (port, hosts, TLS settings) on an edge proxy.
+  Traffic is then bound into the mesh via a VirtualService attached to that
+  gateway. The other options serve different purposes.
+solution: |
+  A Gateway resource configures the load balancer-facing proxies at the mesh
+  edge, declaring which ports and hosts listen for inbound traffic, optionally
+  with TLS termination settings. After a Gateway declares the listener, a
+  VirtualService bound to that gateway name routes the traffic to backend
+  services through the normal mesh data path, so routing and security policies
+  still apply. DestinationRule configures policies for subsets of services,
+  PeerAuthentication controls mTLS modes, and ServiceEntry registers external
+  services into the mesh. The Gateway itself does not define routing rules; it
+  defines where traffic can enter.
+checks:
+  - desc: Names the Gateway resource
+    contains: "Gateway resource"
+  - desc: Mentions edge proxy listeners
+    contains: "listener"
+  - desc: Explains binding with a VirtualService
+    contains: "VirtualService"
+  - desc: Notes TLS termination options
+    contains: "TLS termination"

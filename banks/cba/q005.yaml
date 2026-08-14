@@ -1,0 +1,37 @@
+kind: knowledge
+domain: ebpf-basics
+level: core
+title: What eBPF is
+prompt: |
+  A developer wants to add custom network behavior without changing kernel
+  source or loading kernel modules. Which technology enables safe, sandboxed
+  programs to run inside the kernel?
+options:
+  A: "eBPF, whose verified programs run in a restricted in-kernel virtual machine."
+  B: "A kernel module that recompiles the kernel at load time."
+  C: "A userspace daemon that intercepts every syscall by restarting processes."
+  D: "Cgroups v2, which replaces the need for kernel-level programs."
+answer: A
+explanation: |
+  eBPF allows programs to run inside the kernel in a safe, sandboxed way.
+  Before execution the kernel verifies the program, checking that it terminates,
+  cannot crash the kernel, and only accesses valid memory, then JIT-compiles it.
+  This powers Cilium's data path. Kernel modules run unverified privileged
+  code, a userspace syscall-interception daemon cannot observe kernel-internal
+  events, and cgroups are a control mechanism, not a way to run programs.
+solution: |
+  eBPF is a Linux technology that lets programs run inside the kernel in a
+  restricted sandbox. The verifier checks each program for safety, such as
+  finite loops, valid memory access, and termination, before the kernel
+  JIT-compiles and attaches it to hooks. This makes kernel-level extensions
+  such as Cilium's networking, policy, and load balancing safe and performant
+  without modifying kernel source or loading kernel modules.
+checks:
+  - desc: Names eBPF
+    contains: "eBPF"
+  - desc: Mentions the verifier
+    contains: "verifier"
+  - desc: Programs run in the kernel
+    contains: "kernel"
+  - desc: Programs are sandboxed
+    contains: "sandbox"

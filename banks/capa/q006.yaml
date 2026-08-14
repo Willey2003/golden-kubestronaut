@@ -1,0 +1,36 @@
+kind: knowledge
+domain: argo-cd
+level: deep
+title: Generating Applications with ApplicationSets
+prompt: |
+  An operator manages the same application in fifty namespaces across five
+  clusters. Creating fifty Application objects by hand is tedious. Which Argo
+  CD feature generates and manages Applications from a template?
+options:
+  A: "An ApplicationSet, which generates Applications per cluster, namespace, or list using generators."
+  B: "A Sync Wave annotation."
+  C: "A Repository credential."
+  D: "A health check hook."
+answer: A
+explanation: |
+  ApplicationSets use generators (list, git, cluster, matrix, merge) to produce
+  many Applications from one template. Sync waves control ordering, not
+  generation.
+solution: |
+  An ApplicationSet renders multiple Applications from a single template
+  combined with generators. Generators such as the cluster generator, list
+  generator, git generator, and matrix or merge combinations produce parameter
+  sets, and each combination is expanded into an Application with the template
+  values filled in. This lets one ApplicationSet cover many clusters and
+  namespaces, and Argo CD keeps the generated Applications in sync with the
+  template. Sync waves order resource application during a sync and do not
+  generate Applications, and repository credentials only authenticate to git.
+checks:
+  - desc: Names ApplicationSet
+    contains: "ApplicationSet"
+  - desc: Mentions generators
+    contains: "generators"
+  - desc: Notes the cluster generator
+    contains: "cluster generator"
+  - desc: Contrasts with sync waves
+    contains: "Sync waves"

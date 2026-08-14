@@ -1,0 +1,39 @@
+kind: knowledge
+domain: gitops-tooling
+level: core
+title: Flux controller responsibilities
+prompt: |
+  A team is evaluating Flux. Which statement correctly maps Flux's controllers
+  to their responsibilities?
+options:
+  A: "source-controller fetches and stores artifacts from Git or OCI; kustomize-controller applies kustomized manifests; helm-controller releases Helm charts; notification-controller forwards events."
+  B: "helm-controller fetches Git repositories and kustomize-controller installs charts."
+  C: "source-controller applies resources directly to the cluster."
+  D: "notification-controller is responsible for reconciling cluster state."
+answer: A
+explanation: |
+  Flux is built from focused controllers: source-controller watches sources
+  such as GitRepository, OCIRepository, and HelmRepository and stores fetched
+  artifacts; kustomize-controller builds Kustomize overlays and applies them;
+  helm-controller reconciles HelmRelease resources by installing and upgrading
+  charts; and notification-controller dispatches events to receivers such as
+  Slack or webhooks. The other options swap or misassign these
+  responsibilities.
+solution: |
+  Flux splits GitOps reconciliation across focused controllers. The
+  source-controller monitors sources such as GitRepository, OCIRepository, and
+  HelmRepository and caches the artifacts it fetches. The kustomize-controller
+  builds Kustomize overlays from those artifacts and applies the resulting
+  manifests, while the helm-controller reconciles HelmRelease resources to
+  install and upgrade charts. The notification-controller watches
+  reconciliation events and forwards them to receivers like Slack or generic
+  webhooks.
+checks:
+  - desc: Names the source-controller
+    contains: "source-controller"
+  - desc: Names the kustomize-controller
+    contains: "kustomize-controller"
+  - desc: Names the helm-controller
+    contains: "helm-controller"
+  - desc: Names the notification-controller
+    contains: "notification-controller"

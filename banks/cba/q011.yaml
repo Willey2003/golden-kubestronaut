@@ -1,0 +1,36 @@
+kind: knowledge
+domain: connectivity-security
+level: deep
+title: Encrypting pod-to-pod traffic
+prompt: |
+  An operator must encrypt pod-to-pod traffic traversing the cluster network.
+  Which Cilium feature applies?
+options:
+  A: "Cilium's built-in IPsec or WireGuard transparent encryption, enabled in the agent configuration."
+  B: "Wrapping every pod in a separate overlay network with TLS."
+  C: "Relying on HTTPS inside the applications only."
+  D: "Configuring kube-proxy to encrypt traffic between nodes."
+answer: A
+explanation: |
+  Cilium ships transparent encryption options, IPsec and WireGuard, that encrypt
+  pod-to-pod traffic between nodes at the data path with no application changes.
+  Encryption is enabled through the agent configuration, for example Helm values
+  such as encryption.type, and the Cilium CLI reports node status. App-level TLS
+  only protects specific protocols, per-pod overlay networks are impractical,
+  and kube-proxy does not encrypt traffic.
+solution: |
+  Cilium provides built-in transparent encryption for pod-to-pod traffic using
+  either IPsec or WireGuard. When enabled in the agent configuration, all
+  traffic between nodes is encrypted at the data path, so applications and their
+  protocols need no changes. Operators verify node encryption state with the
+  Cilium CLI, and the choice between IPsec and WireGuard is made at install
+  time because it affects agent behavior.
+checks:
+  - desc: Cites IPsec
+    contains: "IPsec"
+  - desc: Cites WireGuard
+    contains: "WireGuard"
+  - desc: Encryption is transparent
+    contains: "encrypt"
+  - desc: Enabled in the agent configuration
+    contains: "agent"

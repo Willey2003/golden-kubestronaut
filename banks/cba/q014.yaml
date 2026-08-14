@@ -1,0 +1,34 @@
+kind: knowledge
+domain: deployment-cilium
+level: core
+title: Installing Cilium
+prompt: |
+  Which is the standard way to install and manage Cilium in a cluster?
+options:
+  A: "Use the cilium CLI, via cilium install, or the official Helm chart, then verify with cilium status."
+  B: "Apply random DaemonSet YAML found on the internet directly."
+  C: "Compile Cilium from source and copy binaries to every node."
+  D: "Run a single kubectl run pod that programs all nodes' eBPF."
+answer: A
+explanation: |
+  Cilium is normally installed with the official Helm chart or with the cilium
+  CLI, which wraps the Helm chart with sensible defaults and auto-detects
+  configuration. After install, cilium status verifies that agents, the
+  operator, and the data path are healthy. Hand-rolled YAML, manual source
+  builds, or a single kubectl run pod are neither supported nor how the data
+  path, a DaemonSet, is meant to be deployed.
+solution: |
+  The supported installation paths for Cilium are the official Helm chart and
+  the cilium CLI, which installs the chart with auto-detected defaults for the
+  cluster. Cilium is then verified with cilium status and the cluster check,
+  and the kubectl plugin provides a Cilium view. Because the data path runs as
+  a DaemonSet, one install correctly places an agent on every node.
+checks:
+  - desc: Uses the Helm chart
+    contains: "Helm"
+  - desc: Uses cilium install
+    contains: "cilium CLI"
+  - desc: Data path is a DaemonSet
+    contains: "DaemonSet"
+  - desc: Verified with cilium status
+    contains: "cilium status"

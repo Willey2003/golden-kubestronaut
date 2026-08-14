@@ -1,0 +1,36 @@
+kind: knowledge
+domain: deployment-cilium
+level: deep
+title: Kube-proxy replacement
+prompt: |
+  A team wants to remove kube-proxy and have Cilium handle ClusterIP, NodePort,
+  LoadBalancer, and external traffic. Which Cilium feature makes this possible?
+options:
+  A: "Kube-proxy replacement, where eBPF programs in Cilium's agent implement Service handling directly."
+  B: "Running kube-proxy in user mode alongside Cilium."
+  C: "Disabling Services entirely and using headless DNS."
+  D: "A sidecar in every pod that NATs traffic to services."
+answer: A
+explanation: |
+  Cilium's kube-proxy replacement moves Service handling, including ClusterIP,
+  NodePort, LoadBalancer, and external and internal traffic, into eBPF, so
+  kube-proxy can be removed entirely. It supports the Service and topology
+  features Kubernetes expects and adds socket-level load balancing where the
+  kernel redirects connections directly. Disabling Services or relying on
+  sidecars removes functionality, and running kube-proxy defeats the purpose.
+solution: |
+  Cilium can fully replace kube-proxy by implementing Service handling in eBPF
+  inside the agent. ClusterIP, NodePort, LoadBalancer, and external traffic
+  paths are all processed by eBPF programs, eliminating the iptables overhead
+  and enabling socket-level load balancing where the kernel picks the backend
+  before the socket is even used. Removing kube-proxy simplifies the cluster
+  and improves performance at scale.
+checks:
+  - desc: Replaces kube-proxy
+    contains: "kube-proxy"
+  - desc: Service handling in eBPF
+    contains: "eBPF"
+  - desc: Handles ClusterIP
+    contains: "ClusterIP"
+  - desc: Provides load balancing
+    contains: "load balancing"

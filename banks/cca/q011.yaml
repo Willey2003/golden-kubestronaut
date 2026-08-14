@@ -1,0 +1,35 @@
+kind: knowledge
+domain: containers-k8s-cloud
+level: core
+title: Deployments and ReplicaSets
+prompt: |
+  An operator wants three identical copies of a web app running and
+  automatically replaced if one crashes. Which Kubernetes objects are the
+  natural fit?
+options:
+  A: "A Deployment, which manages a ReplicaSet that keeps the desired number of Pods running."
+  B: "A single Pod, because Pods scale themselves."
+  C: "A ConfigMap, which holds application settings."
+  D: "A NodePort Service only."
+answer: A
+explanation: |
+  Deployments manage replica sets of pods, and provide rolling updates,
+  rollbacks, and self-healing. A bare Pod has no replacement logic, while
+  ConfigMap and Service serve configuration and networking.
+solution: |
+  A Deployment is the workload object that maintains the desired number of
+  identical replicas. It manages a ReplicaSet underneath, which creates and
+  monitors Pods and replaces any that fail or are deleted, providing
+  self-healing and enabling rolling updates and rollbacks. A single Pod has no
+  controller to recreate it if it dies. A ConfigMap provides configuration
+  data, and a Service provides a stable network endpoint in front of the pods,
+  but neither creates or maintains replicas.
+checks:
+  - desc: Names the Deployment
+    contains: "Deployment"
+  - desc: Mentions the ReplicaSet
+    contains: "ReplicaSet"
+  - desc: Notes replacement on failure
+    contains: "replaces any that fail"
+  - desc: Contrasts a bare Pod
+    contains: "A single Pod"

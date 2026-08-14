@@ -1,0 +1,19 @@
+kind: knowledge
+domain: observability-advanced
+level: core
+title: Components that provide cluster-wide flow visibility UI
+prompt: |
+  An operator wants a UI that shows live network flows and a service map
+  across the whole cluster. Which pair of Cilium components provides this?
+options:
+  A: "hubble-relay and hubble-ui"
+  B: "prometheus and grafana"
+  C: "elasticsearch and kibana"
+  D: "jaeger and kiali"
+answer: A
+explanation: |
+  Hubble agents on each node expose local flows; hubble-relay aggregates
+  them into a single API and hubble-ui renders the web UI with the service
+  dependency graph and live flow stream. Prometheus/Grafana can visualize
+  Hubble metrics but do not show flows themselves, and the other pairs are
+  log/trace tooling that Cilium does not ship for flow visibility.

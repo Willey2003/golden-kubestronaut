@@ -1,0 +1,35 @@
+kind: knowledge
+domain: logs
+level: deep
+title: Correlating logs with traces
+prompt: |
+  A trace shows a failing span, and the operator wants the matching application
+  logs. How does OpenTelemetry connect logs to traces?
+options:
+  A: "Trace context, the trace and span IDs, is added to the log record's attributes so logs can be joined to their spans."
+  B: "Logs are correlated by timestamp rounded to the second."
+  C: "The backend guesses which log belongs to which trace by message text."
+  D: "Correlation is impossible with OpenTelemetry."
+answer: A
+explanation: |
+  When an application emits a log record while a span is active, the
+  OpenTelemetry Logs bridge can attach the current trace and span IDs to the
+  record's attributes. Backends can then query logs by trace ID and show them
+  beside the spans. Timestamp rounding, text guessing, and "impossible" are all
+  wrong; correlation is a first-class OpenTelemetry feature.
+solution: |
+  OpenTelemetry correlates logs with traces by attaching trace context to log
+  records. When a span is active and the application writes a log, the
+  instrumentation adds the current trace ID and span ID as attributes on the
+  record. Backends that understand this correlation can display all the logs
+  belonging to a trace alongside its spans, letting an operator jump from a
+  failing span straight to the relevant application output.
+checks:
+  - desc: Attaches the trace ID
+    contains: "trace ID"
+  - desc: Attaches the span ID
+    contains: "span ID"
+  - desc: Context rides in attributes
+    contains: "attributes"
+  - desc: Logs are joined to spans
+    contains: "correlates"

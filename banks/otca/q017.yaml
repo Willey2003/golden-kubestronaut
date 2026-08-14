@@ -1,0 +1,37 @@
+kind: knowledge
+domain: opentelemetry-collector
+level: core
+title: Collector agent vs gateway
+prompt: |
+  Where should the Collector run to receive telemetry from all cluster
+  workloads and centralize processing?
+options:
+  A: "As a gateway deployment, a dedicated service that workloads export to, while an agent sidecar or DaemonSet can collect locally."
+  B: "Only on the developer's laptop."
+  C: "Inside each application binary."
+  D: "In the browser."
+answer: A
+explanation: |
+  In a Kubernetes deployment, a Collector gateway runs as a standalone
+  deployment that receives data from many sources and applies centralized
+  processing such as batching, filtering, and exporting. An agent deployment, a
+  DaemonSet, can also run on each node to gather node-local data and forward it.
+  The Collector is an independent process, not embedded in applications or
+  browsers.
+solution: |
+  The Collector has two main deployment modes. An agent runs alongside
+  applications, as a sidecar or DaemonSet, to gather local telemetry and forward
+  it. A gateway is a standalone collector deployment that aggregates data from
+  many agents or applications, applies shared processing such as batching,
+  filtering, and redaction, and exports to one or more backends. Centralizing
+  processing in the gateway keeps per-service configuration small and
+  consistent.
+checks:
+  - desc: Names the gateway mode
+    contains: "gateway"
+  - desc: Names the agent mode
+    contains: "agent"
+  - desc: Agent can be a DaemonSet
+    contains: "DaemonSet"
+  - desc: Centralizes processing
+    contains: "processing"

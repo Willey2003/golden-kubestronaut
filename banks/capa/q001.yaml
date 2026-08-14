@@ -1,0 +1,36 @@
+kind: knowledge
+domain: gitops-concepts
+level: core
+title: What GitOps is
+prompt: |
+  A platform team wants application and infrastructure state to be driven
+  entirely from git. Which core practice defines GitOps?
+options:
+  A: "Git is the single source of truth for desired state, and automated processes apply and reconcile that state."
+  B: "Git is used only to store documentation."
+  C: "Git branches mirror database backups."
+  D: "Deployments are done by manually running commands from git history."
+answer: A
+explanation: |
+  GitOps makes git the single source of truth for desired state; agents pull
+  changes and reconcile the live environment. Documentation alone or manual
+  replay of commands is not GitOps.
+solution: |
+  GitOps is defined by making git the single source of truth for the desired
+  state of applications and infrastructure. Everything that runs in the
+  environment is described declaratively in git, and an automated process
+  observes the repository and continuously reconciles the live system to match
+  what is declared, applying committed changes and correcting drift. Because
+  history, review, and rollback all live in git, changes are peer-reviewed,
+  auditable, and reversible. Using git for documentation only, or replaying
+  commands manually, misses the essential automated reconciliation that GitOps
+  provides.
+checks:
+  - desc: Names git as the source of truth
+    contains: "single source of truth"
+  - desc: Names reconciliation
+    contains: "reconciles"
+  - desc: Notes automated application
+    contains: "automated process"
+  - desc: Mentions drift correction
+    contains: "drift"

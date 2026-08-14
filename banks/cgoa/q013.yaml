@@ -1,0 +1,38 @@
+kind: knowledge
+domain: gitops-security
+level: core
+title: Least privilege for the GitOps agent
+prompt: |
+  When connecting a GitOps agent to the cluster, what is the security best
+  practice for its RBAC permissions?
+options:
+  A: "Grant the agent only the permissions required to sync its declared resources."
+  B: "Grant the agent cluster-admin so it can always reconcile everything."
+  C: "Grant the agent read-only access and create temporary users for every sync."
+  D: "Run the agent with the credentials of a human operator."
+answer: A
+explanation: |
+  Least privilege means the agent's service account gets exactly the RBAC
+  permissions it needs, typically the ability to create, update, and delete the
+  resource types it manages, and nothing more. Broad cluster-admin grants are
+  unnecessary and dangerous if the agent is compromised, and using human
+  credentials or temporary users is neither least privilege nor auditable in
+  the same way. RBAC-scoped service accounts also make compliance reporting
+  straightforward.
+solution: |
+  The GitOps agent runs as a service account whose RBAC roles should implement
+  least privilege: permissions limited to the resource types, namespaces, and
+  verbs the agent actually reconciles. Restricting scope means a compromised
+  agent can only affect what it manages, and each agent can be limited to its
+  own namespaces or Applications. Least privilege is applied to the agent's own
+  access to the cluster, independent of the privileges users hold in the
+  cluster.
+checks:
+  - desc: Cites the least-privilege principle
+    contains: "least privilege"
+  - desc: Agent runs as a service account
+    contains: "service account"
+  - desc: Mentions RBAC
+    contains: "RBAC"
+  - desc: Scope limited to namespaces
+    contains: "namespaces"

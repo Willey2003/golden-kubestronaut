@@ -1,0 +1,13 @@
+id: cnpa
+title: CNPA Networking Associate Mock
+engine: mixed
+duration_minutes: 120
+pass_threshold: 0.7
+draw_size: 16
+seed: null
+domains:
+  cilium-networking: 0.25
+  service-mesh-cilium: 0.15
+  security-policies: 0.25
+  observability: 0.15
+  multinetworking: 0.20

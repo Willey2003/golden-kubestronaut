@@ -1,0 +1,36 @@
+kind: knowledge
+domain: kubernetes-cost-concepts
+level: deep
+title: Request-based vs usage-based allocation
+prompt: |
+  Two pods share a node. Pod A requests 4 CPU and uses 0.5; Pod B requests 0.5
+  and uses 4. Which workload should a cost model weight as more expensive?
+options:
+  A: "It depends on the allocation strategy: request-based models weight Pod A, usage-based models weight Pod B."
+  B: "Pod B is always more expensive because it uses more."
+  C: "Pod A is always more expensive because requests are the only signal."
+  D: "Both are free because they share a node."
+answer: A
+explanation: |
+  Allocation strategies differ. Request-based allocation weights cost by
+  resources requested, charging for reserved capacity, which favors Pod A.
+  Usage-based allocation weights by actual consumption, which favors Pod B.
+  Real FinOps setups often blend the two, since requests reserve capacity, a
+  real cost, while usage drives efficiency decisions. Neither signal is always
+  correct.
+solution: |
+  The cost of a shared node is distributed using an allocation strategy, and the
+  choice changes the result. A request-based model charges each pod for the
+  capacity it reserves, so Pod A, requesting 4 CPU, carries more cost despite
+  low usage. A usage-based model charges by what is actually consumed, making
+  Pod B the cost driver. Because requests reserve billable capacity while usage
+  reflects real demand, mature cost models blend both signals.
+checks:
+  - desc: Names the request-based model
+    contains: "request-based"
+  - desc: Names the usage-based model
+    contains: "usage-based"
+  - desc: Requests reserve capacity
+    contains: "reserves"
+  - desc: Distribution uses a strategy
+    contains: "allocation"

@@ -1,0 +1,19 @@
+kind: knowledge
+domain: operations-deployment
+level: quick
+title: Installing a package on Debian-based systems
+prompt: |
+  A Debian/Ubuntu server needs the `nginx` package installed from its
+  configured repositories. Which command does this?
+options:
+  A: "apt install nginx"
+  B: "yum install nginx"
+  C: "dnf install nginx"
+  D: "rpm -i nginx"
+answer: A
+explanation: |
+  Debian and Ubuntu use the `apt` front end; `apt install nginx`
+  resolves and installs the package and its dependencies from the
+  configured repositories. `yum` and `dnf` are the package managers for
+  RHEL-family distributions, and `rpm -i` installs a standalone `.rpm`
+  file without resolving dependencies from repositories.

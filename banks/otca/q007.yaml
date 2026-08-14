@@ -1,0 +1,36 @@
+kind: knowledge
+domain: traces
+level: deep
+title: Sampling traces
+prompt: |
+  A high-traffic service cannot store every trace. Which OpenTelemetry
+  mechanism selectively records a subset?
+options:
+  A: "Sampling, where head sampling at the SDK and tail sampling at the Collector decide which traces are kept."
+  B: "Truncating every span to a single attribute."
+  C: "Sending traces only on weekends."
+  D: "Storing traces in memory and dropping the oldest."
+answer: A
+explanation: |
+  Sampling controls which traces are recorded or forwarded. Head sampling makes
+  a decision at the start of the trace in the SDK, while tail sampling in the
+  Collector makes a decision after seeing spans of the trace, allowing rules
+  based on error status, latency, or other attributes. Dropping spans
+  arbitrarily, truncation, or time-based retention do not preserve complete
+  traces.
+solution: |
+  Sampling is how high-volume systems bound trace storage. Head sampling in the
+  SDK decides at trace creation whether to record the spans, so only a fraction
+  of traces are produced. Tail sampling in the Collector evaluates complete or
+  partial traces and keeps those that match rules, such as failed requests or
+  high latency, while discarding the rest. Combining both keeps costs in check
+  while preserving the traces that matter.
+checks:
+  - desc: Names head sampling
+    contains: "head sampling"
+  - desc: Names tail sampling
+    contains: "tail sampling"
+  - desc: Tail sampling runs in the Collector
+    contains: "Collector"
+  - desc: Keeps a subset of traces
+    contains: "traces"

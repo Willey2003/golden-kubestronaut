@@ -1,0 +1,36 @@
+kind: knowledge
+domain: gitops-tooling
+level: deep
+title: Helm charts in a GitOps workflow
+prompt: |
+  An operator uses Helm charts in a GitOps workflow. Which statement about
+  combining Helm with GitOps is most accurate?
+options:
+  A: "The chart and its values are stored in Git as the desired state, and the GitOps agent renders and applies the release."
+  B: "Helm is only usable without GitOps, because GitOps rejects templates."
+  C: "GitOps agents cannot track chart versions or values changes."
+  D: "Values must be passed at the command line on every sync."
+answer: A
+explanation: |
+  GitOps tools such as Argo CD and Flux treat charts as part of the declarative
+  desired state: the chart source and the values are referenced from Git or an
+  OCI registry, the agent renders the manifests, and reconciliation installs or
+  upgrades the release. Templates stay in the repository, version control tracks
+  chart and values changes, and nothing needs to be passed manually on each
+  sync. Helm is fully compatible with GitOps; options B, C, and D are incorrect.
+solution: |
+  Helm fits naturally into GitOps because charts and values are declarative
+  artifacts. The GitOps agent references the chart, from a Git or OCI source,
+  together with the values file, renders the manifests, and reconciles the
+  release, so upgrades and rollbacks are driven by changes in the repository.
+  Version control captures every chart and values change, giving the same
+  auditability and reproducibility for Helm releases as for plain manifests.
+checks:
+  - desc: Mentions Helm
+    contains: "Helm"
+  - desc: References the values file
+    contains: "values"
+  - desc: Agent reconciles the release
+    contains: "reconciles"
+  - desc: Changes driven through the repository
+    contains: "repository"

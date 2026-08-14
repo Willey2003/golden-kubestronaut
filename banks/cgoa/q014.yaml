@@ -1,0 +1,37 @@
+kind: knowledge
+domain: gitops-security
+level: core
+title: Storing secrets in a GitOps repository
+prompt: |
+  A GitOps repository must include the configuration for a database password.
+  What is the safest GitOps approach for handling that secret?
+options:
+  A: "Encrypt the secret at rest in the repository, for example with SOPS or SealedSecrets, so plaintext never appears in Git."
+  B: "Commit the plaintext password because the repository is private."
+  C: "Store the password in a branch that is never merged."
+  D: "Put the password in a comment above the manifest for clarity."
+answer: A
+explanation: |
+  Secret material must never be committed in plaintext, even in private
+  repositories, because repository history is difficult to scrub and private
+  access is not guaranteed. GitOps conventions encrypt secrets at rest in the
+  repository, using SOPS with a KMS or age keys, or SealedSecrets whose sealed
+  values are safe to commit, and decrypt only at apply time. Branches and
+  comments are still committed history and do not protect the value.
+solution: |
+  Secret management in GitOps means never storing plaintext secrets in the
+  repository. Tools such as SOPS encrypt individual values with a KMS, PGP, or
+  age key, and SealedSecrets encrypt the entire Secret so only the
+  cluster-local controller can decrypt it. The encrypted payload is committed
+  to Git, reviewable like any manifest, and decrypted only at apply time inside
+  the cluster. This keeps Git as the single source of truth without leaking
+  credentials.
+checks:
+  - desc: Cites SOPS
+    contains: "SOPS"
+  - desc: Cites SealedSecrets
+    contains: "SealedSecrets"
+  - desc: Secrets are encrypted at rest
+    contains: "encrypt"
+  - desc: No plaintext in Git
+    contains: "Git"

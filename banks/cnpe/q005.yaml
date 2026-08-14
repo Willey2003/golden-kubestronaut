@@ -1,0 +1,21 @@
+kind: knowledge
+domain: cluster-mesh
+level: core
+title: Per-cluster settings required for Cluster Mesh
+prompt: |
+  Two Cilium clusters will be joined into a Cluster Mesh. Which settings
+  must be configured per cluster so identities and routing stay consistent?
+options:
+  A: "A unique cluster ID and a unique cluster name per cluster"
+  B: "The same cluster name in both clusters"
+  C: "Unique IPAM pools assigned to every node"
+  D: "A shared kubeconfig mounted into the Cilium agents"
+answer: A
+explanation: |
+  Each cluster in a Cilium Cluster Mesh needs a unique `cluster-id` and
+  `cluster-name`. Identities are namespaced by cluster name so a pod in
+  one cluster does not collide with one in another, and the cluster ID
+  disambiguates the mesh. The clusters then share service discovery (via
+  the kvstore such as etcd, or the newer control-plane-based Cluster
+  Mesh) so remote services appear as local. Sharing a kubeconfig is not
+  how the mesh is configured.

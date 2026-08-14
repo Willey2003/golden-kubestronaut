@@ -1,0 +1,34 @@
+kind: knowledge
+domain: finops-practices
+level: core
+title: Showback vs chargeback
+prompt: |
+  A platform team reports each product's monthly Kubernetes cost to its
+  engineers but does not bill them. Which practice is this?
+options:
+  A: "Showback, reporting cost to owners without an actual internal transfer of funds."
+  B: "Chargeback, reporting cost with an internal monetary transfer."
+  C: "Neither, because costs must not be shared."
+  D: "Spot budgeting, which bills only at month end."
+answer: A
+explanation: |
+  Showback gives teams visibility into their cost without moving money;
+  chargeback actually charges business units through internal accounting. Both
+  use the same allocation data. Reporting to engineers without funds transfer is
+  showback; the other options misdescribe it.
+solution: |
+  Showback reports each team's cost back to them so owners understand what they
+  consume, without transferring money between internal budgets. Chargeback goes
+  further and actually bills business units through internal accounting, making
+  the allocation visible on their profit and loss statement. Both rely on the
+  same Kubernetes cost allocation, and teams often start with showback to build
+  cost culture before moving to chargeback.
+checks:
+  - desc: Names showback
+    contains: "Showback"
+  - desc: Reports cost to owners
+    contains: "cost"
+  - desc: Contrasts with chargeback
+    contains: "chargeback"
+  - desc: Relies on cost allocation
+    contains: "allocation"

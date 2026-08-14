@@ -1,0 +1,35 @@
+kind: knowledge
+domain: observability-cilium
+level: core
+title: Filtering flows with hubble observe
+prompt: |
+  An operator wants to see only traffic denied by policies in the payroll
+  namespace. Which approach fits Hubble?
+options:
+  A: "Run hubble observe with filters such as --namespace payroll and --verdict DROPPED."
+  B: "Run kubectl logs on every pod and grep for the word denied."
+  C: "Restart the cilium-operator and watch the events stream."
+  D: "Query the service map, which only shows allowed traffic."
+answer: A
+explanation: |
+  The hubble CLI filters live flow output by labels, namespace, identity,
+  protocol, port, and verdict, where DROPPED marks policy-denied flows.
+  Combining a namespace filter with a verdict filter gives exactly the denied
+  flows in that namespace. Application logs rarely carry policy verdicts,
+  operator restarts do not generate flow history, and the service map is an
+  aggregation, not a per-flow filter.
+solution: |
+  hubble observe streams and filters live flows from the eBPF data path. Filters
+  such as --namespace and --verdict DROPPED select only the flows that match, so
+  an operator can isolate policy-denied traffic in a specific namespace. The
+  output shows the five-tuple plus Kubernetes metadata and the policy identity
+  involved, making root-cause analysis of blocked traffic quick and targeted.
+checks:
+  - desc: Uses hubble observe
+    contains: "hubble observe"
+  - desc: Filters by verdict DROPPED
+    contains: "DROPPED"
+  - desc: Filters by namespace
+    contains: "namespace"
+  - desc: Applies a filter
+    contains: "filter"

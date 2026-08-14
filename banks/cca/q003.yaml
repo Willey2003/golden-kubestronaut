@@ -1,0 +1,36 @@
+kind: knowledge
+domain: cloud-computing-concepts
+level: core
+title: Scalability vs elasticity
+prompt: |
+  A web app automatically provisions more instances as traffic rises and
+  releases them when traffic falls, with no human action. Which characteristic
+  is being demonstrated?
+options:
+  A: "Elasticity, the ability to scale resources up and down automatically in response to demand."
+  B: "Scalability alone, the capacity to handle growth with manual provisioning."
+  C: "Resiliency, the ability to survive failures."
+  D: "Metering, the tracking of usage for billing."
+answer: A
+explanation: |
+  Elasticity is automatic, dynamic scaling with demand; scalability is the
+  general capacity to grow. Automatic provisioning and releasing of instances
+  is the canonical elasticity example.
+solution: |
+  Elasticity is the ability of a cloud service to automatically scale resources
+  up or down to match current demand, adding instances when traffic rises and
+  releasing them when it falls, without manual intervention. Scalability is the
+  broader capacity of a system to handle increased load, which may be achieved
+  manually or automatically. The scenario describes automated response, so
+  elasticity is the precise term. Resiliency concerns recovery from failures,
+  and metering is the measurement of resource usage for billing and chargeback,
+  neither of which involves dynamic capacity adjustment.
+checks:
+  - desc: Names elasticity
+    contains: "Elasticity"
+  - desc: Distinguishes scalability
+    contains: "Scalability"
+  - desc: Notes automatic scaling
+    contains: "automatically"
+  - desc: Mentions releasing resources
+    contains: "releasing"

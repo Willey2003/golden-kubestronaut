@@ -1,0 +1,40 @@
+kind: hands-on
+domain: advanced-cilium
+level: core
+title: Host firewall policy allowing inbound SSH
+prompt: |
+  Using Cilium's host firewall, create a CiliumClusterwideNetworkPolicy
+  named `host-ssh` that applies to host endpoints on nodes labeled
+  `node-role.kubernetes.io/control-plane=true` and allows inbound SSH
+  (TCP port 22) from any source (the `world` entity).
+solution: |
+  cat <<'EOF' | kubectl apply -f -
+  apiVersion: cilium.io/v2
+  kind: CiliumClusterwideNetworkPolicy
+  metadata:
+    name: host-ssh
+  spec:
+    nodeSelector:
+      matchLabels:
+        node-role.kubernetes.io/control-plane: "true"
+    ingress:
+    - fromEntities:
+      - world
+      toPorts:
+      - ports:
+        - port: "22"
+          protocol: TCP
+  EOF
+checks:
+  - desc: CiliumClusterwideNetworkPolicy host-ssh exists
+    run: kubectl get ccnp host-ssh -o name
+    equals: ciliumclusterwidenetworkpolicy.cilium.io/host-ssh
+  - desc: Policy targets control-plane host endpoints
+    run: "kubectl get ccnp host-ssh -o jsonpath='{.spec.nodeSelector.matchLabels.node-role\\.kubernetes\\.io/control-plane}'"
+    equals: "true"
+  - desc: Ingress is allowed from the world entity
+    run: "kubectl get ccnp host-ssh -o jsonpath='{.spec.ingress[0].fromEntities}'"
+    contains: world
+  - desc: Allowed port is TCP 22
+    run: "kubectl get ccnp host-ssh -o jsonpath='{.spec.ingress[0].toPorts[0].ports[0].port}'"
+    equals: 22

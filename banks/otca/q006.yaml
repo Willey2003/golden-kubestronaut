@@ -1,0 +1,36 @@
+kind: knowledge
+domain: traces
+level: core
+title: Span attributes, events, and status
+prompt: |
+  A span recorded a failed database query. Which span data is best for
+  capturing the error detail?
+options:
+  A: "A span event with attributes describing the failure, plus span status set to ERROR."
+  B: "Only a status of OK with a longer duration."
+  C: "A second span with no attributes."
+  D: "A log record in a different file, never linked."
+answer: A
+explanation: |
+  Span status communicates the overall outcome, OK, ERROR, or UNSET, and span
+  events record timestamped, human-readable annotations, ideal for logging an
+  exception with attributes such as the message and stack. Combining status
+  ERROR with an event that carries the error detail is the canonical pattern. A
+  misleading OK status, a bare span, or an unlinked log line loses the
+  correlation.
+solution: |
+  Spans carry rich, structured data: attributes are key/value pairs describing
+  the operation; events are timestamped annotations that can record exceptions
+  with a message, stack trace, and other attributes; and span status signals the
+  outcome, with ERROR marking a failed operation. Recording an error as both a
+  span event with the exception details and a span status of ERROR gives the
+  tracing backend the full picture for failure analysis.
+checks:
+  - desc: Mentions span events
+    contains: "events"
+  - desc: Attributes carry the detail
+    contains: "attributes"
+  - desc: Status signals ERROR
+    contains: "ERROR"
+  - desc: Names span status
+    contains: "status"

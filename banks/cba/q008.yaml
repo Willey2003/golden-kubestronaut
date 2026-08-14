@@ -1,0 +1,36 @@
+kind: knowledge
+domain: connectivity-security
+level: core
+title: CiliumNetworkPolicy L3/L4/L5
+prompt: |
+  A pod must only accept HTTPS from pods labeled app=web and only on port 443.
+  Which Cilium policy expresses this rule?
+options:
+  A: "A CiliumNetworkPolicy with an endpointSelector for the pod, fromEndpoints for app=web, and toPorts for 443."
+  B: "A Kubernetes NetworkPolicy that allows all traffic on any port."
+  C: "A NodePort Service filtering by source IP."
+  D: "A NetworkPolicy using pod CIDR ranges instead of labels."
+answer: A
+explanation: |
+  CiliumNetworkPolicy selects the affected pods with an endpointSelector and
+  expresses L3 (who), L4 (ports), and L5 (for example HTTP) rules. Here the
+  ingress rule uses fromEndpoints with matchLabels app=web plus toPorts
+  restricted to TCP 443. NetworkPolicy with CIDRs would be address-based,
+  NodePort filtering cannot enforce per-pod policy, and the other options do
+  not express the L4 constraint.
+solution: |
+  CiliumNetworkPolicy describes access with endpoint selectors instead of
+  addresses. The rule targets the protected pod with an endpointSelector,
+  defines who may connect with fromEndpoints selecting app=web pods, and
+  constrains L4 with toPorts to TCP 443. L5 rules extend this to
+  protocol-aware matching such as HTTP methods and paths. Together these layers
+  express precise, identity-based access without referencing IPs.
+checks:
+  - desc: Uses an endpointSelector
+    contains: "endpointSelector"
+  - desc: Selects sources with fromEndpoints
+    contains: "fromEndpoints"
+  - desc: Restricts ports with toPorts
+    contains: "toPorts"
+  - desc: Constrains to TCP 443
+    contains: "443"

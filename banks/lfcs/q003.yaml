@@ -1,0 +1,20 @@
+kind: knowledge
+domain: essential-commands
+level: deep
+title: Print the ten most frequent lines
+prompt: |
+  You need the ten most frequently occurring lines in `access.log`, listed
+  most frequent first. Which pipeline does this?
+options:
+  A: "sort access.log | uniq -c | sort -rn | head -10"
+  B: "uniq -c access.log | sort -n | head -10"
+  C: "sort access.log | uniq -c | head -10"
+  D: "cat access.log | sort -rn | uniq | head -10"
+answer: A
+explanation: |
+  `sort` groups identical adjacent lines so `uniq -c` can count them;
+  `sort -rn` orders the counts numerically in descending order (most
+  frequent first); `head -10` keeps the top ten. Without the initial
+  `sort`, `uniq` only collapses directly adjacent lines, so B is wrong;
+  C sorts but never reorders by count; D's `sort -rn` sorts text, not
+  counts.

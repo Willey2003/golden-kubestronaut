@@ -1,0 +1,38 @@
+kind: knowledge
+domain: traffic-management
+level: core
+title: VirtualService vs DestinationRule
+prompt: |
+  An engineer wants to route 90% of traffic to version v1 and 10% to v2, and
+  then define connection pool limits for the v2 subset. Which pair of resources
+  implements this?
+options:
+  A: "A VirtualService for the weighted route and a DestinationRule for the subset connection pool policies."
+  B: "Two Gateways, one per version."
+  C: "A ServiceEntry and a PeerAuthentication."
+  D: "An EnvoyFilter with no other resources."
+answer: A
+explanation: |
+  A VirtualService defines routing (weights, headers, hosts); a DestinationRule
+  defines subsets and per-subset policies like connection pools, load
+  balancing, and TLS. This split is central to Istio traffic management.
+solution: |
+  Traffic routing is split between two complementary resources. A
+  VirtualService describes how traffic is routed: which hosts and ports match,
+  which subsets receive which share of traffic, and how matches on headers and
+  paths behave. A DestinationRule defines the subsets (such as v1 and v2) and
+  the policies applied to them, including connection pool limits, outlier
+  detection, load balancing, and TLS settings. Weighted routing in the
+  VirtualService combined with subsets in the DestinationRule is the standard
+  way to implement canary deployments. The Gateway handles edge listeners,
+  ServiceEntry handles external hosts, and neither replaces these two
+  resources.
+checks:
+  - desc: Names the VirtualService
+    contains: "VirtualService"
+  - desc: Names the DestinationRule
+    contains: "DestinationRule"
+  - desc: Mentions weighted routing
+    contains: "Weighted"
+  - desc: Mentions subsets
+    contains: "subsets"

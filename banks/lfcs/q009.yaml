@@ -1,0 +1,18 @@
+kind: knowledge
+domain: networking
+level: core
+title: Displaying the IP routing table
+prompt: |
+  A host is not reaching a remote network and you need to inspect its
+  routes. Which command shows the current IP routing table?
+options:
+  A: "ip route"
+  B: "ip addr show route"
+  C: "route -C"
+  D: "netstat -at"
+answer: A
+explanation: |
+  `ip route` (equivalently `ip route show`) prints the kernel's routing
+  table, including the default route and connected subnets. `ip addr`
+  shows only addresses, `route -C` dumps the route cache (not the
+  table), and `netstat -at` lists TCP sockets, not routes.

@@ -1,0 +1,36 @@
+kind: knowledge
+domain: argo-workflows
+level: core
+title: Passing parameters and artifacts
+prompt: |
+  A workflow step produces a file that the next step must consume, and each
+  step needs parameters that vary per run. How does Argo Workflows handle
+  passing these?
+options:
+  A: "Steps declare inputs and outputs; artifacts are stored in an artifact repository and parameters are passed between templates."
+  B: "Steps read each other's container logs directly."
+  C: "Parameters are hardcoded in image tags."
+  D: "Files are transferred over SSH between pods."
+answer: A
+explanation: |
+  Workflow templates declare inputs.parameters and inputs.artifacts; outputs
+  are produced and saved (S3, GCS, etc.), then referenced by dependent steps.
+  This is declarative, not log parsing or SSH.
+solution: |
+  Argo Workflows passes data between steps with inputs and outputs. A template
+  declares its inputs, such as parameters and artifacts, and produces outputs,
+  such as result parameters or generated files. Output artifacts are stored in
+  a configured artifact repository, commonly an S3-compatible or GCS bucket,
+  and dependent steps fetch them. Parameters flow between templates by
+  reference, so a run can be parameterized per invocation. Parsing logs or
+  using SSH between pods would be brittle and is not how the engine works;
+  declaring inputs and outputs keeps workflows reproducible and retryable.
+checks:
+  - desc: Names inputs and outputs
+    contains: "inputs"
+  - desc: Names the artifact repository
+    contains: "artifact repository"
+  - desc: Mentions parameters
+    contains: "parameters"
+  - desc: Notes parameterization
+    contains: "parameterized"

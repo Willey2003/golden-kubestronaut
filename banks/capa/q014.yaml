@@ -1,0 +1,35 @@
+kind: knowledge
+domain: argo-events-rollouts
+level: core
+title: Types of EventSources
+prompt: |
+  Which of the following can serve as an Argo Events EventSource?
+options:
+  A: "An HTTP/webhook endpoint, a cron schedule, an S3 bucket, or a Kafka topic."
+  B: "Only a git commit hook."
+  C: "Only a Kubernetes Job."
+  D: "Only a DNS record."
+answer: A
+explanation: |
+  Argo Events ships many EventSource types: webhook, cron, s3, kafka, amqp,
+  mqtt, github, gitlab, redis, and more. The EventSource converts external
+  activity into cloud events consumed by Sensors.
+solution: |
+  Argo Events provides a wide catalog of EventSource types, including the
+  webhook source for HTTP and CI callbacks, the cron source for time-based
+  events, the S3 source for object storage events, the Kafka and NATS sources
+  for message queues, and source integrations for GitHub, GitLab, and many
+  others. Each EventSource converts external activity into standardized events
+  that Sensors subscribe to. The only restriction is the source type: a custom
+  or unsupported source can be bridged with a generic webhook or message queue
+  rather than a DNS record or a Kubernetes Job, which produce no events on
+  their own.
+checks:
+  - desc: Names the webhook source
+    contains: "webhook"
+  - desc: Names the cron source
+    contains: "cron"
+  - desc: Names the S3 source
+    contains: "S3"
+  - desc: Names a message queue source
+    contains: "Kafka"

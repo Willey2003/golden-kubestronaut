@@ -1,0 +1,37 @@
+kind: knowledge
+domain: cilium-fundamentals
+level: core
+title: Identity-based security
+prompt: |
+  A security team wants policies that follow workloads as they move across
+  nodes, instead of being tied to IP addresses. Which Cilium concept makes this
+  possible?
+options:
+  A: "Security identities derived from labels, which CiliumNetworkPolicies reference."
+  B: "Static IP addresses assigned at install time and never changed."
+  C: "Pod CIDR ranges manually maintained by operators."
+  D: "DNS names hard-coded into policy files."
+answer: A
+explanation: |
+  Cilium maps each pod's Kubernetes labels to a numeric security identity.
+  Policies select endpoints by labels and are enforced based on these
+  identities, so when a pod is rescheduled to another node its identity follows
+  it and policy continues to apply. Static IPs, hand-maintained CIDRs, and
+  hard-coded DNS names all reintroduce address dependence that the identity
+  model removes.
+solution: |
+  Cilium derives a security identity from the labels of each endpoint, and
+  identities, not IP addresses, are the unit of enforcement for
+  CiliumNetworkPolicies. When a workload is rescheduled, its labels and identity
+  move with it, so policy continues to apply on the new node without any address
+  updates. This identity-based model scales far beyond address-based filtering
+  and survives churn.
+checks:
+  - desc: Identities are derived from labels
+    contains: "identity"
+  - desc: Policies select by labels
+    contains: "labels"
+  - desc: References CiliumNetworkPolicies
+    contains: "CiliumNetworkPolicies"
+  - desc: Not tied to IP addresses
+    contains: "IP addresses"

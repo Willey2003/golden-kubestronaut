@@ -1,0 +1,13 @@
+id: otca
+title: OTCA OpenTelemetry Certified Associate Mock
+engine: knowledge
+duration_minutes: 90
+pass_threshold: 0.7
+draw_size: 18
+seed: null
+domains:
+  telemetry-concepts: 0.15
+  traces: 0.25
+  metrics: 0.20
+  logs: 0.15
+  opentelemetry-collector: 0.25

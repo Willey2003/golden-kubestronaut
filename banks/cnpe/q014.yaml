@@ -1,0 +1,46 @@
+kind: hands-on
+domain: cluster-mesh
+level: core
+title: Allow node and cluster entities to reach a database
+prompt: |
+  Create the namespace `cnpe-q14`. Create a CiliumNetworkPolicy named
+  `node-access` in that namespace that allows pods labeled `app=db` to
+  receive traffic on TCP port 5432 only from node (host) endpoints and
+  other cluster endpoints, using the `remote-node` and `cluster` entities.
+solution: |
+  kubectl create ns cnpe-q14
+  cat <<'EOF' | kubectl apply -f -
+  apiVersion: cilium.io/v2
+  kind: CiliumNetworkPolicy
+  metadata:
+    name: node-access
+    namespace: cnpe-q14
+  spec:
+    endpointSelector:
+      matchLabels:
+        app: db
+    ingress:
+    - fromEntities:
+      - remote-node
+      - cluster
+      toPorts:
+      - ports:
+        - port: "5432"
+          protocol: TCP
+  EOF
+checks:
+  - desc: Namespace cnpe-q14 exists
+    run: kubectl get ns cnpe-q14 -o name
+    equals: namespace/cnpe-q14
+  - desc: CiliumNetworkPolicy node-access exists
+    run: kubectl -n cnpe-q14 get cnp node-access -o name
+    equals: ciliumnetworkpolicy.cilium.io/node-access
+  - desc: Ingress sources include the remote-node entity
+    run: "kubectl -n cnpe-q14 get cnp node-access -o jsonpath='{.spec.ingress[0].fromEntities}'"
+    contains: remote-node
+  - desc: Ingress sources include the cluster entity
+    run: "kubectl -n cnpe-q14 get cnp node-access -o jsonpath='{.spec.ingress[0].fromEntities}'"
+    contains: cluster
+  - desc: Allowed port is TCP 5432
+    run: "kubectl -n cnpe-q14 get cnp node-access -o jsonpath='{.spec.ingress[0].toPorts[0].ports[0].port}'"
+    equals: 5432

@@ -1,0 +1,18 @@
+kind: knowledge
+domain: system-services
+level: core
+title: Start a service now and at boot
+prompt: |
+  The `httpd` service must start immediately and also automatically at
+  every boot. Which single command accomplishes both?
+options:
+  A: "systemctl enable --now httpd"
+  B: "systemctl start --persist httpd"
+  C: "systemctl --always httpd"
+  D: "systemctl reboot httpd"
+answer: A
+explanation: |
+  `systemctl enable --now httpd` enables the unit for automatic start at
+  boot and starts it in the same command. `start` alone only runs it now,
+  `--persist` and `--always` are not valid start options, and `reboot`
+  restarts the machine rather than the service.

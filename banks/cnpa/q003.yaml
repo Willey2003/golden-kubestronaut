@@ -1,0 +1,21 @@
+kind: knowledge
+domain: cilium-networking
+level: deep
+title: What determines a Cilium security identity
+prompt: |
+  Cilium tags every endpoint with a numeric security identity that is used
+  to make policy decisions. What primarily determines that identity?
+options:
+  A: "The labels attached to the endpoint (its pod)."
+  B: "The pod's IP address and subnet."
+  C: "The namespace name alone."
+  D: "The image digest of the container."
+answer: A
+explanation: |
+  Cilium derives an endpoint's security identity from its Kubernetes
+  labels: pods with the same labels share one identity, so policy can be
+  expressed as "allow the frontend identity to reach the backend identity"
+  regardless of IPs. This is what makes identity-aware (label-based)
+  policies stable across pod rescheduling and cluster mesh deployments.
+  IPs, namespace names alone, and image digests are not the basis for
+  identity assignment.

@@ -1,0 +1,36 @@
+kind: knowledge
+domain: service-mesh-concepts
+level: core
+title: What a service mesh is
+prompt: |
+  An architect wants to introduce a layer that manages service-to-service
+  communication without changing application code. Which description best
+  matches a service mesh?
+options:
+  A: "A dedicated infrastructure layer for service-to-service communication, implemented with proxies that are transparent to application code."
+  B: "A service discovery tool that only resolves DNS names."
+  C: "An API gateway for exposing public HTTP APIs only."
+  D: "A logging aggregation system for microservices."
+answer: A
+explanation: |
+  A service mesh is a dedicated layer, typically sidecar proxies, that handles
+  communication, security, and observability between services. API gateways
+  handle north-south traffic; service meshes focus on east-west traffic.
+solution: |
+  A service mesh is a dedicated infrastructure layer that handles
+  service-to-service (east-west) communication. Istio implements it with a
+  data plane of Envoy proxies deployed as sidecars alongside each workload and
+  a control plane (istiod) that configures them. The mesh intercepts traffic,
+  so features like mutual TLS, retries, traffic splitting, and telemetry work
+  without changing application code. An API gateway is a related but separate
+  concept for north-south traffic, and service discovery alone does not provide
+  the traffic management and security features of a mesh.
+checks:
+  - desc: Describes the dedicated layer
+    contains: "dedicated infrastructure layer"
+  - desc: Names sidecar proxies
+    contains: "sidecars"
+  - desc: Names the control plane istiod
+    contains: "istiod"
+  - desc: Contrasts with the API gateway
+    contains: "API gateway"

@@ -1,0 +1,38 @@
+kind: knowledge
+domain: gitops-security
+level: deep
+title: Supply-chain verification for GitOps
+prompt: |
+  A team wants to ensure only verified changes reach production via GitOps.
+  Which set of controls best supports software-supply-chain security?
+options:
+  A: "Sign commits or tags and verify image signatures such as cosign as part of the sync policy."
+  B: "Rely on the fact that only two people have repository access."
+  C: "Verify the repository by reading its README before merge."
+  D: "Use a fresh access token for each contributor to push directly to main."
+answer: A
+explanation: |
+  Supply-chain security for GitOps combines authenticity of the change, signed
+  commits and tags verified by the agent, with integrity of the artifacts,
+  container images signed with cosign and verified before deployment. Who has
+  access is about authorization, not authenticity, reading a README verifies
+  nothing, and pushing directly to main without review or signing removes both
+  gates. Signed and verified provenance is what makes the chain trustworthy end
+  to end.
+solution: |
+  Protecting the GitOps supply chain requires verifying both the change and the
+  artifacts it introduces. Commits and tags can be signed and the GitOps agent
+  configured to verify signatures, so only authenticated changes are synced.
+  Container images are signed with tools such as cosign and the signatures are
+  verified by admission or by the GitOps tool before deployment. Combined,
+  these controls make the pipeline from commit to running workload verifiable
+  end to end.
+checks:
+  - desc: Verifies commit signatures
+    contains: "signatures"
+  - desc: Cites cosign
+    contains: "cosign"
+  - desc: Only verified changes are synced
+    contains: "verified"
+  - desc: Pipeline is verifiable end to end
+    contains: "GitOps"

@@ -1,0 +1,19 @@
+kind: knowledge
+domain: essential-commands
+level: core
+title: Create a gzipped tar archive
+prompt: |
+  You must back up the entire `/etc` directory into a gzip-compressed
+  archive named `etc-backup.tar.gz`. Which command creates it?
+options:
+  A: "tar czf etc-backup.tar.gz /etc"
+  B: "tar xzf /etc etc-backup.tar.gz"
+  C: "gzip -c /etc > etc-backup.tar.gz"
+  D: "tar cf etc-backup.tar.gz /etc"
+answer: A
+explanation: |
+  `tar czf` combines `-c` (create), `-z` (gzip compression), and `-f`
+  (archive filename), producing `etc-backup.tar.gz` from `/etc`. `-x`
+  extracts instead of creating, `gzip` only compresses a single file (it
+  cannot archive a directory), and `tar cf` produces an uncompressed
+  `.tar`, not a gzipped archive.

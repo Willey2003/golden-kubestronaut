@@ -1,0 +1,37 @@
+kind: knowledge
+domain: infrastructure-automation
+level: core
+title: Infrastructure as code with Terraform
+prompt: |
+  A team wants to define their cloud resources (networks, VMs, storage) as code
+  in a repository and have the tool figure out and apply the differences. Which
+  tool and approach fits best?
+options:
+  A: "Terraform, which manages resources declaratively from HCL and applies only the detected differences using its state."
+  B: "A spreadsheet documenting what is running."
+  C: "SSH scripts run manually once."
+  D: "A monitoring dashboard."
+answer: A
+explanation: |
+  Terraform is declarative IaC: it reads desired resources from HCL, compares
+  with its state file and the real infrastructure, and builds a plan of changes
+  to apply. This is drift-driven, reproducible automation.
+solution: |
+  Terraform is an infrastructure as code tool that lets teams declare cloud
+  resources in HCL files stored in version control. It maintains a state file
+  that tracks the relationship between the declared resources and real
+  infrastructure, then computes a plan that shows exactly what will be created,
+  changed, or destroyed, and applies those differences. Because the
+  infrastructure is defined as code, it is reviewable, reusable, and
+  reproducible across environments. Manual SSH scripting is imperative and hard
+  to audit, spreadsheets drift instantly, and dashboards observe rather than
+  provision.
+checks:
+  - desc: Names Terraform
+    contains: "Terraform"
+  - desc: Mentions declarative HCL
+    contains: "HCL"
+  - desc: Mentions the state file
+    contains: "state file"
+  - desc: Notes the plan/apply workflow
+    contains: "plan"

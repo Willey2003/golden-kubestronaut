@@ -1,0 +1,35 @@
+kind: knowledge
+domain: traces
+level: quick
+title: Traces, spans, and trace IDs
+prompt: |
+  A request crosses five microservices. What telemetry object ties all the work
+  for that one request together?
+options:
+  A: "A trace composed of spans, all sharing a trace ID, connected by parent-child relationships."
+  B: "A single metric with a unique label."
+  C: "One log line duplicated in each service."
+  D: "A network capture file per service."
+answer: A
+explanation: |
+  A trace is a tree of spans that represents a single logical operation. All
+  spans in the trace share a trace ID, and each span has its own span ID plus a
+  parent span ID, forming the parent-child relationship that shows the request's
+  path across services. Metrics and logs are not structured this way, and
+  packet captures do not carry the application-level request context.
+solution: |
+  A trace represents one logical operation, such as a user request, as a tree
+  of spans. Every span in the trace shares the same trace ID, while each span
+  has its own span ID and records its parent span ID, encoding the flow through
+  services. The resulting hierarchy shows timing and dependencies: the client
+  span at the root, then a span per service call, each with its own duration and
+  status.
+checks:
+  - desc: Names the trace
+    contains: "trace"
+  - desc: Traces are made of spans
+    contains: "spans"
+  - desc: Spans share a trace ID
+    contains: "trace ID"
+  - desc: Records the parent relationship
+    contains: "parent"

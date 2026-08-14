@@ -1,0 +1,39 @@
+kind: knowledge
+domain: argo-events-rollouts
+level: core
+title: Progressive delivery with Argo Rollouts
+prompt: |
+  A team wants canary and blue-green deployments with automated analysis,
+  something Deployments do not offer natively. Which resource does Argo
+  Rollouts introduce?
+options:
+  A: "A Rollout custom resource, which manages ReplicaSets like a Deployment but adds progressive delivery strategies."
+  B: "A ServiceEntry for canary traffic."
+  C: "An EnvoyFilter."
+  D: "A HorizontalPodAutoscaler."
+answer: A
+explanation: |
+  A Rollout looks like a Deployment (it owns ReplicaSets) but supports canary
+  and blue-green strategies, step-based weight increases, traffic routing, and
+  analysis during the rollout.
+solution: |
+  Argo Rollouts introduces the Rollout custom resource. A Rollout is managed
+  like a Deployment, owning ReplicaSets and providing the standard scale and
+  update semantics, but it adds progressive delivery strategies. The canary
+  strategy steps the new version up through weight percentages over time,
+  optionally splitting real traffic with a traffic management integration such
+  as Istio, and can pause or abort based on analysis. The blue-green strategy
+  runs old and new versions side by side with preview and active services
+  before switching. AnalysisTemplates and AnalysisRuns evaluate metrics during
+  the rollout and can block or roll it back. ServiceEntry and EnvoyFilter are
+  Istio objects, and an autoscaler changes replica counts rather than rollout
+  strategy.
+checks:
+  - desc: Names the Rollout CRD
+    contains: "Rollout custom resource"
+  - desc: Notes it owns ReplicaSets
+    contains: "ReplicaSets"
+  - desc: Names the canary strategy
+    contains: "canary"
+  - desc: Names the blue-green strategy
+    contains: "blue-green"

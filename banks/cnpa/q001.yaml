@@ -1,0 +1,22 @@
+kind: knowledge
+domain: cilium-networking
+level: core
+title: How Cilium implements packet forwarding and policy
+prompt: |
+  An administrator is explaining how Cilium provides connectivity and
+  policy enforcement on a Kubernetes cluster. Which statement correctly
+  describes Cilium's data plane?
+options:
+  A: "Cilium compiles eBPF programs and loads them into the Linux kernel, attaching them to hooks such as tc and XDP."
+  B: "Cilium forwards every packet through a user-space proxy that inspects traffic at the application layer."
+  C: "Cilium depends on kube-proxy's iptables rules for all forwarding and policy decisions."
+  D: "Cilium requires a sidecar container in every pod to relay traffic to its destination."
+answer: A
+explanation: |
+  Cilium is an eBPF-based CNI: it compiles BPF programs at runtime and
+  attaches them to kernel hooks (tc, XDP, cgroup/socket) so forwarding,
+  load balancing, and policy decisions happen in the kernel without the
+  overhead of userspace proxying or per-pod sidecars. The userspace agent
+  only programs these kernels; it is not on the data path. kube-proxy's
+  iptables mode is an alternative implementation Cilium actively replaces,
+  and per-pod sidecars are not required by Cilium itself.

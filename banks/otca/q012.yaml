@@ -1,0 +1,33 @@
+kind: knowledge
+domain: logs
+level: quick
+title: What an OpenTelemetry log record is
+prompt: |
+  What does OpenTelemetry mean by a "log"?
+options:
+  A: "A structured log record, a timestamped event with a body and attributes, produced via the Logs API/SDK or collected from existing logs."
+  B: "An unstructured string with no timestamp."
+  C: "A JSON blob that only the application reads."
+  D: "Any output printed by the kernel."
+answer: A
+explanation: |
+  In OpenTelemetry, a log record is a structured entity with a timestamp, a
+  body, and key/value attributes, so logs can be queried, filtered, and
+  correlated. They can be emitted through the Logs API/SDK or captured from
+  existing sources by the Collector. Unstructured strings, opaque blobs, or raw
+  kernel output do not carry the structure that makes OTel logs useful.
+solution: |
+  An OpenTelemetry log record is a timestamped event consisting of a body plus a
+  set of key/value attributes. Because the schema is structured, logs can be
+  filtered, aggregated, and correlated with other signals. OTel produces log
+  records through the Logs API/SDK or ingests them from existing files and
+  systems with the Collector, then normalizes them to the common format.
+checks:
+  - desc: Names the log record
+    contains: "log record"
+  - desc: Records are timestamped
+    contains: "timestamped"
+  - desc: Carries attributes
+    contains: "attributes"
+  - desc: Emphasizes structure
+    contains: "structured"

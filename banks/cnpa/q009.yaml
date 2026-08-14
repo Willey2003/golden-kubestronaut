@@ -1,0 +1,21 @@
+kind: knowledge
+domain: observability
+level: core
+title: Cilium component providing flow-level visibility
+prompt: |
+  A networking engineer needs per-flow visibility, a service dependency
+  graph, and the ability to stream and filter network flows live. Which
+  Cilium component provides this?
+options:
+  A: "Hubble"
+  B: "Tetragon"
+  C: "Kiali"
+  D: "Fluent Bit"
+answer: A
+explanation: |
+  Hubble is the observability layer built on Cilium's eBPF data plane. It
+  provides flow logs (with the `hubble` CLI), a service dependency graph,
+  Prometheus metrics, and a UI (hubble-ui) backed by hubble-relay.
+  Tetragon is a separate eBPF project focused on runtime security and
+  process-level observability; Kiali is an Istio graph UI; Fluent Bit is a
+  log forwarder.

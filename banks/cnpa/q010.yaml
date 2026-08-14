@@ -1,0 +1,20 @@
+kind: knowledge
+domain: observability
+level: quick
+title: Who exposes Hubble metrics to Prometheus
+prompt: |
+  A team configures Prometheus scraping for Hubble flow metrics (such as
+  `hubble_flows_processed_total`). Which component serves these metrics
+  over HTTP?
+options:
+  A: "The Cilium agent with Hubble metrics enabled"
+  B: "kube-proxy"
+  C: "CoreDNS"
+  D: "The Kubernetes API server"
+answer: A
+explanation: |
+  When the `hubble-metrics` option is enabled, the Cilium agent serves
+  Prometheus metrics on its metrics endpoint (usually port 9091), and
+  Hubble-specific counters such as dropped/forwarded flow totals are
+  exported there. kube-proxy, CoreDNS, and the API server do not produce
+  Hubble flow metrics.

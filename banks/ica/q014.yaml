@@ -1,0 +1,37 @@
+kind: knowledge
+domain: security-istio
+level: deep
+title: Validating JWTs with RequestAuthentication
+prompt: |
+  A service should only accept requests that carry a valid JWT issued by the
+  company identity provider. Which resource validates the token at the mesh
+  level?
+options:
+  A: "A RequestAuthentication policy that defines the issuer and JWKS location."
+  B: "A PeerAuthentication policy with STRICT mode."
+  C: "A Gateway that blocks non-TLS traffic."
+  D: "A DestinationRule with TLS mode ISTIO_MUTUAL."
+answer: A
+explanation: |
+  RequestAuthentication configures JWT validation (issuer, JWKS) for requests
+  to a workload. Alone it only validates tokens that are present; combine it
+  with an AuthorizationPolicy to enforce access.
+solution: |
+  RequestAuthentication is the Istio resource that configures origin
+  authentication: it declares the expected token issuer (iss) and the JWKS
+  location used to verify signatures. When a request reaches a workload covered
+  by the policy, the mesh validates the presented JWT against those settings.
+  On its own, RequestAuthentication only validates tokens when present;
+  combining it with an AuthorizationPolicy makes the enforcement explicit, for
+  example allowing only requests with a valid token from a given principal.
+  PeerAuthentication concerns mTLS between services, not end-user tokens, and
+  Gateways manage listeners rather than token validation.
+checks:
+  - desc: Names RequestAuthentication
+    contains: "RequestAuthentication"
+  - desc: Mentions the issuer
+    contains: "issuer"
+  - desc: Mentions JWKS
+    contains: "JWKS"
+  - desc: Notes combination with AuthorizationPolicy
+    contains: "AuthorizationPolicy"

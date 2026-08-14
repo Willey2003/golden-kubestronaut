@@ -1,0 +1,37 @@
+kind: knowledge
+domain: telemetry-concepts
+level: core
+title: What OpenTelemetry is
+prompt: |
+  An organization wants one vendor-neutral way to collect telemetry across its
+  services and send it to any backend. Which project provides this?
+options:
+  A: "OpenTelemetry, a CNCF project providing standards, APIs, SDKs, and a collector for vendor-neutral telemetry."
+  B: "A proprietary agent tied to a single commercial backend."
+  C: "A monitoring platform that only ingests its own format."
+  D: "An instrumentation library that only emits HTTP metrics."
+answer: A
+explanation: |
+  OpenTelemetry, a CNCF project, standardizes telemetry: APIs and SDKs for
+  instrumentation, the OTLP protocol, and the OpenTelemetry Collector for
+  processing and exporting data to many backends. It is vendor-neutral, so the
+  same instrumentation can feed Prometheus, Jaeger, cloud backends, and more
+  without rewrites. Proprietary agents, closed platforms, and single-purpose
+  libraries contradict that neutrality.
+solution: |
+  OpenTelemetry is a CNCF project that provides the standard for collecting
+  telemetry: cross-language APIs and SDKs for instrumentation, the OTLP wire
+  protocol, and the OpenTelemetry Collector for receiving, processing, and
+  exporting data. It is vendor-neutral and open, so instrumented services can
+  send traces, metrics, and logs to any compliant backend without lock-in. This
+  standardization removes the need to rewrite instrumentation when backends
+  change.
+checks:
+  - desc: Cites CNCF
+    contains: "CNCF"
+  - desc: Names the OTLP protocol
+    contains: "OTLP"
+  - desc: Includes the Collector
+    contains: "Collector"
+  - desc: Emphasizes vendor neutrality
+    contains: "vendor-neutral"

@@ -1,0 +1,36 @@
+kind: knowledge
+domain: infrastructure-automation
+level: core
+title: Value of continuous delivery
+prompt: |
+  Which statement best captures the value of a continuous delivery (CD)
+  pipeline?
+options:
+  A: "It automates testing and deployment so changes move safely from commit to production through repeatable, gated stages."
+  B: "It replaces automated tests with manual checklists."
+  C: "It guarantees no deployment ever fails."
+  D: "It only stores built artifacts, never deploying them."
+answer: A
+explanation: |
+  CI builds and tests on every change; CD automates the deployment path with
+  gates (tests, approvals) through environments. It does not guarantee zero
+  failures but makes releases frequent and low-risk.
+solution: |
+  Continuous delivery automates the path from a committed change to a
+  releasable artifact, running builds, unit and integration tests, and
+  environment-specific steps through repeatable, gated stages. Because every
+  stage is automated and observable, teams can release frequently with lower
+  risk, and a failed stage stops the pipeline instead of shipping broken
+  software. CD does not guarantee that deployments never fail; failures become
+  earlier, smaller, and easier to revert. Replacing tests with manual
+  checklists or treating the pipeline as artifact storage only would undo the
+  automation that makes delivery reliable.
+checks:
+  - desc: Names continuous delivery
+    contains: "Continuous delivery"
+  - desc: Mentions automated stages
+    contains: "gated stages"
+  - desc: Notes reduced release risk
+    contains: "release frequently"
+  - desc: Rejects manual-only flow
+    contains: "Replacing tests"

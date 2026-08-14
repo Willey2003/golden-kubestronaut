@@ -1,0 +1,37 @@
+kind: knowledge
+domain: observability-tracing
+level: core
+title: Metrics, traces, and logs
+prompt: |
+  An operator wants the full telemetry picture for a service: request counts
+  over time, the path of a single slow request, and text emitted by the
+  application. Which three data types map to these needs?
+options:
+  A: "Metrics, traces, and logs."
+  B: "Counters, gauges, and histograms only."
+  C: "Snapshots, backups, and archives."
+  D: "Events, jobs, and cron schedules."
+answer: A
+explanation: |
+  Metrics give aggregated signals over time, traces show request paths and
+  spans, and logs carry arbitrary application text. Istio provides metrics and
+  traces natively and standardizes log enrichment.
+solution: |
+  The three pillars of observability are metrics, traces, and logs. Metrics are
+  aggregated numeric signals over time, such as request rate or error
+  percentage, which suit dashboards and alerts. Traces represent the path of a
+  single request across components, with spans showing the time spent at each
+  hop, which is ideal for debugging latency. Logs are discrete textual records
+  emitted by applications and proxies, useful for detailed diagnosis. In a
+  mesh, Envoy generates rich metrics and trace spans automatically, while
+  application logs still come from the workloads themselves; correlating the
+  three via shared identifiers like request IDs gives the fullest picture.
+checks:
+  - desc: Names metrics
+    contains: "Metrics"
+  - desc: Names traces
+    contains: "traces"
+  - desc: Names logs
+    contains: "Logs"
+  - desc: Names the three pillars
+    contains: "three pillars"

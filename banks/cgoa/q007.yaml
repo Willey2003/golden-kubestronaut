@@ -1,0 +1,36 @@
+kind: knowledge
+domain: gitops-practices
+level: core
+title: Rollback is a Git operation
+prompt: |
+  A bad release was merged into the main branch and synced to production. What
+  is the standard GitOps rollback procedure?
+options:
+  A: "Revert the offending commit in Git and let the agent sync the reverted state."
+  B: "Run kubectl rollout undo deployment in production."
+  C: "Delete the deployment from the cluster."
+  D: "Restore a backup of the etcd database."
+answer: A
+explanation: |
+  Because Git is the single source of truth, rolling back means changing the
+  desired state back, typically by reverting the bad commit or restoring the
+  previous tag and merging. The agent detects the new desired state and
+  reconciles the cluster. kubectl rollout undo bypasses Git and only works for
+  Deployment history, deleting the resource creates drift and downtime, and
+  etcd restores are heavy-handed and unrelated to the GitOps workflow.
+solution: |
+  In GitOps a rollback is a Git operation: revert the offending commit, or
+  restore the repository to the previously known-good revision, and merge. The
+  agent reconciles the cluster to the reverted desired state, removing the bad
+  release and restoring the previous version. Because the whole system is
+  version controlled, the rollback is fast, auditable, and repeatable, with no
+  imperative kubectl commands or manual cleanup required.
+checks:
+  - desc: Rollback is a revert in Git
+    contains: "revert"
+  - desc: Requires a merge
+    contains: "merge"
+  - desc: Agent reconciles the cluster
+    contains: "reconciles"
+  - desc: Stresses version control
+    contains: "version controlled"

@@ -1,0 +1,37 @@
+kind: knowledge
+domain: gitops-core-concepts
+level: deep
+title: Git as the single source of truth
+prompt: |
+  An organization wants "everything changes through Git" for its clusters.
+  Which practice is most aligned with making Git the single source of truth?
+options:
+  A: "All changes to the desired state go through reviewed commits or pull requests merged into Git, which the agent then applies."
+  B: "Only CI-generated artifacts are pushed to the cluster; Git holds build logs."
+  C: "Git records changes after the fact purely for compliance reporting."
+  D: "Git stores only the application source code; cluster manifests live in a private wiki."
+answer: A
+explanation: |
+  Single source of truth means the Git repository is authoritative for the
+  desired state and every change flows through it. PR review, merges, and
+  reverts in Git are the only way to change what the cluster runs, giving full
+  auditability and history. Options B, C, and D treat Git as a passive record
+  rather than the source from which live state is derived, which breaks the
+  GitOps model.
+solution: |
+  Treating Git as the single source of truth means the repository is
+  authoritative: no change reaches the cluster except through the
+  version-controlled desired state. Teams propose changes as commits and pull
+  requests, review and approve them, and merge them, and the GitOps agent then
+  applies the merged state. This produces a complete, replayable history of
+  every change, makes rollbacks a simple revert, and guarantees that the live
+  environment always derives from Git.
+checks:
+  - desc: Cites the single source of truth
+    contains: "single source of truth"
+  - desc: Names pull requests
+    contains: "pull requests"
+  - desc: Mentions rollback via revert
+    contains: "revert"
+  - desc: Points at the GitOps agent
+    contains: "agent"

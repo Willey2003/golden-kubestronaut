@@ -1,0 +1,19 @@
+kind: knowledge
+domain: essential-commands
+level: quick
+title: Print only files containing a string
+prompt: |
+  You must find which log files in the current directory contain the
+  string "ERROR". Which command prints only the names of the matching
+  files?
+options:
+  A: "grep -l ERROR *.log"
+  B: "grep -c ERROR *.log"
+  C: "grep -v ERROR *.log"
+  D: "grep -n ERROR *.log"
+answer: A
+explanation: |
+  `grep -l` (files-with-matches) prints only the names of files that
+  contain a match, so the output is exactly the file list you asked for.
+  `-c` prints a match count per file, `-v` inverts the match (files
+  without the string), and `-n` prints line numbers alongside each match.

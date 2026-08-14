@@ -1,0 +1,20 @@
+kind: knowledge
+domain: essential-commands
+level: core
+title: Keep a job running after logout
+prompt: |
+  You start `/opt/backup.sh` over SSH, but it must keep running after you
+  log out, with its output written to `/var/log/backup.log`. Which command
+  achieves this?
+options:
+  A: "nohup /opt/backup.sh > /var/log/backup.log 2>&1 &"
+  B: "/opt/backup.sh > /var/log/backup.log &"
+  C: "bg /opt/backup.sh"
+  D: "exec /opt/backup.sh"
+answer: A
+explanation: |
+  `nohup` makes the process ignore SIGHUP (the signal a shell sends when
+  the terminal closes) and `&` backgrounds it; redirecting both stdout and
+  stderr captures all output. A plain `&` still dies on SIGHUP, `bg` only
+  resumes an already-stopped job, and `exec` replaces the current shell,
+  which does not survive logout either.

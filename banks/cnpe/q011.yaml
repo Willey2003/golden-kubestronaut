@@ -1,0 +1,20 @@
+kind: knowledge
+domain: performance-tuning
+level: core
+title: What bpf-map-dynamic-size-ratio controls
+prompt: |
+  While tuning a large Cilium cluster, an engineer looks at the agent
+  option `bpf-map-dynamic-size-ratio`. What does it control?
+options:
+  A: "The fraction of system memory used to size dynamic eBPF maps such as conntrack and NAT."
+  B: "The ratio of IPv4 to IPv6 pod addresses."
+  C: "The proportion of LoadBalancer backends that are active."
+  D: "The percentage of CPU the agent may consume."
+answer: A
+explanation: |
+  `bpf-map-dynamic-size-ratio` sets how much of the host's RAM is budgeted
+  for the dynamically sized eBPF maps (connection tracking, NAT, and
+  related maps). Raising it increases capacity for large clusters at the
+  cost of memory, while lowering it reduces footprint. It has nothing to
+  do with IP address family mix, load-balancer backend counts, or CPU
+  limits.

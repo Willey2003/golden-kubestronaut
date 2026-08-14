@@ -1,0 +1,20 @@
+kind: knowledge
+domain: performance-tuning
+level: deep
+title: Lowest-latency pod-to-pod forwarding configuration
+prompt: |
+  A latency-sensitive workload needs the fastest possible pod-to-pod path.
+  Which Cilium configuration generally delivers the lowest forwarding
+  latency?
+options:
+  A: "Native (direct) routing with BPF masquerading and kube-proxy replacement"
+  B: "VXLAN tunneling for all traffic"
+  C: "kube-proxy in iptables mode"
+  D: "Routing traffic through a user-space proxy"
+answer: A
+explanation: |
+  Native (direct) routing lets packets traverse the node's routing table
+  without an encapsulation header, and BPF masquerading plus kube-proxy
+  replacement keep load balancing and NAT inside eBPF in the kernel. This
+  combination minimizes per-packet overhead compared to VXLAN tunneling,
+  iptables-based kube-proxy, or any user-space forwarding path.

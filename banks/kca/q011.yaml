@@ -1,0 +1,34 @@
+kind: knowledge
+domain: cost-optimization
+level: core
+title: Spot instances for interruptible workloads
+prompt: |
+  For which workloads are spot, interruptible instances most appropriate from a
+  cost perspective?
+options:
+  A: "Stateless, restartable, or batch workloads tolerant of interruption."
+  B: "Stateful databases with strong durability guarantees."
+  C: "The control-plane nodes."
+  D: "Any workload that must never be interrupted."
+answer: A
+explanation: |
+  Spot nodes are cheaper but can be reclaimed on short notice. They fit
+  stateless, idempotent, or batch workloads whose pods can restart elsewhere.
+  Stateful databases and anything requiring durability should run on on-demand
+  capacity, and control planes are not meant for spot pricing.
+solution: |
+  Spot or interruptible instances trade availability for a significant price
+  reduction, so they fit workloads that tolerate interruption: stateless APIs,
+  batch jobs, CI runners, and anything that can restart cleanly. The Kubernetes
+  controller can run replicas across both spot and on-demand pools, keeping at
+  least a minimum set of guaranteed replicas on steady nodes. This mix captures
+  most of the savings without risking stateful services.
+checks:
+  - desc: Mentions spot instances
+    contains: "spot"
+  - desc: Interruptible workloads
+    contains: "interruptible"
+  - desc: Fits stateless workloads
+    contains: "stateless"
+  - desc: Workloads must restart cleanly
+    contains: "restart"

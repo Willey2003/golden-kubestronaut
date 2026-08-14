@@ -1,0 +1,35 @@
+kind: knowledge
+domain: argo-workflows
+level: core
+title: Templates, steps, and DAGs
+prompt: |
+  In Argo Workflows, how is a reusable unit of work defined and how can several
+  of them be ordered?
+options:
+  A: "Each unit is a template, and templates are composed either as steps or as a DAG with explicit dependencies."
+  B: "Each unit is a ConfigMap, ordered by alphabetical name."
+  C: "Each unit is a Deployment, ordered by replicas."
+  D: "Each unit is a CronJob, ordered by schedule."
+answer: A
+explanation: |
+  Templates (container, script, resource, DAG, steps) are the building blocks.
+  A workflow template has a top-level template, often a DAG template that
+  references other templates. Ordering is explicit, not alphabetical.
+solution: |
+  Argo Workflows organizes work into templates. A container or script template
+  wraps a unit of work, and workflow templates at the top level choose the
+  execution order: a steps template runs sub-steps in sequence, optionally in
+  parallel, while a DAG template expresses dependencies between named tasks and
+  lets Argo run independent tasks in parallel. Because the graph is explicit,
+  ordering never depends on names or alphabetical order. Other resource types
+  like ConfigMaps, Deployments, or CronJobs do not provide this template
+  composition model.
+checks:
+  - desc: Names container templates
+    contains: "container"
+  - desc: Names steps templates
+    contains: "steps template"
+  - desc: Names DAG templates
+    contains: "DAG template"
+  - desc: Notes explicit dependencies
+    contains: "dependencies"

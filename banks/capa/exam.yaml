@@ -1,0 +1,12 @@
+id: capa
+title: CAPA Certified Argo Project Associate Mock
+engine: knowledge
+duration_minutes: 90
+pass_threshold: 0.7
+draw_size: 16
+seed: null
+domains:
+  gitops-concepts: 0.20
+  argo-cd: 0.30
+  argo-workflows: 0.25
+  argo-events-rollouts: 0.25

@@ -1,0 +1,18 @@
+kind: knowledge
+domain: system-services
+level: quick
+title: Listing units that failed to start
+prompt: |
+  After a reboot, some services did not start cleanly. Which command
+  lists the units that entered the failed state?
+options:
+  A: "systemctl --failed"
+  B: "systemctl --errors"
+  C: "systemctl list-errors"
+  D: "journalctl --failed"
+answer: A
+explanation: |
+  `systemctl --failed` (alias for `systemctl list-units --state failed`)
+  shows every unit that failed to start or exited with an error. There is
+  no `--errors` or `list-errors` subcommand, and `journalctl` reads the
+  logs; it has no `--failed` unit-state filter.

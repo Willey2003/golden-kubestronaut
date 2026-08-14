@@ -1,0 +1,21 @@
+kind: knowledge
+domain: cluster-mesh
+level: quick
+title: Writing policies that span a Cluster Mesh
+prompt: |
+  A pod in cluster A must call a Service that lives in cluster B, which is
+  joined to A via Cilium Cluster Mesh. How does the network policy in
+  cluster A allow this traffic?
+options:
+  A: "Write a normal Cilium policy with label selectors; remote cluster identities work across the mesh."
+  B: "You must add an IP allowlist entry for every remote pod."
+  C: "Cross-cluster traffic can never be allowed by policy."
+  D: "A NetworkAttachmentDefinition must be created for the remote cluster."
+answer: A
+explanation: |
+  Cluster Mesh keeps the identity model intact across clusters: identities
+  are assigned by labels and remain valid mesh-wide, so the same
+  `fromEndpoints`/`endpointSelector` label-based Cilium policies apply to
+  remote pods exactly as they do locally. No IP-based allowlisting is
+  needed, and the remote Service is reachable through normal Service
+  discovery provided by the mesh.

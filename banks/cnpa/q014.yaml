@@ -1,0 +1,41 @@
+kind: hands-on
+domain: security-policies
+level: core
+title: Cluster-wide policy allowing DNS-only egress
+prompt: |
+  Pods labeled `app=payments` must only ever reach the cluster DNS. Create
+  a CiliumClusterwideNetworkPolicy named `dns-egress` that selects those
+  pods and allows egress only to the `kube-dns` pods (labeled
+  `k8s-app=kube-dns`) on UDP port 53.
+solution: |
+  cat <<'EOF' | kubectl apply -f -
+  apiVersion: cilium.io/v2
+  kind: CiliumClusterwideNetworkPolicy
+  metadata:
+    name: dns-egress
+  spec:
+    endpointSelector:
+      matchLabels:
+        app: payments
+    egress:
+    - toEndpoints:
+      - matchLabels:
+          k8s-app: kube-dns
+      toPorts:
+      - ports:
+        - port: "53"
+          protocol: UDP
+  EOF
+checks:
+  - desc: CiliumClusterwideNetworkPolicy dns-egress exists
+    run: kubectl get ccnp dns-egress -o name
+    equals: ciliumclusterwidenetworkpolicy.cilium.io/dns-egress
+  - desc: Policy selects pods labeled app=payments
+    run: "kubectl get ccnp dns-egress -o jsonpath='{.spec.endpointSelector.matchLabels.app}'"
+    equals: payments
+  - desc: Egress is allowed only to kube-dns pods
+    run: "kubectl get ccnp dns-egress -o jsonpath='{.spec.egress[0].toEndpoints[0].matchLabels.k8s-app}'"
+    equals: kube-dns
+  - desc: Allowed DNS port is UDP 53
+    run: "kubectl get ccnp dns-egress -o jsonpath='{.spec.egress[0].toPorts[0].ports[0].port}'"
+    equals: 53

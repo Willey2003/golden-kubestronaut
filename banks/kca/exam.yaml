@@ -1,0 +1,12 @@
+id: kca
+title: KCA Kubernetes Cost Associate Mock
+engine: knowledge
+duration_minutes: 90
+pass_threshold: 0.7
+draw_size: 16
+seed: null
+domains:
+  kubernetes-cost-concepts: 0.30
+  resource-allocation: 0.25
+  cost-optimization: 0.25
+  finops-practices: 0.20

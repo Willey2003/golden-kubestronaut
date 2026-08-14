@@ -1,0 +1,36 @@
+kind: knowledge
+domain: containers-k8s-cloud
+level: core
+title: Containers vs virtual machines
+prompt: |
+  An engineer compares a container with a VM. Which statement is accurate about
+  the main difference?
+options:
+  A: "Containers share the host operating system kernel, while VMs each run their own guest OS."
+  B: "Containers always require more disk than VMs."
+  C: "VMs cannot run more than one process."
+  D: "Containers eliminate the need for application code."
+answer: A
+explanation: |
+  Containers share the host kernel and package the app plus its dependencies in
+  lightweight layers; VMs virtualize hardware and run a full guest OS. Sharing
+  the kernel is lighter but reduces isolation relative to VMs.
+solution: |
+  The core difference is isolation granularity. Containers share the host
+  operating system kernel and package the application with its runtime and
+  dependencies in lightweight image layers, so they start quickly and use fewer
+  resources. Each virtual machine runs a full guest operating system on
+  virtualized hardware, providing stronger isolation at the cost of more
+  overhead. Because containers share the kernel, a host kernel vulnerability
+  affects all containers, whereas VMs are isolated by the hypervisor. This
+  trade-off drives the choice: VMs for strong isolation, containers for density
+  and speed.
+checks:
+  - desc: States the kernel sharing
+    contains: "operating system kernel"
+  - desc: Notes the guest OS
+    contains: "guest operating system"
+  - desc: Notes lighter overhead
+    contains: "lightweight image layers"
+  - desc: Mentions the isolation trade-off
+    contains: "isolation"

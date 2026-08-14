@@ -1,0 +1,39 @@
+kind: knowledge
+domain: gitops-core-concepts
+level: core
+title: Pull-based vs push-based deployment
+prompt: |
+  A team is choosing between GitOps pull-based deployment and a traditional
+  push-based CD pipeline that runs kubectl apply from CI. Which statement best
+  distinguishes the two models?
+options:
+  A: "In pull-based deployment an agent inside the cluster pulls the desired state from Git and applies it."
+  B: "In pull-based deployment CI runs kubectl apply directly against the production cluster over the network."
+  C: "Push-based deployment requires the cluster to initiate a connection back to the CI server."
+  D: "Pull-based deployment does not require any agent inside the cluster."
+answer: A
+explanation: |
+  In pull-based GitOps, an in-cluster operator or agent regularly pulls the
+  desired state from the Git repository and reconciles the cluster toward it,
+  so nothing outside the cluster pushes manifests into the cluster and no
+  external system needs admin access to the API. Push-based CI, by contrast,
+  runs commands such as kubectl apply from the pipeline, which requires
+  network reachability and elevated credentials. C and D describe the pull
+  model inaccurately.
+solution: |
+  Pull-based GitOps places an agent or operator inside the cluster that pulls
+  the desired state from the Git repository and applies it, so no external
+  system needs direct access to the Kubernetes API. Push-based deployment runs
+  tools such as kubectl apply from a CI pipeline, which requires the pipeline
+  to reach the cluster API and hold credentials that can modify it. The pull
+  model improves security because the cluster initiates the connection and only
+  the agent holds the credentials it needs.
+checks:
+  - desc: Agent runs inside the cluster
+    contains: "inside the cluster"
+  - desc: Mentions the pull model
+    contains: "pulls"
+  - desc: Contrasts with kubectl apply from CI
+    contains: "kubectl apply"
+  - desc: Discusses credentials
+    contains: "credentials"

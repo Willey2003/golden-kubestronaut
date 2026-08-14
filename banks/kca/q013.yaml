@@ -1,0 +1,33 @@
+kind: knowledge
+domain: finops-practices
+level: quick
+title: What FinOps is
+prompt: |
+  Which definition best captures FinOps as a practice?
+options:
+  A: "A management practice bringing finance, engineering, and product together to maximize business value from cloud spend."
+  B: "A tool that auto-discounts all cloud bills."
+  C: "A tax that cloud providers charge."
+  D: "A certification that only accountants may take."
+answer: A
+explanation: |
+  FinOps, Financial Operations, hosted by the FinOps Foundation, is a cultural
+  and operational practice: finance, engineering, and product collaborate to
+  manage cloud cost like an asset and maximize value. It is not a discount
+  mechanism, a fee, or limited to accountants.
+solution: |
+  FinOps is a management practice in which finance, engineering, and product
+  teams work together to understand, manage, and optimize cloud spending as a
+  business asset. It treats cost visibility, accountability, and continuous
+  optimization as part of how the organization operates, with engineers owning
+  the cost of what they run. The goal is business value from cloud investment,
+  not merely cutting bills.
+checks:
+  - desc: Names FinOps
+    contains: "FinOps"
+  - desc: Involves finance teams
+    contains: "finance"
+  - desc: Involves engineering teams
+    contains: "engineering"
+  - desc: Focuses on optimization
+    contains: "optimization"

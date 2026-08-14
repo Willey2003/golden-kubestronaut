@@ -1,0 +1,20 @@
+kind: knowledge
+domain: service-mesh-cilium
+level: quick
+title: Cilium resource for Envoy-based L7 configuration
+prompt: |
+  An operator wants to define custom Envoy listener/cluster configuration
+  that Cilium Service Mesh will apply. Which Cilium resource is used for
+  this?
+options:
+  A: "CiliumEnvoyConfig"
+  B: "EnvoyFilter"
+  C: "VirtualService"
+  D: "CiliumLoadBalancerIPPool"
+answer: A
+explanation: |
+  `CiliumEnvoyConfig` (and its cluster-wide sibling
+  `CiliumClusterwideEnvoyConfig`) lets you provide Envoy listener and
+  cluster configuration that Cilium applies to the Envoy proxies it
+  manages. EnvoyFilter and VirtualService are Istio resources, and
+  CiliumLoadBalancerIPPool is unrelated to Envoy configuration.

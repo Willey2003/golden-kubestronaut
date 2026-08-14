@@ -1,0 +1,35 @@
+kind: knowledge
+domain: opentelemetry-collector
+level: deep
+title: The OTLP protocol
+prompt: |
+  Which protocol do OpenTelemetry SDKs and Collectors use by default to
+  exchange telemetry?
+options:
+  A: "OTLP, the OpenTelemetry protocol, with gRPC and HTTP transports on configurable ports."
+  B: "A JSON file dropped into a shared folder."
+  C: "Syslog over UDP."
+  D: "A proprietary binary format per vendor."
+answer: A
+explanation: |
+  OTLP, the OpenTelemetry Protocol, is the standard wire protocol for OTel
+  telemetry, defined for traces, metrics, and logs, with gRPC and HTTP transport
+  variants. SDKs export via OTLP by default, and Collectors talk to each other
+  over OTLP. Files, syslog, and vendor-specific binary formats are not the OTel
+  default exchange.
+solution: |
+  OTLP, the OpenTelemetry Protocol, is the default protocol for exchanging
+  telemetry between SDKs, Collectors, and backends that support it. It defines a
+  schema for traces, metrics, and logs and offers both gRPC and HTTP transports,
+  with ports configurable in the Collector, commonly 4317 for gRPC and 4318 for
+  HTTP. Using one protocol everywhere simplifies instrumentation and deployment
+  because exporters and receivers speak the same wire format.
+checks:
+  - desc: Names OTLP
+    contains: "OTLP"
+  - desc: Offers gRPC transport
+    contains: "gRPC"
+  - desc: Offers HTTP transport
+    contains: "HTTP"
+  - desc: It is the default protocol
+    contains: "protocol"

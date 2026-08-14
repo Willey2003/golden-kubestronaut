@@ -1,0 +1,19 @@
+kind: knowledge
+domain: service-mesh-cilium
+level: core
+title: Which proxy handles L7 policies in Cilium Service Mesh
+prompt: |
+  Cilium Service Mesh is used to enforce HTTP-layer (L7) policies on pod
+  traffic. Which component processes that L7 traffic on behalf of Cilium?
+options:
+  A: "Envoy"
+  B: "HAProxy"
+  C: "NGINX"
+  D: "The kernel's connection tracking"
+answer: A
+explanation: |
+  When L7 handling is required, Cilium Service Mesh offloads the HTTP
+  processing to Envoy, which runs either as an injected sidecar or as a
+  shared proxy managed by Cilium. L3/L4 rules stay in eBPF in the kernel,
+  and only traffic that needs L7 inspection is steered to Envoy. HAProxy,
+  NGINX, and conntrack are not the proxies Cilium manages for L7 policies.

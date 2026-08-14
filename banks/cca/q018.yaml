@@ -1,0 +1,38 @@
+kind: knowledge
+domain: cloud-security
+level: core
+title: Secrets management and network isolation
+prompt: |
+  A team stores database passwords in the application source code and exposes
+  the database port to the entire internet. Which combination of practices most
+  directly addresses these problems?
+options:
+  A: "Using a secrets manager for credentials and restricting database access to the application's private network with a firewall."
+  B: "Rotating the password every year."
+  C: "Adding more database replicas."
+  D: "Encrypting the database volume only."
+answer: A
+explanation: |
+  Secrets belong in a dedicated secrets manager with access controls and
+  rotation, not in source code. Databases should be reachable only from
+  authorized networks. Encryption at rest complements, but does not replace,
+  these controls.
+solution: |
+  Storing credentials in source code and exposing a database to the whole
+  internet are two concrete, common vulnerabilities. The fixes are to
+  centralize secrets in a secrets manager, where they are encrypted,
+  access-controlled, and rotated, and to place the database on a private
+  network, reachable only from the application subnet via security groups or
+  firewall rules. Volume encryption protects data at rest but does not stop
+  attackers from reading plaintext credentials or reaching an open port.
+  Rotating a password periodically is useful but does not remove the credential
+  from source, and adding replicas only increases the attack surface.
+checks:
+  - desc: Names a secrets manager
+    contains: "secrets manager"
+  - desc: Notes private networking
+    contains: "place the database"
+  - desc: Mentions rotation
+    contains: "rotated"
+  - desc: Contrasts encryption at rest
+    contains: "data at rest"

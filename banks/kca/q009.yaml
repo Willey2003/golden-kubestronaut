@@ -1,0 +1,35 @@
+kind: knowledge
+domain: cost-optimization
+level: quick
+title: Rightsizing workloads
+prompt: |
+  A team notices a workload consistently uses 20% of its requested CPU for
+  months. Which optimization reduces cost without hurting performance?
+options:
+  A: "Lower requests to match observed steady-state usage."
+  B: "Increase requests to be safe."
+  C: "Set no limits and no requests."
+  D: "Restart the workload weekly to reset usage."
+answer: A
+explanation: |
+  Rightsizing lowers a workload's requests and limits to align with its measured
+  steady-state usage, freeing cluster capacity and reducing the workload's
+  allocated cost. Raising requests increases reserved cost, removing limits
+  risks instability, and restarts do not change the underlying request-to-usage
+  gap.
+solution: |
+  Rightsizing aligns a workload's requests and limits with its observed
+  steady-state usage. If a deployment consistently consumes 20% of its requested
+  CPU, reducing the request to that level frees schedulable capacity, lowers the
+  workload's allocated cost, and typically needs no code changes. The key is to
+  rightsize using historical metrics over a meaningful window, then watch for
+  regressions after the change.
+checks:
+  - desc: Aligns requests with usage
+    contains: "rightsize"
+  - desc: Adjusts requests
+    contains: "requests"
+  - desc: Based on steady-state usage
+    contains: "steady-state"
+  - desc: Frees capacity
+    contains: "capacity"

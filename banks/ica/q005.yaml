@@ -1,0 +1,34 @@
+kind: knowledge
+domain: istio-architecture
+level: core
+title: What istiod consolidates
+prompt: |
+  A single component named istiod replaced three older Istio components. Which
+  functions are consolidated into istiod?
+options:
+  A: "Service discovery and configuration (Pilot), configuration validation (Galley), and certificate authority (Citadel)."
+  B: "Load balancing, DNS, and NTP."
+  C: "Log storage, tracing, and metrics."
+  D: "Container registry and image scanning."
+answer: A
+explanation: |
+  istiod merges Pilot (config plus discovery, the xDS server), Galley (config
+  validation), and Citadel (mTLS certificate authority) into one deployment.
+solution: |
+  istiod is the single control plane component of Istio and consolidates three
+  previously separate responsibilities: Pilot, which performs service discovery
+  and translates Istio configuration into Envoy configuration served over xDS;
+  Galley, which ingests and validates configuration; and Citadel, which issues
+  the certificates used for mutual TLS between workloads. Consolidating them
+  into one binary simplifies operation and reduces the number of components to
+  deploy and monitor. Envoy proxies connect to istiod to fetch their
+  configuration.
+checks:
+  - desc: Names Pilot
+    contains: "Pilot"
+  - desc: Names Galley
+    contains: "Galley"
+  - desc: Names Citadel
+    contains: "Citadel"
+  - desc: Mentions xDS
+    contains: "xDS"

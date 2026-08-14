@@ -1,0 +1,20 @@
+kind: knowledge
+domain: security-policies
+level: deep
+title: Allowing egress to a hostname with toFQDNs
+prompt: |
+  An application may only talk to `api.example.com`. The operator writes a
+  policy with `toFQDNs` and `rules.dns`. Which statement about how Cilium
+  enforces this rule is correct?
+options:
+  A: "Cilium resolves the hostname and only permits traffic to the IPs it resolved to, re-resolving on TTL expiry."
+  B: "Cilium allows traffic to any IP as long as the DNS query happens."
+  C: "Cilium blocks all egress until a human approves each resolved IP."
+  D: "Cilium requires a sidecar to terminate the TLS connection before checking the name."
+answer: A
+explanation: |
+  With `toFQDNs` plus `rules.dns`, Cilium caches the IPs the hostname
+  resolves to and permits egress only to those cached addresses. It
+  re-resolves the name when the DNS TTL expires, so a changing A record is
+  tracked automatically. This is what protects against the classic
+  "IP allowlist" problem of external addresses changing over time.

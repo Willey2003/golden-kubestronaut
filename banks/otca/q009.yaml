@@ -1,0 +1,35 @@
+kind: knowledge
+domain: metrics
+level: core
+title: Counter vs UpDownCounter
+prompt: |
+  An operator records completed orders, which always increase, and the current
+  size of a queue, which can go up and down. Which instruments are appropriate?
+options:
+  A: "A Counter for completed orders and an UpDownCounter for queue size."
+  B: "A Gauge for completed orders and a Counter for queue size."
+  C: "A Histogram for both."
+  D: "A Counter for both."
+answer: A
+explanation: |
+  A Counter is for monotonic, always-increasing quantities such as total
+  completed orders. An UpDownCounter handles additive values that can both
+  increase and decrease across calls, such as a queue size. A gauge would be
+  wrong for completed orders because cumulative totals are not current readings,
+  and histograms are for distributions of measured values.
+solution: |
+  Counters measure monotonic, ever-increasing totals such as the number of
+  completed orders, and are the basis for rates like orders per second.
+  UpDownCounters measure additive quantities that can increase or decrease
+  across calls, such as the size of a work queue. OpenTelemetry also provides
+  asynchronous gauges for current readings, but completed-order totals and
+  queue sizes map to Counter and UpDownCounter respectively.
+checks:
+  - desc: Completed orders use a Counter
+    contains: "Counter"
+  - desc: Counters are monotonic
+    contains: "monotonic"
+  - desc: Queue size uses an UpDownCounter
+    contains: "UpDownCounter"
+  - desc: References the queue
+    contains: "queue"

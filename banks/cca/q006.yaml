@@ -1,0 +1,37 @@
+kind: knowledge
+domain: cloud-native-architecture
+level: core
+title: Twelve-factor configuration
+prompt: |
+  According to the twelve-factor methodology, where should configuration such
+  as database URLs and credentials live so the same codebase can run in
+  different environments?
+options:
+  A: "In environment variables, kept separate from the code and injected at runtime."
+  B: "Hardcoded in the source code for each environment."
+  C: "In a config file committed to the repository."
+  D: "Baked into the container image."
+answer: A
+explanation: |
+  Twelve-factor config lives in environment variables so it differs per
+  environment without code changes. Hardcoding values or committing config
+  files couples the artifact to one environment and risks leaking secrets.
+solution: |
+  The twelve-factor methodology requires strict separation of configuration
+  from code: configuration such as connection strings, URLs, and credentials
+  should be read from environment variables, which differ per environment
+  without any code change. The same build artifact can then run in development,
+  staging, and production with different injected settings. Hardcoding values
+  in source or committing config files couples the artifact to a specific
+  environment and risks leaking secrets. Baking values into a container image
+  has the same problem because images are built once but deployed to many
+  places.
+checks:
+  - desc: Names environment variables
+    contains: "environment variables"
+  - desc: Notes per-environment variation
+    contains: "differ per environment"
+  - desc: Rejects hardcoding
+    contains: "Hardcoding"
+  - desc: Mentions code/config separation
+    contains: "strict separation of configuration"

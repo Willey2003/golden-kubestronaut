@@ -1,0 +1,37 @@
+kind: knowledge
+domain: cloud-computing-concepts
+level: core
+title: Cloud deployment models
+prompt: |
+  A regulated bank keeps sensitive workloads in a private environment on
+  premises but runs burst workloads in a public cloud with private connectivity
+  between them. Which deployment model best describes this setup?
+options:
+  A: "Hybrid cloud, which combines private and public environments with connectivity between them."
+  B: "Private cloud only."
+  C: "Community cloud."
+  D: "Multitenancy."
+answer: A
+explanation: |
+  Hybrid cloud spans private and public infrastructure, often with VPNs or
+  dedicated links. Community cloud is shared among organizations with common
+  needs; multitenancy is a resource-sharing characteristic, not a deployment
+  model.
+solution: |
+  A hybrid cloud deployment combines private (on-premises or dedicated)
+  infrastructure with public cloud services, connected through VPNs, dedicated
+  links, or other networking so workloads and data can move between them. This
+  lets the bank keep sensitive systems isolated while scaling out burst
+  workloads in the public cloud. A purely private cloud would forgo the public
+  portion, a community cloud is shared by a group of organizations with common
+  requirements, and multitenancy describes how a provider shares resources
+  among customers rather than a deployment model.
+checks:
+  - desc: Names hybrid cloud
+    contains: "hybrid cloud"
+  - desc: Mentions private infrastructure
+    contains: "private"
+  - desc: Mentions public cloud
+    contains: "public cloud"
+  - desc: Notes connectivity
+    contains: "VPN"

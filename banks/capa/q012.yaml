@@ -1,0 +1,36 @@
+kind: knowledge
+domain: argo-workflows
+level: deep
+title: Retrying failed steps
+prompt: |
+  A workflow step sometimes fails transiently because of network blips, and the
+  team wants the engine to try again before failing the workflow. Which
+  mechanism in Argo Workflows handles this?
+options:
+  A: "The retryStrategy on the workflow or template, which retries failed steps with a backoff."
+  B: "Increasing the node count."
+  C: "The container runtime's garbage collection."
+  D: "Rebuilding the workflow image."
+answer: A
+explanation: |
+  retryStrategy supports a limit, a retry policy, and a backoff with duration
+  and factor. The workflow controller executes retries, and a pod failure is
+  retried according to the policy before the workflow fails.
+solution: |
+  Argo Workflows supports retrying failed steps through the retryStrategy,
+  which can be set at the workflow level or on an individual template. The
+  strategy defines a retry limit, a retry policy for when to retry, and a
+  backoff with duration and factor so retries spread out over time. The
+  workflow controller implements the policy, and if all retries are exhausted,
+  the step fails and the workflow proceeds per its onExit and error handling.
+  Adding nodes, garbage collection, or rebuilding images has nothing to do with
+  retrying a transient pod failure.
+checks:
+  - desc: Names retryStrategy
+    contains: "retryStrategy"
+  - desc: Mentions backoff
+    contains: "backoff"
+  - desc: Notes the retry limit
+    contains: "retry limit"
+  - desc: Names the workflow controller
+    contains: "workflow controller"

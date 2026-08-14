@@ -1,0 +1,45 @@
+kind: hands-on
+domain: cilium-networking
+level: core
+title: Allow frontend pods to reach the backend on port 80
+prompt: |
+  Create the namespace `cnpa-q13`. Then create a CiliumNetworkPolicy named
+  `backend-ingress` in that namespace that permits ingress to pods labeled
+  `app=backend` only from pods labeled `app=frontend`, on TCP port 80.
+solution: |
+  kubectl create ns cnpa-q13
+  cat <<'EOF' | kubectl apply -f -
+  apiVersion: cilium.io/v2
+  kind: CiliumNetworkPolicy
+  metadata:
+    name: backend-ingress
+    namespace: cnpa-q13
+  spec:
+    endpointSelector:
+      matchLabels:
+        app: backend
+    ingress:
+    - fromEndpoints:
+      - matchLabels:
+          app: frontend
+      toPorts:
+      - ports:
+        - port: "80"
+          protocol: TCP
+  EOF
+checks:
+  - desc: Namespace cnpa-q13 exists
+    run: kubectl get ns cnpa-q13 -o name
+    equals: namespace/cnpa-q13
+  - desc: CiliumNetworkPolicy backend-ingress exists
+    run: kubectl -n cnpa-q13 get cnp backend-ingress -o name
+    equals: ciliumnetworkpolicy.cilium.io/backend-ingress
+  - desc: Policy selects pods labeled app=backend
+    run: "kubectl -n cnpa-q13 get cnp backend-ingress -o jsonpath='{.spec.endpointSelector.matchLabels.app}'"
+    equals: backend
+  - desc: Ingress is allowed only from pods labeled app=frontend
+    run: "kubectl -n cnpa-q13 get cnp backend-ingress -o jsonpath='{.spec.ingress[0].fromEndpoints[0].matchLabels.app}'"
+    equals: frontend
+  - desc: Allowed port is TCP 80
+    run: "kubectl -n cnpa-q13 get cnp backend-ingress -o jsonpath='{.spec.ingress[0].toPorts[0].ports[0].port}'"
+    equals: 80

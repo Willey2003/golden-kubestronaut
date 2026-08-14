@@ -1,0 +1,37 @@
+kind: knowledge
+domain: gitops-concepts
+level: core
+title: Pull-based vs push-based delivery
+prompt: |
+  Argo CD deploys applications by running inside the target cluster and
+  comparing live state with git. How does this deployment model differ from a
+  classic push-based CI/CD pipeline?
+options:
+  A: "Argo CD pulls from git and reconciles inside the cluster, so the cluster's agents apply changes and correct drift; push pipelines run outside and submit deployments."
+  B: "There is no difference; both submit jobs to a build server."
+  C: "Push pipelines are declarative and pull pipelines are imperative."
+  D: "Argo CD stores state in a database instead of git."
+answer: A
+explanation: |
+  Argo CD's application controller runs in the cluster, continuously comparing
+  live state with the desired state in git and applying any difference. Push
+  pipelines execute externally and submit deployments over the API.
+solution: |
+  Argo CD operates on a pull-based model: an agent inside the cluster watches
+  the git repository, compares the live state of the cluster with the declared
+  state, and applies whatever is needed to converge, continuously correcting
+  drift. Classic CI/CD pipelines are push-based: an external server builds
+  artifacts and submits deployments into the cluster over the API. The pull
+  model keeps credentials and deployment logic inside the environment, applies
+  declaratively, and self-heals when the cluster drifts. The distinction is
+  about where automation runs and how it applies state, not about build servers
+  or where git lives.
+checks:
+  - desc: Names the pull-based model
+    contains: "pull-based model"
+  - desc: Names the push-based model
+    contains: "push-based"
+  - desc: Notes in-cluster reconciliation
+    contains: "agent inside the cluster"
+  - desc: Notes drift correction
+    contains: "drift"

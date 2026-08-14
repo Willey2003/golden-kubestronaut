@@ -1,0 +1,21 @@
+kind: knowledge
+domain: advanced-cilium
+level: quick
+title: Cilium BandwidthManager and pod bandwidth annotations
+prompt: |
+  A noisy workload is consuming the node's uplink and starving other pods.
+  The operator wants per-pod bandwidth limits enforced efficiently.
+  Which Cilium feature implements this in eBPF?
+options:
+  A: "BandwidthManager"
+  B: "The Traefik ingress limits"
+  C: "The default QoS class on the pod"
+  D: "An HPA on the deployment"
+answer: A
+explanation: |
+  Cilium's BandwidthManager enforces the standard Kubernetes
+  `kubernetes.io/ingress-bandwidth` and `kubernetes.io/egress-bandwidth`
+  pod annotations using eBPF with Earliest Departure Time (EDT) pacing in
+  the kernel, avoiding the overhead of a userspace shaping daemon. QoS
+  classes, ingress controllers, and HPAs do not provide per-pod network
+  bandwidth guarantees.

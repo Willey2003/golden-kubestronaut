@@ -1,0 +1,21 @@
+kind: knowledge
+domain: multinetworking
+level: quick
+title: Routing selected pod egress through a dedicated gateway
+prompt: |
+  Certain workloads must leave the cluster through a dedicated egress
+  node and be masqueraded with that node's address so external services
+  can apply IP-based allowlisting. Which Cilium feature provides this?
+options:
+  A: "CiliumEgressGatewayPolicy"
+  B: "CiliumHostFirewall"
+  C: "CiliumNodeConfig"
+  D: "CiliumIdentity"
+answer: A
+explanation: |
+  `CiliumEgressGatewayPolicy` selects pods by label and routes their
+  egress traffic to a chosen gateway node where it is forwarded and
+  masqueraded with the gateway's IP before leaving the cluster.
+  CiliumHostFirewall enforces policy on host endpoints, CiliumNodeConfig
+  applies per-node agent configuration overrides, and CiliumIdentity is
+  the identity resource used for policy decisions.

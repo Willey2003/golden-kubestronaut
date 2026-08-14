@@ -1,0 +1,28 @@
+kind: hands-on
+domain: system-services
+level: core
+title: Create and enable a systemd service
+prompt: |
+  Create a systemd unit file `/etc/systemd/system/timesync-echo.service`
+  that runs `/bin/sleep 3600`. Reload systemd, then enable and start the
+  service so it starts automatically at boot and is currently running.
+solution: |
+  cat > /etc/systemd/system/timesync-echo.service <<'EOF'
+  [Unit]
+  Description=Timesync echo placeholder service
+
+  [Service]
+  ExecStart=/bin/sleep 3600
+
+  [Install]
+  WantedBy=multi-user.target
+  EOF
+  systemctl daemon-reload
+  systemctl enable --now timesync-echo
+checks:
+  - desc: The service is enabled to start at boot
+    run: systemctl is-enabled timesync-echo
+    equals: enabled
+  - desc: The service is currently active
+    run: systemctl is-active timesync-echo
+    equals: active

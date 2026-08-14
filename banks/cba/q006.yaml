@@ -1,0 +1,35 @@
+kind: knowledge
+domain: ebpf-basics
+level: deep
+title: eBPF network hooks
+prompt: |
+  Where in the network path can eBPF programs be attached to process packets at
+  the highest performance point?
+options:
+  A: "At hooks such as XDP and the TC traffic control layer, which run early in the packet path."
+  B: "Only at the application socket layer after userspace has received the data."
+  C: "Only by restarting the packet forwarding daemon."
+  D: "At the iptables NAT table, which is the earliest hook in Linux."
+answer: A
+explanation: |
+  eBPF programs attach to hooks along the kernel data path. XDP runs before the
+  kernel's network stack at the driver level, and TC attaches to the traffic
+  control layer, both early, low-overhead points where packets can be
+  redirected, dropped, or modified at line rate. Socket-layer hooks run much
+  later in userspace, and iptables hooks are later and costlier than XDP.
+solution: |
+  eBPF programs attach to specific kernel hooks. XDP runs at the earliest point,
+  inside the network driver and before the kernel network stack, and is ideal
+  for high-performance filtering and load balancing. TC traffic control hooks
+  attach to the tc layer for forwarding and encapsulation decisions. By working
+  at these early hooks, eBPF-based data paths like Cilium's avoid the overhead
+  of later, more general packet processing.
+checks:
+  - desc: Names XDP
+    contains: "XDP"
+  - desc: Names the TC layer
+    contains: "TC"
+  - desc: Runs early at the driver
+    contains: "driver"
+  - desc: Processes packets
+    contains: "packet"

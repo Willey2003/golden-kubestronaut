@@ -1,0 +1,37 @@
+kind: knowledge
+domain: cilium-fundamentals
+level: quick
+title: What Cilium is
+prompt: |
+  An architect needs a CNI that provides networking, load balancing, and
+  security for cloud-native workloads with high performance. Which project best
+  fits this requirement, and why?
+options:
+  A: "Cilium, a CNI built on eBPF that delivers networking, kube-proxy-style load balancing, and identity-aware security in the kernel."
+  B: "Flannel, which provides network policy enforcement using eBPF in userspace."
+  C: "Calico only, because it is the only CNI that supports network policies."
+  D: "A bridge-based CNI that routes all traffic through a userspace proxy."
+answer: A
+explanation: |
+  Cilium is an eBPF-based CNI and security solution. It implements container
+  networking, service load balancing that can replace kube-proxy, and L3/L4/L7
+  network policies enforced at the kernel level, giving low latency and high
+  throughput. Flannel does not enforce policies in userspace, network policy is
+  not Calico-exclusive, and bridging with a userspace proxy would add latency
+  rather than deliver performance.
+solution: |
+  Cilium is a CNI built on eBPF that provides container networking, service
+  load balancing, and identity-aware security for Kubernetes and other
+  runtimes. Because forwarding and policy decisions run in the kernel via eBPF
+  programs, Cilium delivers high throughput and low latency without a userspace
+  data path. It also replaces kube-proxy's iptables with eBPF, enabling faster
+  service handling and richer features such as socket-level load balancing.
+checks:
+  - desc: Built on eBPF
+    contains: "eBPF"
+  - desc: Provides load balancing
+    contains: "load balancing"
+  - desc: Decisions run in the kernel
+    contains: "kernel"
+  - desc: Identified as a CNI
+    contains: "CNI"

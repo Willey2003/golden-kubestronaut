@@ -1,0 +1,21 @@
+kind: knowledge
+domain: security-advanced
+level: deep
+title: How toFQDNs handles hostnames resolving to multiple IPs
+prompt: |
+  A policy restricts a pod's egress with `toFQDNs` to `api.example.com`,
+  which resolves to several IPs. Which statement correctly describes how
+  Cilium enforces this rule?
+options:
+  A: "It permits egress only to the currently resolved IPs and refreshes them when the DNS TTL expires."
+  B: "It permits egress to any destination while the name is in the DNS cache."
+  C: "It blocks egress until a cluster administrator approves the resolved addresses."
+  D: "It requires an mTLS sidecar to verify the hostname on every connection."
+answer: A
+explanation: |
+  `toFQDNs` makes Cilium resolve the name, cache the resulting IPs, and
+  allow egress only to those cached addresses. DNS TTL expiry triggers a
+  re-resolution, so the allowed set tracks record changes automatically.
+  There is no human approval step and no sidecar TLS requirement: the rule
+  is enforced by the Cilium agent in the data path. This behavior is what
+  makes FQDN-based egress rules practical and safe.

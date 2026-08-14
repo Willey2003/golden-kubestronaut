@@ -1,0 +1,34 @@
+kind: knowledge
+domain: cost-optimization
+level: deep
+title: Bin packing and utilization
+prompt: |
+  A cluster runs at 12% average CPU utilization but the bill keeps growing.
+  What is the most effective cost remedy?
+options:
+  A: "Bin pack workloads tighter so fewer, fuller nodes serve the same demand, and scale the rest down."
+  B: "Add more nodes to spread the load."
+  C: "Increase every workload's limits."
+  D: "Move all pods to the largest instance type."
+answer: A
+explanation: |
+  Low utilization with rising spend means paying for capacity that is barely
+  used. Improving bin packing, placing more pods per node via scheduling
+  policies and rightsizing, reduces the number of nodes needed, which is the
+  lever that shrinks the bill. Adding nodes or bigger instances raises cost, and
+  raising limits does not improve utilization.
+solution: |
+  When utilization is low, the cluster is paying for capacity it is not using.
+  Bin packing packs more pods onto each node so that a smaller number of nodes
+  serves the same demand, then the surplus nodes can scale down or be removed.
+  Together with rightsizing and autoscaling, better packing is the main lever
+  for turning unused capacity into savings instead of an expanding bill.
+checks:
+  - desc: Uses bin packing
+    contains: "bin packing"
+  - desc: Improves utilization
+    contains: "utilization"
+  - desc: Reduces the number of nodes
+    contains: "nodes"
+  - desc: Combined with rightsizing
+    contains: "rightsizing"

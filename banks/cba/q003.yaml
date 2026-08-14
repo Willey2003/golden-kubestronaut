@@ -1,0 +1,36 @@
+kind: knowledge
+domain: cilium-fundamentals
+level: core
+title: Cilium components
+prompt: |
+  Which statement correctly describes Cilium's major deployment components?
+options:
+  A: "cilium-agent runs on every node and programs eBPF; cilium-operator handles cluster-wide tasks; the Cilium CLI talks to the agent API."
+  B: "cilium-operator programs eBPF programs locally on every node."
+  C: "A single central daemon outside the cluster performs all data path functions."
+  D: "The Cilium CLI is the primary data path and replaces the agent."
+answer: A
+explanation: |
+  Cilium deploys a cilium-agent DaemonSet so every node runs an agent that
+  programs that node's eBPF data path. The cilium-operator is a single or HA
+  deployment that handles cluster-wide work such as identity allocation and
+  managing the cluster IP pool. The Cilium CLI and kubectl plugin interact with
+  the agent API to show endpoints, policies, and status. The other options mix
+  up these roles.
+solution: |
+  Cilium is deployed as a DaemonSet so each node runs a cilium-agent that
+  programs eBPF programs and maps for the local data path, including
+  networking, policy enforcement, and service load balancing. A separate
+  cilium-operator deployment handles cluster-wide concerns such as allocating
+  security identities and managing the IP pool for cluster services. The Cilium
+  CLI and kubectl plugin connect to the agent's API to inspect endpoints,
+  policies, health, and service state.
+checks:
+  - desc: Names the cilium-agent
+    contains: "cilium-agent"
+  - desc: Agent programs eBPF
+    contains: "eBPF"
+  - desc: Names the cilium-operator
+    contains: "cilium-operator"
+  - desc: Deployed as a DaemonSet
+    contains: "DaemonSet"

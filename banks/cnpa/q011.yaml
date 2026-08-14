@@ -1,0 +1,21 @@
+kind: knowledge
+domain: multinetworking
+level: core
+title: Where LoadBalancer service IPs come from
+prompt: |
+  Cilium is managing LoadBalancer services without a cloud controller.
+  Which resource defines the pool of IP addresses that Cilium allocates
+  LoadBalancer service addresses from?
+options:
+  A: "CiliumLoadBalancerIPPool"
+  B: "CiliumServicePool"
+  C: "IPAddressPool"
+  D: "CiliumIPPool"
+answer: A
+explanation: |
+  `CiliumLoadBalancerIPPool` defines one or more CIDR blocks that the
+  Cilium operator uses to allocate external IPs for Services of type
+  LoadBalancer. The blocks can overlap with node ranges for L2
+  announcements, and pools can be disabled or restricted to specific
+  services. IPAddressPool is the equivalent MetalLB resource; the other
+  two names do not exist.

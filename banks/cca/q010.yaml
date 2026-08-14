@@ -1,0 +1,39 @@
+kind: knowledge
+domain: containers-k8s-cloud
+level: core
+title: What container orchestration provides
+prompt: |
+  A team runs many containers across several machines and needs scheduling,
+  scaling, service discovery, and self-healing. Which tool provides these
+  capabilities as an orchestration platform?
+options:
+  A: "Kubernetes, which schedules containers, scales workloads, discovers services, and restarts failed ones."
+  B: "A load balancer appliance only."
+  C: "A CI server running builds."
+  D: "An image registry storing container images."
+answer: A
+explanation: |
+  Kubernetes is a container orchestration platform: its scheduler places pods
+  on nodes, controllers maintain replicas, Services provide discovery, and the
+  kubelet restarts failed containers. The other options are single-purpose
+  tools.
+solution: |
+  Kubernetes is a container orchestration platform that automates the
+  management of containerized workloads across a cluster of nodes. Its
+  scheduler places pods on nodes with available capacity, controllers such as
+  the Deployment controller maintain the desired number of replicas, Services
+  and DNS provide service discovery and stable endpoints, and the kubelet
+  restarts containers that fail health checks, providing self-healing.
+  Declarative manifests define the desired state and the control plane
+  continuously reconciles toward it. A load balancer, CI server, or image
+  registry addresses only one narrow concern and cannot schedule or self-heal
+  workloads.
+checks:
+  - desc: Names Kubernetes
+    contains: "Kubernetes"
+  - desc: Mentions scheduling
+    contains: "scheduler"
+  - desc: Mentions self-healing
+    contains: "self-healing"
+  - desc: Mentions service discovery
+    contains: "service discovery"

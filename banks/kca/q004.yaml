@@ -1,0 +1,34 @@
+kind: knowledge
+domain: kubernetes-cost-concepts
+level: quick
+title: Labels and tags as cost signals
+prompt: |
+  What is the primary mechanism to group cloud and Kubernetes spend for
+  reporting?
+options:
+  A: "Consistent labels on resources, propagated as tags to the cloud bill."
+  B: "Random naming conventions remembered by the team."
+  C: "Comments in the source code."
+  D: "The order in which pods were created."
+answer: A
+explanation: |
+  Cost tools rely on labels and tags. Kubernetes labels on namespaces,
+  workloads, and pods are propagated as cloud tags, and the bill can then be
+  grouped by team, environment, product, or owner. Random names, code comments,
+  and creation order carry no structured cost metadata.
+solution: |
+  Labels and tags are the backbone of Kubernetes cost reporting. Teams apply
+  consistent labels, for example app, team, environment, and product, to
+  namespaces and workloads, and cost tools propagate them to the cloud provider
+  as tags. Billing data can then be grouped, filtered, and charged by any label
+  dimension, turning the raw bill into per-team or per-product statements that
+  match how the organization actually works.
+checks:
+  - desc: Uses labels
+    contains: "labels"
+  - desc: Propagated as tags
+    contains: "tags"
+  - desc: Groups the cloud bill
+    contains: "bill"
+  - desc: Grouped by team
+    contains: "team"

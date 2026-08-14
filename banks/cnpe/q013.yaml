@@ -1,0 +1,51 @@
+kind: hands-on
+domain: security-advanced
+level: core
+title: Group external CIDRs and allow egress to a CIDR
+prompt: |
+  Create the namespace `cnpe-q13`. Create a CiliumCIDRGroup named
+  `internal-ranges` whose `externalCIDRs` are `10.10.0.0/16` and
+  `192.168.0.0/16`. Then create a CiliumNetworkPolicy named `app-egress`
+  in `cnpe-q13` that allows pods labeled `app=app` to send egress traffic
+  to the CIDR `10.10.0.0/16`.
+solution: |
+  kubectl create ns cnpe-q13
+  cat <<'EOF' | kubectl apply -f -
+  apiVersion: cilium.io/v2alpha1
+  kind: CiliumCIDRGroup
+  metadata:
+    name: internal-ranges
+  spec:
+    externalCIDRs:
+    - 10.10.0.0/16
+    - 192.168.0.0/16
+  ---
+  apiVersion: cilium.io/v2
+  kind: CiliumNetworkPolicy
+  metadata:
+    name: app-egress
+    namespace: cnpe-q13
+  spec:
+    endpointSelector:
+      matchLabels:
+        app: app
+    egress:
+    - toCIDRSet:
+      - cidr: 10.10.0.0/16
+  EOF
+checks:
+  - desc: Namespace cnpe-q13 exists
+    run: kubectl get ns cnpe-q13 -o name
+    equals: namespace/cnpe-q13
+  - desc: CiliumCIDRGroup internal-ranges exists
+    run: kubectl get ccg internal-ranges -o name
+    equals: ciliumcidrgroup.cilium.io/internal-ranges
+  - desc: CIDR group contains the first range
+    run: "kubectl get ccg internal-ranges -o jsonpath='{.spec.externalCIDRs[0]}'"
+    equals: 10.10.0.0/16
+  - desc: CIDR group contains the second range
+    run: "kubectl get ccg internal-ranges -o jsonpath='{.spec.externalCIDRs[1]}'"
+    equals: 192.168.0.0/16
+  - desc: Policy allows egress to 10.10.0.0/16
+    run: "kubectl -n cnpe-q13 get cnp app-egress -o jsonpath='{.spec.egress[0].toCIDRSet[0].cidr}'"
+    equals: 10.10.0.0/16

@@ -1,0 +1,19 @@
+kind: knowledge
+domain: observability-advanced
+level: deep
+title: What Tetragon adds to Cilium observability
+prompt: |
+  A cluster already runs Cilium for networking. What does adding Tetragon
+  provide beyond Cilium's own observability?
+options:
+  A: "eBPF-based runtime observability and enforcement of process and executable activity"
+  B: "A second, faster CNI data plane"
+  C: "An L7 HTTP reverse proxy"
+  D: "A replacement for the Cilium agent"
+answer: A
+explanation: |
+  Tetragon is a separate eBPF-based security observability tool: it
+  captures and can enforce on process execution, file access, syscalls,
+  and other runtime events at the kernel level, complementing Cilium's
+  network-flow focus. It is not a CNI, not a proxy, and not a replacement
+  for the Cilium agent; the two are designed to run together.

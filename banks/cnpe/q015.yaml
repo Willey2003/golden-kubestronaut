@@ -1,0 +1,34 @@
+kind: hands-on
+domain: performance-tuning
+level: core
+title: Apply per-node agent tuning with CiliumNodeConfig
+prompt: |
+  Control-plane nodes handle a large number of connections and need larger
+  eBPF connection-tracking maps. Create a CiliumNodeConfig named
+  `high-scale` in namespace `kube-system` that applies to nodes labeled
+  `node-role.kubernetes.io/control-plane=true` and overrides the agent
+  setting `bpf-map-dynamic-size-ratio` to `0.002`.
+solution: |
+  cat <<'EOF' | kubectl apply -f -
+  apiVersion: cilium.io/v2
+  kind: CiliumNodeConfig
+  metadata:
+    name: high-scale
+    namespace: kube-system
+  spec:
+    nodeSelector:
+      matchLabels:
+        node-role.kubernetes.io/control-plane: "true"
+    defaults:
+      bpf-map-dynamic-size-ratio: "0.002"
+  EOF
+checks:
+  - desc: CiliumNodeConfig high-scale exists in kube-system
+    run: kubectl -n kube-system get ciliumnodeconfig high-scale -o name
+    equals: ciliumnodeconfig.cilium.io/high-scale
+  - desc: Config targets control-plane nodes
+    run: "kubectl -n kube-system get ciliumnodeconfig high-scale -o jsonpath='{.spec.nodeSelector.matchLabels.node-role\\.kubernetes\\.io/control-plane}'"
+    equals: "true"
+  - desc: Map size ratio is overridden to 0.002
+    run: "kubectl -n kube-system get ciliumnodeconfig high-scale -o jsonpath='{.spec.defaults.bpf-map-dynamic-size-ratio}'"
+    equals: "0.002"

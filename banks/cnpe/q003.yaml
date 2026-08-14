@@ -1,0 +1,21 @@
+kind: knowledge
+domain: advanced-cilium
+level: core
+title: Advertising LoadBalancer IPs to external routers
+prompt: |
+  LoadBalancer services must be reachable from outside the cluster, but
+  there is no cloud load balancer. Which Cilium feature advertises service
+  IPs to external routers using BGP?
+options:
+  A: "The Cilium BGP Control Plane (CiliumBGPClusterConfig)"
+  B: "OSPF redistribution in kube-proxy"
+  C: "VXLAN multicast flooding"
+  D: "DNS SRV records published to the routers"
+answer: A
+explanation: |
+  Cilium ships a native BGP Control Plane driven by
+  `CiliumBGPClusterConfig` and related CRDs. It peers with external
+  routers and announces the IPs of LoadBalancer (and ClusterIP) services,
+  letting traffic reach the cluster without an external load balancer or a
+  third-party BGP daemon. OSPF, VXLAN flooding, and DNS SRV records do not
+  advertise service IPs to routers.

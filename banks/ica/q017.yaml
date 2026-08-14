@@ -1,0 +1,38 @@
+kind: knowledge
+domain: observability-tracing
+level: deep
+title: Distributed tracing through the mesh
+prompt: |
+  A request crosses four services in the mesh. To understand where latency
+  accumulates, the team needs to see the request's path and timings as one
+  trace. What makes this possible in Istio?
+options:
+  A: "Envoy propagates trace context (for example B3 headers) between hops so spans can be correlated into one trace."
+  B: "Each service writes its own logs with no shared context."
+  C: "Prometheus stores trace data directly."
+  D: "The Kubernetes scheduler collects traces."
+answer: A
+explanation: |
+  Istio integrates with tracing backends such as Zipkin, Jaeger, and
+  OpenTelemetry, and Envoy propagates trace headers between hops so spans
+  across hops form one trace. Applications only need to propagate incoming
+  headers.
+solution: |
+  Distributed tracing in Istio works because the Envoy proxies forward trace
+  context between hops. The ingress proxy assigns a trace ID and propagates it
+  downstream via standard headers, such as the B3 headers used by Zipkin and
+  Jaeger, so each span recorded by every proxy on the request path shares the
+  same trace ID. These spans are exported to a tracing backend such as Jaeger,
+  Zipkin, or an OpenTelemetry collector, where they are assembled into a single
+  trace showing latency at each hop. Application code only needs to propagate
+  the incoming headers for the mesh to correlate spans; no per-service tracing
+  SDK is strictly required for the mesh's own spans.
+checks:
+  - desc: Names B3 headers
+    contains: "B3 headers"
+  - desc: Mentions trace IDs
+    contains: "trace ID"
+  - desc: Names tracing backends
+    contains: "Jaeger"
+  - desc: Notes span correlation
+    contains: "same trace ID"

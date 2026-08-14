@@ -1,0 +1,36 @@
+kind: knowledge
+domain: connectivity-security
+level: deep
+title: Clusterwide vs namespaced policies
+prompt: |
+  A cluster-wide rule must allow a logging DaemonSet to reach every namespace's
+  pods. Which resource applies policy to all namespaces?
+options:
+  A: "CiliumClusterwideNetworkPolicy, which selects endpoints across all namespaces."
+  B: "CiliumNetworkPolicy with namespace set to a wildcard."
+  C: "A Kubernetes NetworkPolicy applied to each namespace manually."
+  D: "An endpointSelector in a CiliumNetworkPolicy that lists every pod name."
+answer: A
+explanation: |
+  CiliumClusterwideNetworkPolicy is the cluster-scoped analogue of
+  CiliumNetworkPolicy: its selectors can match any endpoint in any namespace,
+  including via namespaceSelector, so it fits cross-namespace or cluster-wide
+  rules. CiliumNetworkPolicy is namespaced and cannot select across namespaces,
+  manually repeating a Kubernetes NetworkPolicy in every namespace is brittle,
+  and listing every pod name does not scale.
+solution: |
+  CiliumClusterwideNetworkPolicy is a cluster-scoped policy that can select
+  endpoints in any namespace, using namespaceSelector and endpointSelector to
+  target workloads wherever they run. This makes it the right resource for rules
+  such as allowing a logging DaemonSet to reach every namespace. A namespaced
+  CiliumNetworkPolicy is limited to its own namespace, so cross-namespace or
+  cluster-wide rules require the clusterwide variant.
+checks:
+  - desc: Names the clusterwide policy
+    contains: "CiliumClusterwideNetworkPolicy"
+  - desc: Policy is cluster-scoped
+    contains: "cluster-scoped"
+  - desc: Uses a namespaceSelector
+    contains: "namespaceSelector"
+  - desc: Applies across namespaces
+    contains: "namespace"

@@ -1,0 +1,38 @@
+kind: knowledge
+domain: gitops-tooling
+level: core
+title: Kustomize base and overlays for environments
+prompt: |
+  A team manages dev, staging, and production from one manifest set. They want
+  to keep the base identical and vary only replica counts and image tags.
+  Which Kustomize construct best supports this?
+options:
+  A: "A base directory plus per-environment overlays that patch the base."
+  B: "One giant manifest duplicated per environment with different namespaces."
+  C: "A Helm chart for production and raw YAML for dev."
+  D: "A single file edited in place for every environment change."
+answer: A
+explanation: |
+  Kustomize organizes configuration as a shared base plus environment-specific
+  overlays. Each overlay references the base and applies patches, changing
+  replica counts, image tags, names, or namespaces without duplicating the whole
+  manifest set. This keeps one source of truth while letting environments
+  differ. Duplicating manifests per environment, mixing tools inconsistently, or
+  editing one file in place all defeat the purpose of a reviewable, versioned
+  base.
+solution: |
+  Kustomize uses a base directory containing the common manifests and
+  per-environment overlays that layer patches on top. An overlay declares which
+  base it uses and applies patches for environment-specific differences such as
+  replica counts, image tags, and namespaces. The result is a single
+  maintainable source of truth where dev, staging, and production share the same
+  underlying configuration while remaining free to diverge where necessary.
+checks:
+  - desc: Mentions the base directory
+    contains: "base"
+  - desc: Mentions overlays
+    contains: "overlays"
+  - desc: Uses patches to differ
+    contains: "patches"
+  - desc: Varies image tags per environment
+    contains: "image tags"

@@ -1,0 +1,36 @@
+kind: knowledge
+domain: gitops-practices
+level: quick
+title: PR-based change management
+prompt: |
+  A developer wants to raise the replicas of an application from 2 to 4. What
+  is the idiomatic GitOps workflow to make this change?
+options:
+  A: "Modify the manifest in Git in a branch, open a pull request, get it reviewed, merge it, and let the agent sync."
+  B: "Run kubectl scale in production and document the change in a ticket afterwards."
+  C: "SSH into a node and edit the manifest file stored locally."
+  D: "Ask the agent to fetch the desired state from an environment variable."
+answer: A
+explanation: |
+  In GitOps, changes go through the normal Git collaboration flow: a branch, a
+  pull request, review and approval, then a merge. The agent observes the new
+  desired state and reconciles the cluster to it. Direct kubectl scale against
+  the cluster bypasses Git and creates drift, editing files on nodes is never
+  part of the workflow, and desired state lives in the repository, not in
+  environment variables.
+solution: |
+  The idiomatic GitOps workflow is to change the desired state in Git: create a
+  branch, modify the manifest, open a pull request, obtain review and approval,
+  and merge. The GitOps agent detects the merged change and reconciles the live
+  cluster to the new desired state, scaling the deployment to four replicas.
+  Because the change is recorded in Git, it is auditable, reversible, and
+  identical to how every other environment change is made.
+checks:
+  - desc: Change goes through a pull request
+    contains: "pull request"
+  - desc: Requires review
+    contains: "review"
+  - desc: Change is merged
+    contains: "merge"
+  - desc: Agent reconciles the cluster
+    contains: "reconciles"

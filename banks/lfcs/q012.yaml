@@ -1,0 +1,19 @@
+kind: knowledge
+domain: storage
+level: core
+title: Creating an XFS filesystem
+prompt: |
+  A new disk `/dev/sdb1` must be formatted with the XFS filesystem.
+  Which command creates the XFS filesystem on it?
+options:
+  A: "mkfs.xfs /dev/sdb1"
+  B: "mke2fs -t xfs /dev/sdb1"
+  C: "mkfs.ext4 -X /dev/sdb1"
+  D: "xfs mkfs /dev/sdb1"
+answer: A
+explanation: |
+  `mkfs.xfs /dev/sdb1` invokes the XFS filesystem builder on the
+  partition. `mke2fs` only creates ext2/3/4 filesystems and does not
+  understand `-t xfs`, `mkfs.ext4 -X` formats with ext4 (there is no `-X`
+  option and it will not produce XFS), and `xfs mkfs` is not a real
+  command.

@@ -1,0 +1,34 @@
+kind: knowledge
+domain: resource-allocation
+level: core
+title: Requests vs limits
+prompt: |
+  What is the difference between a container's requests and its limits?
+options:
+  A: "Requests reserve capacity for the container; limits cap the maximum it may consume."
+  B: "Requests cap usage and limits reserve capacity."
+  C: "Requests are deprecated and limits are mandatory."
+  D: "They are synonyms with no behavioral difference."
+answer: A
+explanation: |
+  Requests are the amount of CPU or memory the scheduler reserves for a
+  container on a node, affecting scheduling and quality of service. Limits cap
+  the maximum a container may use; CPU above the limit is throttled and memory
+  above the limit can OOM-kill the pod. They have distinct semantics and are
+  both used by cost tools to weight allocation.
+solution: |
+  A container's requests declare the resources the scheduler must reserve on a
+  node for it, so the sum of requests drives admission and placement. Limits
+  declare the ceiling the container may consume: CPU above the limit is
+  throttled, and memory above the limit can terminate the pod. Both fields are
+  part of resource management, and cost tools commonly weight allocation by
+  requests while flagging waste when actual usage is far below them.
+checks:
+  - desc: Requests reserve capacity
+    contains: "reserve"
+  - desc: Limits cap consumption
+    contains: "limits"
+  - desc: Drives scheduling
+    contains: "scheduler"
+  - desc: CPU over limit is throttled
+    contains: "throttled"

@@ -1,0 +1,37 @@
+kind: knowledge
+domain: argo-workflows
+level: core
+title: What Argo Workflows is
+prompt: |
+  A data team wants to run multi-step pipelines (fetch, transform, train,
+  notify) as Kubernetes resources, with each step a container. Which project is
+  purpose-built for this?
+options:
+  A: "Argo Workflows, a Kubernetes-native workflow engine that runs DAG or step pipelines of containers as CRDs."
+  B: "Argo CD, which deploys applications from git."
+  C: "Argo Rollouts, which manages progressive deliveries."
+  D: "Argo Events, which reacts to external events."
+answer: A
+explanation: |
+  Argo Workflows defines Workflow custom resources with templates; steps or
+  DAGs run containers in pods. It is Kubernetes-native, so pipelines are just
+  resources. Argo CD is for GitOps deployments, not data pipelines.
+solution: |
+  Argo Workflows is a Kubernetes-native workflow engine. Workflows are defined
+  as custom resources with a workflow template composed of container templates,
+  and executed either in a steps sequence or as a DAG with dependencies. The
+  engine creates pods for each step, handles the scheduling, provides retries,
+  and passes artifacts and parameters between steps. Because workflows are
+  native Kubernetes resources, they are created, watched, and logged with
+  kubectl and other tooling. The other Argo projects solve different problems:
+  Argo CD deploys from git, Rollouts performs progressive delivery, and Events
+  reacts to external triggers.
+checks:
+  - desc: Names Argo Workflows
+    contains: "Argo Workflows"
+  - desc: Notes Kubernetes-native CRDs
+    contains: "custom resources"
+  - desc: Names steps and DAG modes
+    contains: "DAG"
+  - desc: Notes parameter passing
+    contains: "artifacts and parameters"

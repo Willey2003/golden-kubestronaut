@@ -1,0 +1,33 @@
+kind: knowledge
+domain: cost-optimization
+level: core
+title: Cluster autoscaling removes idle nodes
+prompt: |
+  Which mechanism removes the cost of idle nodes automatically?
+options:
+  A: "The Cluster Autoscaler, which scales node pools down when pods no longer need the capacity."
+  B: "The HorizontalPodAutoscaler, which scales node hardware."
+  C: "The VerticalPodAutoscaler, which deletes nodes."
+  D: "A cron job that reboots nodes daily."
+answer: A
+explanation: |
+  The Cluster Autoscaler adds or removes nodes so that pending pods get placed
+  and underutilized nodes are drained and terminated. Scaling down idle nodes
+  directly removes their cost. HPA scales replicas, not nodes; VPA adjusts pod
+  resource requests, not nodes; and reboots do not remove capacity.
+solution: |
+  The Cluster Autoscaler keeps node count aligned with demand: when pods cannot
+  be scheduled, it provisions nodes, and when nodes are underutilized for long
+  enough that all their pods can run elsewhere, it drains and terminates them.
+  Because every idle node still carries its hourly price, scaling down unused
+  nodes is a direct cost win. For fast-changing loads, it pairs with the
+  HorizontalPodAutoscaler so replicas and nodes both track demand.
+checks:
+  - desc: Names the Cluster Autoscaler
+    contains: "Cluster Autoscaler"
+  - desc: Terminates idle nodes
+    contains: "terminates"
+  - desc: Scales down underutilized nodes
+    contains: "underutilized"
+  - desc: Directly removes cost
+    contains: "cost"

@@ -1,0 +1,13 @@
+id: cba
+title: CBA Cilium Certified Associate Mock
+engine: knowledge
+duration_minutes: 90
+pass_threshold: 0.7
+draw_size: 16
+seed: null
+domains:
+  cilium-fundamentals: 0.25
+  ebpf-basics: 0.20
+  connectivity-security: 0.25
+  observability-cilium: 0.15
+  deployment-cilium: 0.15

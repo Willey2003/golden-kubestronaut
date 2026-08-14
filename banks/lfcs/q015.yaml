@@ -1,0 +1,25 @@
+kind: hands-on
+domain: users-groups
+level: core
+title: Create a group and a user who belongs to it
+prompt: |
+  Create a group named `opsgrp`. Then create the user `opsuser` with a
+  home directory `/home/opsuser`, login shell `/bin/bash`, and add
+  `opsuser` to the secondary group `opsgrp`.
+solution: |
+  groupadd opsgrp
+  useradd -m -s /bin/bash opsuser
+  usermod -aG opsgrp opsuser
+checks:
+  - desc: User opsuser exists
+    run: id opsuser
+    non-empty: true
+  - desc: Group opsgrp exists
+    run: getent group opsgrp
+    non-empty: true
+  - desc: Login shell is /bin/bash
+    run: getent passwd opsuser
+    contains: /bin/bash
+  - desc: opsuser is a member of opsgrp
+    run: id -nG opsuser
+    contains: opsgrp

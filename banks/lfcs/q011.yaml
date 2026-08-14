@@ -1,0 +1,19 @@
+kind: knowledge
+domain: networking
+level: deep
+title: Adding a default gateway
+prompt: |
+  A server must reach the outside world through the router at
+  `192.168.1.1`. Which command adds that as the default gateway?
+options:
+  A: "ip route add default via 192.168.1.1"
+  B: "ip addr add 192.168.1.1 default"
+  C: "ip route default gw 192.168.1.1"
+  D: "route add -host 192.168.1.1 default"
+answer: A
+explanation: |
+  `ip route add default via 192.168.1.1` installs the default route,
+  forwarding non-local destinations to the gateway. `ip addr add` only
+  assigns an address to an interface and has no `default` keyword in this
+  position, `ip route` has no `default gw` subcommand, and `route add
+  -host` creates a host route rather than the default route.

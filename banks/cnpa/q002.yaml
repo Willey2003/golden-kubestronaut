@@ -1,0 +1,22 @@
+kind: knowledge
+domain: cilium-networking
+level: quick
+title: Which standard API Cilium implements for L3/L4 policy
+prompt: |
+  A team wants to enforce L3/L4 network policies in a portable way that
+  works both with Cilium and with other CNIs. Which standard Kubernetes
+  API does Cilium fully implement for this?
+options:
+  A: "NetworkPolicy"
+  B: "PodSecurityPolicy"
+  C: "GatewayClass"
+  D: "NetworkAttachmentDefinition"
+answer: A
+explanation: |
+  Cilium is a fully conformant implementation of the Kubernetes
+  `NetworkPolicy` API for L3/L4 rules (ingress/egress, pod selectors,
+  ports, and CIDR-based rules). PodSecurityPolicy is a deprecated
+  admission control resource unrelated to networking, GatewayClass belongs
+  to the Gateway API, and NetworkAttachmentDefinition comes from the
+  Multus CNI ecosystem. Cilium also offers its own richer CiliumNetworkPolicy
+  CRDs for advanced, Cilium-specific behavior.

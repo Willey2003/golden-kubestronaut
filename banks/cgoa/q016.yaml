@@ -1,0 +1,38 @@
+kind: knowledge
+domain: gitops-security
+level: core
+title: Multi-tenancy with Argo CD Projects
+prompt: |
+  A platform team runs one Argo CD instance for several product teams,
+  including a production cluster. Which control best separates responsibilities
+  safely?
+options:
+  A: "Use Argo CD Projects with scoped RBAC and restrict which clusters and namespaces each project can sync to."
+  B: "Give every team cluster-admin so nothing is blocked."
+  C: "Put every team's Applications in one project with no RBAC."
+  D: "Disable authentication because the UI is on a private network."
+answer: A
+explanation: |
+  Argo CD Projects are the multi-tenancy boundary: each project scopes which
+  source repositories, destination clusters, and namespaces its Applications
+  may target, and role-based access control grants users permissions within
+  projects. This lets many teams share one GitOps tool while production stays
+  protected. Shared admin access, one unrestricted project, or disabled
+  authentication all remove the separation that makes multi-tenant GitOps safe.
+solution: |
+  Argo CD Projects provide the isolation boundary for multi-tenant GitOps. Each
+  project restricts what its Applications may reference, such as source
+  repositories and destination clusters and namespaces, and RBAC roles scope
+  what users can do within those projects. A production cluster can therefore
+  be reachable only by the project and roles that own it, while development
+  teams operate freely in their own projects. This separation of duties keeps
+  shared tooling safe.
+checks:
+  - desc: Names Argo CD Projects
+    contains: "Projects"
+  - desc: Uses RBAC roles
+    contains: "RBAC"
+  - desc: Restricts namespaces
+    contains: "namespaces"
+  - desc: Production stays isolated
+    contains: "production"
