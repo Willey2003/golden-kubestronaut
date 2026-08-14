@@ -42,12 +42,12 @@ Open <http://127.0.0.1:8902> (or the LAN address after `./ga expose`).
 | `kcsa` | Cloud Native Security Associate | security concepts |
 | `pca` | Prometheus Certified Associate | metrics/PromQL |
 | `ica` | Istio Certified Associate | service mesh |
-| `cca` | Cilium Certified Associate | CNI / eBPF networking |
+| `cca` | Cloud Certified Associate | cloud-native platform concepts |
 | `capa` | Certified Argo Project Associate | GitOps / Argo |
 | `cgoa` | Certified GitOps Associate | GitOps practices |
-| `cba` | Certified Backstage Associate | developer portals |
+| `cba` | Cilium Certified Associate | CNI / eBPF networking |
 | `otca` | OpenTelemetry Certified Associate | observability |
-| `kca` | Kubernetes Cloud Native Associate | cloud-native concepts |
+| `kca` | Kubernetes Cost Associate | cloud costs / FinOps |
 | `cnpa` | Cloud Native Professional Associate | professional track |
 | `cnpe` | Cloud Native Professional Engineer | engineering track |
 | `lfcs` | Linux Foundation Certified System Administrator | Linux sysadmin |
